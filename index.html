@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>監看都ok</title>
+<link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="description" content="給影像工作者的 Mac 選單列監看工具。CPU、GPU、溫度、硬碟即時更新，輸出時自動全開風扇。">
+<style>
+
+:root {
+  --paper: #F4F4F1; --block: #FBFBF9; --ink: #1D1D1B; --ink-2: #5A5A52; --mute: #8E8E86;
+  --line: rgba(29,29,27,.15); --line-strong: rgba(29,29,27,.32); --ai: #44617B;
+  --font: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+}
+* { box-sizing: border-box; }
+/* 字體跟 App 一樣用系統字:中文蘋方、日文冬青黑體、西文 San Francisco */
+html[lang="zh-Hans"] { --font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+html[lang="ja"] { --font: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif; }
+html[lang="en"], html[lang="es"], html[lang="pt"] { --font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif; }
+html:is([lang="en"], [lang="es"], [lang="pt"]) :is(body, .top, .for, .sub, .pill, .ghost, .block-h h2, .block-h .meta, .hero-dl .k, .hero-dl .muted, .kv dt, .feat .h, .core-h, .steps b, .field label, .field input, .msg, footer) { letter-spacing: 0; }
+html { scroll-behavior: smooth; background: var(--paper); }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font); font-weight: 400;
+  font-size: 15px; line-height: 1.75; letter-spacing: .02em; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  padding-bottom: env(safe-area-inset-bottom, 0px); }
+h1, h2, h3, b, strong { font-weight: 600; }
+a { color: inherit; }
+::selection { background: rgba(68,97,123,.18); }
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+
+/* 頂欄 */
+.top { position: sticky; top: 0; z-index: 20; height: 50px; display: flex; justify-content: space-between; align-items: center;
+  padding: 0 20px; padding-top: env(safe-area-inset-top, 0px); border-bottom: 1px solid var(--line-strong);
+  background: rgba(244,244,241,.82); -webkit-backdrop-filter: saturate(160%) blur(18px); backdrop-filter: saturate(160%) blur(18px);
+  font-size: 14px; letter-spacing: .05em; }
+.brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: inherit; }
+.brand img { width: 20px; height: 20px; display: block; }
+.top nav { display: flex; align-items: center; gap: 20px; }
+/* 語言切換 */
+.lang { position: relative; }
+.lang-btn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13px; color: var(--ink-2); background: transparent;
+  border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 11px 3px 8px; cursor: pointer; transition: color .3s, border-color .3s; }
+.lang-btn:hover, .lang-btn[aria-expanded="true"] { color: var(--ink); border-color: rgba(29,29,27,.55); }
+.lang-ico { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.1; flex: none; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.lang-menu { position: absolute; right: 0; top: calc(100% + 8px); min-width: 168px; margin: 0; padding: 5px; list-style: none; background: var(--block);
+  border: 1px solid var(--line-strong); border-radius: 10px; box-shadow: 0 14px 34px rgba(29,29,27,.14); z-index: 30; }
+.lang-menu button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 14px; font-size: 14px; line-height: 1.4; letter-spacing: 0;
+  color: var(--ink); background: transparent; border: 0; border-radius: 6px; padding: 7px 10px; cursor: pointer; text-align: left; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+.lang-menu button[lang="zh-Hant"] { font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", sans-serif; }
+.lang-menu button[lang="zh-Hans"] { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif; }
+.lang-menu button[lang="ja"] { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; }
+.lang-menu button:hover, .lang-menu button:focus-visible { background: rgba(29,29,27,.06); outline: none; }
+.lang-menu button[aria-checked="true"]::after { content: ""; width: 9px; height: 5px; margin-top: -3px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); }
+.top nav a { text-decoration: none; color: var(--ink-2); transition: color .3s; }
+.top nav a:hover { color: var(--ink); }
+.top .brand, .top nav a, .lang-btn { white-space: nowrap; }
+.top .brand, .top .lang { flex: none; }
+@media (max-width: 440px) { .top { padding-left: 16px; padding-right: 16px; } .top nav a[href="privacy/"] { display: none; } }
+html[lang="ja"] .hero .sub, html[lang^="zh"] .hero .sub { word-break: keep-all; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 16px 20px 0; display: flex; flex-direction: column; gap: 14px; }
+
+/* 區塊 */
+.block { background: var(--block); border: 1px solid var(--line-strong); border-radius: 12px; overflow: hidden; }
+.block-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 18px;
+  border-bottom: 1px solid var(--line-strong); background: rgba(29,29,27,.025); }
+.block-h h2 { margin: 0; font-size: 15px; letter-spacing: .06em; }
+.block-h .meta { font-size: 12px; color: var(--mute); letter-spacing: .04em; }
+.block-b { padding: 16px 18px 18px; }
+.pair { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; align-items: stretch; }
+
+/* 開場 */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
+.hero-main { padding: 34px 34px 32px; }
+.app-icon { display: block; width: 64px; height: 64px; margin: 0 0 22px; opacity: 0; filter: blur(6px); transform: translateY(8px); animation: iconIn .9s var(--ease-out) .1s forwards; }
+@keyframes iconIn { to { opacity: 1; filter: none; transform: none; } }
+.hero .for { font-size: 13px; color: var(--ink-2); letter-spacing: .08em; margin: 0 0 12px; }
+.hero h1 { font-size: clamp(52px, 8vw, 92px); line-height: 1.04; letter-spacing: -.02em; margin: 0 0 18px; }
+.hero .sub { font-size: clamp(16px, 1.8vw, 19px); color: var(--ink-2); letter-spacing: .05em; line-height: 1.75; margin: 0; }
+.ch { display: inline-block; }
+.hero-dl { border-left: 1px solid var(--line-strong); padding: 22px 22px 22px; display: flex; flex-direction: column; background: rgba(29,29,27,.018); }
+.hero-dl .k { font-size: 12px; color: var(--mute); letter-spacing: .1em; }
+.hero-dl .ver { font-size: 44px; font-weight: 300; line-height: 1.1; letter-spacing: -.01em; margin: 2px 0 12px; font-variant-numeric: tabular-nums; }
+.kv { display: grid; grid-template-columns: minmax(70px, max-content) minmax(0, 1fr); margin: 0 0 16px; font-size: 13px; border-top: 1px solid var(--line); }
+.kv dt, .kv dd { margin: 0; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.kv dt { color: var(--mute); letter-spacing: .06em; padding-right: 12px; }
+.kv dd { color: var(--ink); }
+.hero-dl .muted { font-size: 12px; color: var(--mute); margin-top: 8px; letter-spacing: .04em; }
+
+/* 按鈕 */
+.pill { font-family: var(--font); font-weight: 500; font-size: 15px; letter-spacing: .06em; text-align: center; text-decoration: none; display: inline-block;
+  color: var(--paper); background: var(--ink); border: 0; border-radius: 999px; padding: 10px 28px; cursor: pointer;
+  transition: transform .35s var(--ease-spring), background .3s, opacity .3s; }
+.pill:hover { background: #2C2C29; }
+.pill:active { transform: scale(.96); }
+.pill[aria-disabled="true"] { background: transparent; color: var(--mute); border: 1px solid var(--line-strong); pointer-events: none; }
+.pill.line { background: transparent; color: var(--ink); border: 2px solid var(--ink); padding: 8px 26px; }
+.pill.line:hover { background: rgba(29,29,27,.06); }
+.pill.line[aria-disabled="true"] { color: var(--mute); border: 2px solid var(--line-strong); background: transparent; }
+.ghost { font-family: var(--font); font-weight: 400; font-size: 13px; letter-spacing: .04em; color: var(--ink);
+  background: transparent; border: 1px solid var(--line-strong); border-radius: 999px; padding: 5px 16px; min-width: 84px; cursor: pointer;
+  transition: transform .3s var(--ease-spring), border-color .25s, background .25s; }
+.ghost:hover { border-color: rgba(29,29,27,.55); background: rgba(29,29,27,.05); }
+.ghost:active { transform: scale(.96); }
+.swap-t { display: inline-block; transition: opacity .28s, filter .28s, transform .28s; }
+.swap-t.out { opacity: 0; filter: blur(6px); transform: translateY(5px); }
+
+/* 領取 */
+.lede { color: var(--ink-2); font-size: 14.5px; margin: 0 0 14px; }
+.claim { display: flex; gap: 14px; align-items: flex-end; flex-wrap: wrap; }
+.field { flex: 1 1 240px; min-width: 0; }
+.field label { display: block; font-size: 12px; color: var(--mute); letter-spacing: .1em; margin-bottom: 2px; }
+.field input { width: 100%; border: 0; border-bottom: 1px solid var(--line-strong); background: transparent;
+  font-family: var(--font); font-weight: 400; font-size: 17px; letter-spacing: .02em; color: var(--ink);
+  padding: 6px 0 8px; border-radius: 0; outline: none; transition: border-color .3s; }
+.field input:focus { border-bottom-color: var(--ink); }
+.field input::placeholder { color: var(--mute); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.msg { min-height: 22px; margin-top: 10px; font-size: 13.5px; color: var(--ink-2); letter-spacing: .03em; }
+.msg.err { color: #8A3B2E; }
+.result { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s var(--ease-out); }
+.result.on { grid-template-rows: 1fr; }
+.result > div { overflow: hidden; }
+.result .inner { padding-top: 10px; opacity: 0; filter: blur(6px); transform: translateY(6px);
+  transition: opacity .6s .1s var(--ease-out), filter .6s .1s var(--ease-out), transform .6s .1s var(--ease-out); }
+.result.on .inner { opacity: 1; filter: blur(0); transform: none; }
+.keyrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; border: 1px dashed var(--line-strong); border-radius: 8px; padding: 10px 14px; }
+.keyrow code { flex: 1 1 auto; font-family: var(--mono); font-size: clamp(15px, 2vw, 18px); letter-spacing: .05em; color: var(--ink); word-break: break-all; }
+.note { border-left: 2px solid var(--ai); padding: 1px 0 1px 12px; margin: 14px 0 0; color: var(--ink-2); font-size: 13px; line-height: 1.7; }
+
+/* 開始使用 */
+.next { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+.next li { counter-increment: s; display: grid; grid-template-columns: 30px minmax(0, 1fr); padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink-2); }
+.next li:first-child { padding-top: 0; }
+.next li:last-child { border-bottom: 0; padding-bottom: 0; }
+.next li::before { content: counter(s); color: var(--ink); font-size: 17px; line-height: 1.5; }
+.next b { color: var(--ink); }
+
+/* 特色 */
+.feats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.feat { padding: 14px 14px 16px; border-bottom: 1px solid var(--line); min-width: 0; }
+.feat:not(:nth-child(3n+1)) { border-left: 1px solid var(--line); }
+.feat:nth-last-child(-n+3) { border-bottom: 0; }
+.feat .h { font-size: 15.5px; font-weight: 600; letter-spacing: .02em; margin: 13px 4px 4px; }
+.feat .d { color: var(--ink-2); font-size: 13.5px; line-height: 1.7; margin: 0 4px; }
+.feat-ind { display: none; }
+
+/* 特色小動畫:用 App 自己的深色介面畫成迷你示意(配色取自 App 色系表) */
+.scene {
+  --bg: #1C1A19; --grid: rgba(236,227,210,.055); --glow: rgba(162,83,71,.34);
+  --win: linear-gradient(165deg, #2F2C2A, #262321); --edge: rgba(236,227,210,.1); --shadow: 0 12px 26px rgba(0,0,0,.42);
+  --noti: linear-gradient(165deg, #3A3633, #2E2A28);
+  --tx: #F5F0E8; --tx2: rgba(245,240,232,.62); --tx3: rgba(245,240,232,.36);
+  --track: rgba(236,227,210,.13); --solid: rgba(236,227,210,.2); --zone: rgba(236,227,210,.06);
+  --ctl: #2E2A28; --ctlB: rgba(236,227,210,.16); --selB: rgba(236,227,210,.62); --selF: #3A3532;
+  --pri: #A25347; --priT: #D08072; --priTint: rgba(162,83,71,.24);
+  --ver: #C29D58; --verT: #CCAF72; --verTint: rgba(194,157,88,.16); --verLine: rgba(194,157,88,.34);
+  --ok: #85B5AC; --okTint: rgba(133,181,172,.15); --okLine: rgba(133,181,172,.34); --okFill: rgba(133,181,172,.62);
+  --sdBody: #F5F0E8; --sdLine: transparent; --contacts: #C29D58;
+  --toastSh: 0 6px 14px rgba(0,0,0,.32); --input: #141211; --card2: rgba(236,227,210,.05); --onPri: #FFF8F0;
+  position: relative; height: 170px; border-radius: 8px; background: var(--bg); overflow: hidden; isolation: isolate;
+  font-family: var(--font);
+  font-weight: 400; font-size: 11px; line-height: 1.3; letter-spacing: .01em; color: var(--tx);
+}
+@media (prefers-color-scheme: light) {
+.scene {
+  --bg: #F3EFE8; --grid: rgba(46,42,40,.075); --glow: rgba(162,83,71,.15);
+  --win: #FFFEFB; --edge: rgba(46,42,40,.09); --shadow: 0 1px 0 #ECE5DA, 0 8px 20px rgba(46,42,40,.08);
+  --noti: #FFFEFB;
+  --tx: #2E2A28; --tx2: rgba(46,42,40,.62); --tx3: rgba(46,42,40,.4);
+  --track: rgba(46,42,40,.09); --solid: rgba(46,42,40,.13); --zone: rgba(46,42,40,.05);
+  --ctl: #FFFEFB; --ctlB: rgba(46,42,40,.15); --selB: rgba(46,42,40,.55); --selF: #F6F2EB;
+  --priT: #8C4639; --priTint: rgba(162,83,71,.1);
+  --ver: #B28F49; --verT: #7C5F23; --verTint: rgba(178,143,73,.14); --verLine: rgba(178,143,73,.38);
+  --ok: #39655F; --okTint: rgba(57,101,95,.1); --okLine: rgba(57,101,95,.3); --okFill: rgba(57,101,95,.5);
+  --sdBody: #FFFEFB; --sdLine: rgba(46,42,40,.5); --contacts: #B28F49;
+  --toastSh: 0 4px 10px rgba(46,42,40,.08); --input: #FFFFFF; --card2: #FFFEFB; --onPri: #FFFDF8;
+  box-shadow: inset 0 0 0 1px rgba(46,42,40,.08);
+}
+}
+.scene::before { content: ""; position: absolute; z-index: -1; width: 190px; height: 190px; left: calc(50% - 95px); top: -10px; border-radius: 50%;
+  background: radial-gradient(circle, var(--glow), transparent 64%); filter: blur(18px); animation: scGlow 11s ease-in-out infinite alternate; pointer-events: none; }
+.scene::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(var(--grid) 1px, transparent 1.2px); background-size: 14px 14px; background-position: 7px 7px; }
+@keyframes scGlow { from { transform: translate(-70px, -14px) scale(.9); } to { transform: translate(70px, 16px) scale(1.12); } }
+.scene:not(.on)::before { animation-play-state: paused; }
+.stage { position: absolute; left: 50%; top: 50%; width: 240px; height: 132px; margin: -66px 0 0 -120px; transform: scale(var(--k, 1)); transition: opacity .5s ease; }
+.stage > * { position: absolute; }
+.scene.out .stage { opacity: 0; }
+.scene.rs .stage, .scene.rs .stage *, .scene.rs .stage *::before { transition: none !important; }
+.scene.still .stage, .scene.still .stage *, .scene.still .stage *::before { transition: none !important; animation-duration: 0s !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; }
+.scene.still::before { animation: none; }
+
+/* 共用零件 */
+.ico { display: block; flex: none; }
+.rise { opacity: 0; transform: translateY(8px); transition: opacity .55s var(--ease-out), transform .7s var(--ease-out); transition-delay: var(--dl, 0s); }
+.scene.s1 .rise { opacity: 1; transform: none; }
+.mwin { box-sizing: border-box; border-radius: 9px; padding: 10px 11px 11px; background: var(--win); border: 1px solid var(--edge); box-shadow: var(--shadow); }
+.wdots { display: flex; gap: 4px; margin-bottom: 9px; }
+.wdots i { width: 5px; height: 5px; border-radius: 50%; background: var(--tx3); }
+.task { display: flex; align-items: center; gap: 9px; }
+.tile { width: 26px; height: 26px; border-radius: 7px; flex: none; display: grid; place-items: center; color: var(--pri); background: var(--priTint); transition: color .35s ease, background .35s ease; }
+.tile .ico { width: 11px; height: 13px; --sdLine: transparent; --contacts: rgba(255,255,255,.5); }
+.task .nm2 { min-width: 0; }
+.task .t { display: flex; align-items: center; gap: 6px; height: 17px; }
+.task b { font-weight: 600; font-size: 12px; letter-spacing: .02em; white-space: nowrap; }
+.task .sub { display: block; font-size: 9.5px; color: var(--tx2); margin-top: 1px; white-space: nowrap; }
+.tags { display: grid; height: 17px; flex: none; }
+.tag { grid-area: 1 / 1; justify-self: start; height: 17px; line-height: 17px; padding: 0 6px; border-radius: 5px; font-size: 9.5px; font-weight: 600; white-space: nowrap;
+  opacity: 0; transform: translateY(3px); transition: opacity .3s ease, transform .35s var(--ease-out); }
+.tag.pri { color: var(--priT); background: var(--priTint); }
+.tag.ver, .tag.warn { color: var(--verT); background: var(--verTint); }
+.tag.ok { color: var(--ok); background: var(--okTint); }
+.bar { position: relative; height: 4px; border-radius: 2px; background: var(--track); overflow: hidden; }
+.bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 2px; }
+.bar .fp { background: var(--pri); }
+.bar .fv { background: var(--ver); }
+.bar .fo { background: var(--ok); width: 100%; opacity: 0; transition: opacity .3s ease; }
+.toast { left: 50%; height: 22px; padding: 0 10px 0 8px; display: flex; align-items: center; gap: 5px; border-radius: 999px; font-size: 10.5px; font-weight: 500; white-space: nowrap;
+  opacity: 0; transform: translate(-50%, 6px) scale(.96); transition: opacity .35s ease, transform .5s var(--ease-spring); }
+.toast .ico { width: 11px; height: 11px; }
+.toast.ok { color: var(--ok); background: linear-gradient(var(--okTint), var(--okTint)), var(--bg); box-shadow: inset 0 0 0 1px var(--okLine), var(--toastSh); }
+.toast.warn { color: var(--verT); background: linear-gradient(var(--verTint), var(--verTint)), var(--bg); box-shadow: inset 0 0 0 1px var(--verLine), var(--toastSh); }
+.cap { left: 0; right: 0; height: 16px; font-size: 10.5px; color: var(--tx2); }
+.cap span { position: absolute; left: 0; right: 0; top: 0; text-align: center; white-space: nowrap; opacity: 0; transform: translateY(4px); transition: opacity .35s ease, transform .45s var(--ease-out); }
+.srcsd { color: var(--sdBody); }
+
+/* 0 核心流程(寬版):插卡 → 自動辨識 → 開始備份 → 讀回驗證 → 退卡 */
+.core { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); border-bottom: 1px solid var(--line); }
+.core .scene { grid-column: 2; grid-row: 1; height: 320px; margin: 14px 14px 14px 0; }
+.core-txt { grid-column: 1; grid-row: 1; min-width: 0; padding: 22px 22px 22px 26px; display: flex; flex-direction: column; justify-content: center; }
+.core-h { font-size: clamp(24px, 2.6vw, 30px); font-weight: 600; line-height: 1.3; letter-spacing: .02em; margin: 0 0 8px; text-wrap: balance; }
+.core-d { color: var(--ink-2); font-size: 14.5px; margin: 0 0 18px; }
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: st; border-top: 1px solid var(--line); }
+.steps li { counter-increment: st; display: grid; grid-template-columns: 28px minmax(0, 1fr); padding: 9px 0 10px; border-bottom: 1px solid var(--line); color: var(--mute); transition: color .5s var(--ease-out); }
+.steps li::before { content: counter(st); grid-row: span 2; font-size: 17px; line-height: 1.45; }
+.steps b { font-size: 15px; letter-spacing: .05em; line-height: 1.55; }
+.steps span { font-size: 13px; line-height: 1.65; }
+.sc-core.s1 ~ .core-txt .st1, .sc-core.s6 ~ .core-txt .st2, .sc-core.s8 ~ .core-txt .st3 { color: var(--ink); }
+.sc-core.s6 ~ .core-txt .st1, .sc-core.s8 ~ .core-txt .st2 { color: var(--mute); }
+
+.cursor { left: 0; top: 0; width: 13px; height: 18px; opacity: 0; transform: translate(206px, 130px); transition: transform .65s cubic-bezier(.5,0,.2,1), opacity .3s ease; z-index: 3; filter: drop-shadow(0 1px 2px rgba(0,0,0,.35)); }
+.cursor .ico { width: 13px; height: 18px; transform-origin: 1.2px 1.2px; }
+@keyframes scTap { 0%, 100% { scale: 1; } 45% { scale: .9; } }
+/* 6 自動更新 */
+.sc-update .w6 { left: 0; top: 42px; width: 206px; padding: 9px 11px 12px; transition: opacity .55s var(--ease-out), transform .7s var(--ease-out), filter .4s ease; }
+.sc-update .w6 .bar { margin-top: 10px; }
+.sc-update .fp { width: 28%; transition: width 4.6s cubic-bezier(.3,.1,.6,1), opacity .3s ease; }
+.noti { right: 0; top: 4px; min-width: 178px; max-width: 240px; box-sizing: border-box; padding: 8px 10px; display: flex; gap: 8px; align-items: center; border-radius: 11px; background: var(--noti); border: 1px solid var(--edge); box-shadow: var(--shadow);
+  opacity: 0; transform: translateX(22px); transition: opacity .4s ease, transform .6s var(--ease-out); z-index: 2; }
+.noti img { width: 24px; height: 24px; border-radius: 6px; flex: none; display: block; }
+.nt { position: relative; display: grid; flex: 1; height: 28px; min-width: 0; padding-right: 14px; }
+.nt .m { grid-area: 1 / 1; opacity: 0; transform: translateY(3px); transition: opacity .3s ease, transform .35s var(--ease-out); }
+.nt b { display: block; font-size: 10.5px; font-weight: 600; white-space: nowrap; }
+.nt small { display: block; font-size: 9.5px; color: var(--tx2); margin-top: 2px; white-space: nowrap; }
+.nt .m3 b { color: var(--ok); }
+.spin { position: absolute; right: 0; top: 2px; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--track); border-top-color: var(--tx2); opacity: 0; transition: opacity .3s ease; }
+@keyframes scSpin { to { transform: rotate(360deg); } }
+.sc-update.s1 .t1 { opacity: 1; transform: none; }
+.sc-update.s2 .fp { width: 100%; }
+.sc-update.s3 .noti { opacity: 1; transform: none; }
+.sc-update.s3 .m1 { opacity: 1; transform: none; }
+.sc-update.s4 .t1 { opacity: 0; transform: translateY(-3px); }
+.sc-update.s4 .t3 { opacity: 1; transform: none; }
+.sc-update.s4 .tile { color: var(--ok); background: var(--okTint); }
+.sc-update.s4 .fo { opacity: 1; }
+.sc-update.s5 .m1 { opacity: 0; transform: translateY(-3px); }
+.sc-update.s5 .m2 { opacity: 1; transform: none; }
+.sc-update.s5 .spin { opacity: 1; animation: scSpin .8s linear infinite; }
+.sc-update.s5 .w6 { opacity: .45; filter: saturate(.5); }
+.sc-update.s6 .m2 { opacity: 0; transform: translateY(-3px); }
+.sc-update.s6 .m3 { opacity: 1; transform: none; }
+.sc-update.s6 .spin { opacity: 0; }
+.sc-update.s6 .w6 { opacity: 1; filter: none; }
+
+/* ===== 監看都ok 專用畫面（沿用備份都ok 的共用零件：mwin／tag／bar／toast／cursor／rise） ===== */
+.hot { color: var(--priT) !important; }
+.nw { position: relative; display: inline-block; }
+.nw > span { transition: opacity .3s ease, color .4s ease; }
+.nw > .n2 { position: absolute; left: 0; top: 0; opacity: 0; }
+.mbar .nw > .n2, .fanrow .nw > .n2 { left: auto; right: 0; }
+.sw2 { position: relative; display: inline-grid; }
+.sw2 > span { grid-area: 1 / 1; white-space: nowrap; transition: opacity .3s ease, filter .3s ease, transform .35s var(--ease-out); }
+.sw2 > span + span { opacity: 0; filter: blur(2px); transform: translateY(2px); }
+.mc { box-sizing: border-box; border-radius: 6px; background: var(--card2); box-shadow: inset 0 0 0 1px var(--edge); padding: 5px 7px; }
+.mc .lb2 { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 8.5px; font-weight: 600; color: var(--tx2); white-space: nowrap; }
+.mc .big { font-size: 15px; font-weight: 600; letter-spacing: -.01em; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.mc .big small { font-size: 8px; font-weight: 500; color: var(--tx2); margin-left: 1px; }
+.spk { display: block; width: 100%; height: 14px; margin-top: 2px; overflow: visible; }
+.spk .ln { fill: none; stroke: var(--tx2); stroke-width: 1.3; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke .4s ease; }
+.spk .base { fill: none; stroke: var(--track); stroke-width: 1; stroke-dasharray: 2 2; }
+.pill2 { height: 13px; line-height: 13px; padding: 0 5px; border-radius: 999px; font-size: 7.5px; font-weight: 600; color: var(--tx2); background: var(--track); white-space: nowrap; transition: color .3s ease, background .3s ease; }
+.fanico { width: 11px; height: 11px; color: var(--tx2); animation: scSpin 1.6s linear infinite; animation-play-state: paused; }
+.scene.on .fanico { animation-play-state: running; }
+.mbar { height: 18px; border-radius: 6px; background: var(--zone); }
+.mbar .mbx { position: absolute; right: 8px; top: 0; height: 18px; display: flex; align-items: center; gap: 7px; font-size: 9px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mi { display: inline-flex; align-items: baseline; gap: 3px; transition: opacity .35s ease, max-width .45s var(--ease-out); }
+.mi em { font-style: normal; color: var(--tx2); font-size: 8.5px; }
+.gico { width: 12px; height: 10px; color: var(--tx); }
+.atoast { box-sizing: border-box; display: flex; gap: 7px; align-items: flex-start; padding: 7px 10px 7px 8px; border-radius: 10px; background: var(--noti); border: 1px solid var(--edge); box-shadow: var(--shadow);
+  opacity: 0; transform: translateY(-8px) scale(.97); transition: opacity .35s ease, transform .5s var(--ease-spring); }
+.atoast .ico { width: 12px; height: 12px; margin-top: 1px; color: var(--tx); }
+.atoast.warn .ico { color: var(--priT); }
+.atoast.ok .ico { color: var(--ok); }
+.atoast b { display: block; font-size: 10px; font-weight: 600; white-space: nowrap; }
+.atoast small { display: block; font-size: 8.5px; color: var(--tx2); margin-top: 1px; white-space: nowrap; }
+
+/* 0 核心流程（寬版）：看選單列 → 點開面板 → Pr 高負載 → 風扇自動全開 → 結束恢復 */
+.sc-core .stage { width: 340px; height: 240px; margin: -120px 0 0 -170px; }
+.sc-core .mbar { left: 0; top: 0; width: 340px; }
+.prw { left: 0; top: 40px; width: 152px; padding: 0 9px 10px; }
+.prw .nm2 { flex: 1; min-width: 0; }
+.prw .nm2 b { display: block; overflow: hidden; text-overflow: ellipsis; }
+.prw .task { gap: 7px; margin-top: 2px; }
+.prw .tile { width: 22px; height: 22px; border-radius: 6px; color: var(--tx2); background: var(--track); }
+.prw .tile .ico { width: 11px; height: 11px; }
+.prw b { font-size: 10px; }
+.prw .sub { font-size: 8.5px; }
+.prw .mt .tags { position: absolute; right: 0; top: 3px; height: 14px; }
+.prw .tag { justify-self: end; height: 14px; line-height: 14px; font-size: 7.5px; padding: 0 4px; }
+.prw .bar { margin-top: 8px; height: 3px; }
+.prw .fp { transition: width 4.4s cubic-bezier(.4,.05,.6,.95), opacity .3s ease; }
+.prw .meter { display: flex; justify-content: space-between; margin-top: 7px; font-size: 8.5px; color: var(--tx2); font-variant-numeric: tabular-nums; }
+.pv { right: 0; top: 24px; width: 178px; padding: 7px; display: grid; gap: 4px;
+  opacity: 0; transform: translateY(-6px) scale(.97); transform-origin: 70% 0; transition: opacity .3s ease, transform .45s var(--ease-spring), filter .4s ease; z-index: 2; }
+.pv::before { content: ""; position: absolute; top: -5px; right: 112px; width: 9px; height: 9px; background: var(--win); border-left: 1px solid var(--edge); border-top: 1px solid var(--edge); transform: rotate(45deg); border-radius: 2px 0 0 0; }
+.pv .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.pv .tc svg { display: block; width: 100%; height: 22px; margin-top: 2px; overflow: visible; }
+.tc .lim { stroke: var(--priT); stroke-width: .8; stroke-dasharray: 2.5 2.5; opacity: .7; }
+.tc .ln { fill: none; stroke: var(--tx2); stroke-width: 1.3; stroke-linejoin: round; stroke-dasharray: 100; stroke-dashoffset: 100; }
+.fanrow { display: flex; align-items: center; gap: 6px; }
+.fanrow .big { font-size: 12px; margin-left: auto; }
+.dkrow { display: flex; align-items: baseline; justify-content: space-between; font-size: 9px; white-space: nowrap; }
+.dkrow b { font-size: 10px; font-variant-numeric: tabular-nums; }
+.dkrow em { font-style: normal; color: var(--tx2); font-size: 8px; margin-right: 2px; }
+.pv .bar { margin-top: 4px; height: 3px; }
+.pv .bar .fu { width: 89%; background: var(--tx2); }
+.sc-core .atoast { right: 6px; top: 23px; min-width: 166px; max-width: 200px; z-index: 5; }
+.atoast > div { min-width: 0; }
+.sc-core .cursor { transform: translate(300px, 236px); }
+/* 時間表 */
+.sc-core.s2 .cursor { opacity: 1; transform: translate(211px, 8px); }
+.sc-core.s3 .cursor .ico { animation: scTap .32s ease; }
+.sc-core.s3 .pv { opacity: 1; transform: none; }
+.sc-core.s4 .cursor { opacity: 0; transition: opacity .5s ease; }
+.sc-core.s4 .prw .t1 { opacity: 1; transform: none; }
+.sc-core.s4 .prw .fp { width: 100%; }
+.sc-core.s4 .spk .ln, .sc-core.s4 .tc .ln { stroke-dashoffset: 0; transition: stroke-dashoffset 2.6s cubic-bezier(.45,.05,.55,.95), stroke .4s ease; }
+.sc-core.s5 .hv { color: var(--priT); }
+.sc-core.s5 .spk .ln, .sc-core.s5 .tc .ln { stroke: var(--priT); }
+.sc-core.s5 .fan .sw2 > span:first-child { opacity: 0; filter: blur(2px); transform: translateY(-2px); }
+.sc-core.s5 .fan .sw2 > span + span { opacity: 1; filter: none; transform: none; }
+.sc-core.s5 .fan .pill2 { color: #FFF8F0; background: var(--pri); }
+.sc-core.s5 .fanico { animation-duration: .45s; color: var(--priT); }
+.sc-core.s6 .atoast.a1 { opacity: 1; transform: none; }
+.sc-core.s6 .pv { filter: saturate(.7); }
+.sc-core.s7 .atoast.a1 { opacity: 0; transform: translateY(-6px) scale(.97); }
+.sc-core.s7 .pv { filter: none; }
+.sc-core.s7 .prw .t1 { opacity: 0; transform: translateY(-3px); }
+.sc-core.s7 .prw .t3 { opacity: 1; transform: none; }
+.sc-core.s7 .prw .fo { opacity: 1; }
+.sc-core.s7 .nw > .n1 { opacity: 0; }
+.sc-core.s7 .nw > .n2 { opacity: 1; }
+.sc-core.s7 .hv { color: inherit; }
+.sc-core.s7 .spk .ln, .sc-core.s7 .tc .ln { stroke: var(--tx2); }
+.sc-core.s8 .fan .sw2 > span:first-child { opacity: 1; filter: none; transform: none; }
+.sc-core.s8 .fan .sw2 > span + span { opacity: 0; filter: blur(2px); }
+.sc-core.s8 .fan .pill2 { color: var(--tx2); background: var(--track); }
+.sc-core.s8 .fanico { animation-duration: 1.6s; color: var(--tx2); }
+.sc-core.s8 .atoast.a2 { opacity: 1; transform: none; }
+.sc-core.s9 .atoast.a2 { opacity: 0; transform: translateY(-6px) scale(.97); }
+.sc-core.s1 ~ .core-txt .st1, .sc-core.s3 ~ .core-txt .st2, .sc-core.s5 ~ .core-txt .st3 { color: var(--ink); }
+.sc-core.s3 ~ .core-txt .st1, .sc-core.s5 ~ .core-txt .st2 { color: var(--mute); }
+
+/* 1 即時硬碟 */
+.sc-disk .w-d { left: 8px; top: 8px; width: 224px; padding: 8px 10px 9px; }
+.sc-disk .hd { display: flex; justify-content: space-between; align-items: center; font-size: 9.5px; white-space: nowrap; }
+.sc-disk .hd b { font-size: 10px; color: var(--tx2); }
+.sc-disk .hd .sw2 { font-size: 9px; color: var(--tx3); font-variant-numeric: tabular-nums; }
+.sc-disk .hd .sw2 > span + span { color: var(--tx); }
+.sc-disk .dkrow { margin-top: 7px; font-size: 10.5px; }
+.sc-disk .dkrow b { font-size: 13px; }
+.sc-disk .bar { margin-top: 5px; }
+.sc-disk .bar .fu { width: 88.9%; background: var(--tx2); transition: width 2.2s linear, background .4s ease; }
+.sc-disk .used { margin-top: 4px; font-size: 8.5px; color: var(--tx3); }
+.fchip { left: 50%; top: 84px; height: 20px; padding: 0 9px 0 7px; display: flex; align-items: center; gap: 5px; border-radius: 6px; background: var(--win); border: 1px solid var(--edge); box-shadow: var(--toastSh); font-size: 9px; white-space: nowrap;
+  opacity: 0; transform: translate(-50%, 8px); transition: opacity .35s ease, transform .9s cubic-bezier(.5,0,.3,1); }
+.fchip .ico { width: 9px; height: 11px; color: var(--tx2); }
+.fchip em { font-style: normal; color: var(--tx2); }
+.sc-disk .cap { top: 112px; }
+.sc-disk .okc { display: inline-block; width: 9px; height: 9px; color: var(--ok); vertical-align: -1px; margin-left: 3px; opacity: 0; transform: scale(.4); transition: opacity .25s ease, transform .45s var(--ease-spring); }
+.sc-disk.s2 .fchip { opacity: 1; transform: translate(-50%, 0); }
+.sc-disk.s2 .cap .c1 { opacity: 1; transform: none; }
+.sc-disk.s3 .fchip { opacity: 0; transform: translate(-50%, -46px) scale(.8); transition: opacity .5s ease .5s, transform .9s cubic-bezier(.5,0,.3,1); }
+.sc-disk.s3 .hd .sw2 > span:first-child { opacity: 0; }
+.sc-disk.s3 .hd .sw2 > span + span { opacity: 1; filter: none; transform: none; }
+.sc-disk.s3 .bar .fu { width: 90.4%; background: var(--tx); }
+.sc-disk.s4 .hd .sw2 > span:first-child { opacity: 1; }
+.sc-disk.s4 .hd .sw2 > span + span { opacity: 0; }
+.sc-disk.s4 .bar .fu { background: var(--tx2); }
+.sc-disk.s4 .okc { opacity: 1; transform: none; }
+.sc-disk.s4 .cap .c1 { opacity: 0; transform: translateY(-4px); }
+.sc-disk.s4 .cap .c2 { opacity: 1; transform: none; }
+
+/* 2 溫度與過熱提醒 */
+.sc-temp .w-t { left: 8px; top: 6px; width: 224px; padding: 8px 10px 8px; }
+.sc-temp .hd { display: flex; justify-content: space-between; align-items: center; font-size: 9.5px; white-space: nowrap; }
+.sc-temp .hd b { font-size: 10px; color: var(--tx2); }
+.sc-temp .hd .pk { font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; transition: color .4s ease; }
+.sc-temp .gwrap { position: relative; width: 204px; height: 54px; margin-top: 6px; }
+.sc-temp .gwrap svg { position: absolute; left: 0; top: 0; display: block; width: 204px; height: 54px; overflow: visible; }
+.sc-temp .lim { stroke: var(--priT); stroke-width: .9; stroke-dasharray: 3 3; opacity: .75; }
+.sc-temp .lt { font-size: 7px; fill: var(--priT); opacity: .85; }
+.sc-temp .ga { fill: var(--track); opacity: .8; }
+.sc-temp .gl { fill: none; stroke: var(--tx2); stroke-width: 1.4; stroke-linejoin: round; transition: stroke .4s ease; }
+.sc-temp .gclip { position: absolute; left: 0; top: 0; height: 54px; width: 0; overflow: hidden; }
+.sc-temp .toast { top: 102px; }
+.sc-temp.s2 .gclip { width: 204px; transition: width 2.8s linear; }
+.sc-temp.s3 .pk, .sc-temp.s3 .gl { color: var(--priT); stroke: var(--priT); }
+.sc-temp.s4 .toast { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.toast.hotw { color: var(--priT); background: linear-gradient(var(--priTint), var(--priTint)), var(--bg); box-shadow: inset 0 0 0 1px rgba(162,83,71,.38), var(--toastSh); }
+
+/* 3 外接碟 */
+.sc-ext .w-e { left: 8px; top: 4px; width: 224px; padding: 8px 10px 8px; }
+.sc-ext .hd { font-size: 10px; font-weight: 600; color: var(--tx2); }
+.sc-ext .dkrow { margin-top: 6px; }
+.sc-ext .bar { margin-top: 4px; height: 3px; }
+.sc-ext .bar .fu { width: 89%; background: var(--tx2); }
+.sc-ext .bar .fe { width: 6%; background: var(--tx2); }
+.sc-ext .ex { overflow: hidden; max-height: 0; opacity: 0; transition: max-height .55s var(--ease-out), opacity .35s ease; }
+.sc-ext .ex .dkrow { margin-top: 8px; }
+.sc-ext .ex .ej { display: inline-block; width: 13px; height: 13px; margin-left: 6px; border-radius: 50%; background: var(--track); vertical-align: -3px; position: relative; transition: background .25s ease, transform .3s var(--ease-spring); }
+.sc-ext .ex .ej .ico { position: absolute; left: 3px; top: 3px; width: 7px; height: 7px; color: var(--tx); }
+.sc-ext .io { display: flex; justify-content: flex-end; gap: 8px; margin-top: 3px; font-size: 8px; color: var(--tx3); font-variant-numeric: tabular-nums; }
+.sc-ext .io .on2 { color: var(--tx); }
+.sc-ext .toast { top: 104px; }
+.sc-ext .cursor { transform: translate(230px, 140px); }
+.sc-ext.s2 .ex { max-height: 46px; opacity: 1; }
+.sc-ext.s3 .cursor { opacity: 1; transform: translate(213px, 65px); }
+.sc-ext.s4 .cursor .ico { animation: scTap .32s ease; }
+.sc-ext.s4 .ex .ej { background: var(--okTint); transform: scale(1.15); }
+.sc-ext.s5 .ex { max-height: 0; opacity: 0; }
+.sc-ext.s5 .cursor { opacity: 0; transition: opacity .5s ease; }
+.sc-ext.s5 .toast { opacity: 1; transform: translate(-50%, 0) scale(1); }
+
+/* 4 插卡就開備份都ok */
+.sc-card .slotw { left: 8px; top: 30px; width: 96px; height: 70px; padding: 0; display: grid; place-items: center; }
+.sc-card .slot { position: absolute; left: 50%; top: 22px; width: 34px; height: 4px; margin-left: -17px; border-radius: 2px; background: var(--input); box-shadow: inset 0 0 0 1px var(--ctlB); }
+.sc-card .slotw small { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; font-size: 8.5px; color: var(--tx3); }
+.sc-card .sprite { opacity: 0; transform: translate(-30px, 92px) rotate(-14deg); }
+.sc-card .cn { right: 0; top: 12px; width: 134px; }
+.sc-card .cn img { width: 18px; height: 18px; border-radius: 5px; flex: none; display: block; }
+.sc-card .bkapp { right: 34px; top: 76px; display: flex; flex-direction: column; align-items: center; gap: 4px; opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .5s var(--ease-out); }
+.sc-card .bkapp img { width: 30px; height: 30px; border-radius: 7px; display: block; filter: drop-shadow(0 4px 8px rgba(0,0,0,.3)); }
+.sc-card .bkapp span { font-size: 8.5px; color: var(--tx2); white-space: nowrap; }
+@keyframes scBounce { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-9px); } 55% { transform: translateY(0); } 72% { transform: translateY(-4px); } }
+.sc-card.s2 .sprite { opacity: 1; transform: translate(43px, 6px) rotate(0); }
+.sc-card.s3 .sprite { transform: translate(43px, 18px) rotate(0); opacity: 0; transition: transform .5s ease, opacity .4s ease .1s; }
+.sc-card.s3 .atoast { opacity: 1; transform: none; }
+.sc-card.s4 .bkapp { opacity: 1; transform: none; }
+.sc-card.s4 .bkapp img { animation: scBounce .9s ease 2; }
+
+/* 5 精簡模式 */
+.sc-compact .mbar { left: 8px; top: 10px; width: 224px; }
+.sc-compact .mbx { gap: 0; }
+.sc-compact .mbx > * { margin-left: 7px; transition: opacity .35s ease, max-width .45s var(--ease-out), margin .45s var(--ease-out), width .4s ease; }
+.sc-compact .mbx > .gico { margin-left: 0; }
+.sc-compact .mi { max-width: 60px; overflow: hidden; }
+.sc-compact .mi.low { max-width: 0; opacity: 0; margin-left: 0; }
+.sc-compact .mi.low b { color: var(--priT); font-weight: 600; }
+.sc-compact .gico { opacity: 0; width: 0; transition: opacity .3s ease, width .4s ease; }
+.sc-compact .setw { left: 44px; top: 42px; width: 152px; padding: 8px 10px; }
+.sc-compact .row2 { display: flex; align-items: center; justify-content: space-between; font-size: 9.5px; white-space: nowrap; }
+.sc-compact .row2 small { display: block; font-size: 7.5px; color: var(--tx3); margin-top: 1px; }
+.tg { position: relative; width: 22px; height: 13px; border-radius: 999px; background: var(--track); flex: none; transition: background .3s ease; }
+.tg::after { content: ""; position: absolute; left: 2px; top: 2px; width: 9px; height: 9px; border-radius: 50%; background: #FFFEFB; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .35s var(--ease-spring); }
+.sc-compact .cap { top: 108px; }
+.sc-compact .cursor { transform: translate(230px, 140px); }
+.sc-compact.s2 .cursor { opacity: 1; transform: translate(175px, 61px); }
+.sc-compact.s3 .cursor .ico { animation: scTap .32s ease; }
+.sc-compact.s3 .tg { background: var(--pri); }
+.sc-compact.s3 .tg::after { transform: translateX(9px); }
+.sc-compact.s3 .mi.std { max-width: 0; opacity: 0; margin-left: 0; }
+.sc-compact.s3 .gico { opacity: 1; width: 12px; }
+.sc-compact.s3 .cap .c1 { opacity: 1; transform: none; }
+.sc-compact.s4 .cursor { opacity: 0; transition: opacity .5s ease; }
+.sc-compact.s5 .mi.low { max-width: 70px; opacity: 1; margin-left: 7px; }
+.sc-compact.s5 .cap .c1 { opacity: 0; transform: translateY(-4px); }
+.sc-compact.s5 .cap .c2 { opacity: 1; transform: none; }
+
+/* 6 自動更新（同備份都ok 的畫面，內容換成監看都ok） */
+.sc-update .w6 .tile { color: var(--tx); background: var(--track); }
+.sc-update .w6 .tile .ico { width: 13px; height: 11px; }
+
+/* 更新紀錄 */
+.rel { list-style: none; margin: 0; padding: 0; }
+.rel > li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.rel > li:first-child { padding-top: 0; }
+.rel > li:last-child { border-bottom: 0; padding-bottom: 0; }
+.rel .rv { display: flex; align-items: baseline; gap: 10px; }
+.rel .rv b { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.rel .rv span { font-size: 12px; color: var(--mute); letter-spacing: .04em; }
+.rel .rd { font-size: 13.5px; color: var(--ink-2); }
+.rel .rd ul { margin: 4px 0 0; padding-left: 1.2em; }
+.rel .rd p { margin: 4px 0 0; }
+.rel .rd h2 { display: none; }
+.rel-empty { color: var(--ink-2); font-size: 14px; margin: 0; }
+.free { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .08em; color: var(--ai); border: 1px solid rgba(68,97,123,.45); border-radius: 999px; padding: 0 8px; margin-left: 8px; vertical-align: 3px; }
+
+/* 從備份都ok 核心畫面借用的零件 */
+.mt { position: relative; height: 20px; display: flex; align-items: center; }
+.mt .wdots { margin: 0; }
+.mt .ttl { position: absolute; left: 0; right: 0; text-align: center; font-size: 9px; font-weight: 600; color: var(--tx2); }
+.sprite { left: 0; top: 0; width: 22px; height: 26px; z-index: 3; transition: transform .7s cubic-bezier(.3,.7,.3,1), opacity .35s ease; filter: drop-shadow(0 4px 8px rgba(0,0,0,.35)); }
+.mi b { font-weight: 500; }
+.mbar .clk { color: var(--tx2); }
+.prw .mt .ttl { left: 30px; right: auto; text-align: left; }
+
+footer { padding: 6px 2px 40px; font-size: 12.5px; color: var(--mute); letter-spacing: .05em; display: flex; gap: 20px; flex-wrap: wrap; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+/* 進場 */
+.js .hero .ch { opacity: 0; filter: blur(10px); transform: translateY(.14em); }
+.js .hero .ch.in { opacity: 1; filter: blur(0); transform: none; transition: opacity .8s var(--ease-out), filter .8s var(--ease-out), transform .8s var(--ease-out); }
+.js .reveal { opacity: 0; filter: blur(6px); transform: translateY(8px); }
+.js .reveal.in { opacity: 1; filter: blur(0); transform: none; transition: opacity .8s var(--ease-out), filter .8s var(--ease-out), transform .8s var(--ease-out); }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-dl { border-left: 0; border-top: 1px solid var(--line-strong); }
+  .pair { grid-template-columns: 1fr; }
+  .feats { grid-template-columns: 1fr 1fr; }
+  .core { grid-template-columns: 1fr; }
+  .core .scene { grid-column: 1; grid-row: 1; height: 290px; margin: 14px 14px 0; }
+  .core-txt { grid-column: 1; grid-row: 2; padding: 16px 18px 18px; }
+  .feat:not(:nth-child(3n+1)) { border-left: 0; }
+  .feat:nth-child(2n) { border-left: 1px solid var(--line); }
+  .feat:nth-last-child(-n+3) { border-bottom: 1px solid var(--line); }
+  .feat:nth-last-child(-n+2) { border-bottom: 0; }
+}
+@media (max-width: 520px) {
+  .wrap { padding: 12px 12px 0; }
+  .hero-main { padding: 24px 20px 22px; }
+  /* 手機:橫向滑動,一次看一張多一點 */
+  .feats { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .feats::-webkit-scrollbar { display: none; }
+  .feats .feat { scroll-snap-align: start; border-bottom: 0; border-left: 1px solid var(--line); }
+  .feats .feat:first-child { border-left: 0; }
+  .feat-ind { display: block; position: relative; width: 56px; height: 3px; margin: 2px auto 14px; border-radius: 2px; background: var(--line); overflow: hidden; }
+  .feat-ind i { position: absolute; left: 0; top: 0; bottom: 0; width: 30%; border-radius: 2px; background: var(--ink-2); }
+  .scene { height: 158px; }
+  .core .scene { height: 236px; }
+  .core-txt { padding: 14px 16px 16px; }
+  .top nav { gap: 12px; }
+  .lang-cur { font-size: 0; }
+  .lang-cur::after { content: attr(data-short); font-size: 13px; }
+  .lang-btn { padding: 3px 9px 3px 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+  .app-icon { animation: none; opacity: 1; filter: none; transform: none; }
+  .js .hero .ch, .js .reveal, .result .inner { opacity: 1 !important; filter: none !important; transform: none !important; }
+}
+
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-gauge" viewBox="0 0 24 20"><path d="M3.2 16.5a8.8 8.8 0 0 1 17.6 0" style="fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round"/><path d="M12 16.2l4.6-5.6" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round"/><circle cx="12" cy="16.2" r="2.1" style="fill:currentColor"/></symbol>
+  <symbol id="i-sd" viewBox="0 0 20 24"><path d="M6.5 1.5H15A2.5 2.5 0 0 1 17.5 4v16.5A2.5 2.5 0 0 1 15 23H5a2.5 2.5 0 0 1-2.5-2.5V5.5Z" style="fill:currentColor;stroke:var(--sdLine,transparent);stroke-width:1"/><g style="fill:var(--contacts,#C29D58)"><rect x="7" y="4" width="1.4" height="4.2" rx=".4"/><rect x="9.3" y="4" width="1.4" height="4.2" rx=".4"/><rect x="11.6" y="4" width="1.4" height="4.2" rx=".4"/><rect x="13.9" y="4" width="1.4" height="4.2" rx=".4"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 16 16"><path d="M3.2 8.6l3.2 3 6.4-7" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"/></symbol>
+  <symbol id="i-eject" viewBox="0 0 16 16"><path d="M8 2.6l5.3 6.4H2.7Z" style="fill:currentColor"/><rect x="2.7" y="10.8" width="10.6" height="2" rx=".6" style="fill:currentColor"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 16 16"><path d="M8 1.9l6.9 12H1.1Z" style="fill:none;stroke:currentColor;stroke-width:1.4;stroke-linejoin:round"/><rect x="7.3" y="6" width="1.4" height="4.2" rx=".6" style="fill:currentColor"/><circle cx="8" cy="11.9" r=".85" style="fill:currentColor"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 16 16"><path d="M8.3 1.2c.4 2.3 2 3.4 3.1 4.9 1 1.3 1.6 2.7 1.6 4.2A5 5 0 0 1 3 10.3c0-1.7.8-3 1.9-4 .1 1.3.7 2.2 1.6 2.6-.4-2.7.4-5.4 1.8-7.7Z" style="fill:currentColor"/></symbol>
+  <symbol id="i-fan" viewBox="0 0 16 16"><g style="fill:currentColor"><path d="M8 6.6c-.4-2.6.3-4.9 2.3-5.2 1.7-.2 2.5 1.6 1.4 3-1 1.2-2.4 1.8-3.7 2.2Z"/><path d="M9.4 8c2.6-.4 4.9.3 5.2 2.3.2 1.7-1.6 2.5-3 1.4-1.2-1-1.8-2.4-2.2-3.7Z"/><path d="M8 9.4c.4 2.6-.3 4.9-2.3 5.2-1.7.2-2.5-1.6-1.4-3 1-1.2 2.4-1.8 3.7-2.2Z"/><path d="M6.6 8C4 8.4 1.7 7.7 1.4 5.7 1.2 4 3 3.2 4.4 4.3c1.2 1 1.8 2.4 2.2 3.7Z"/><circle cx="8" cy="8" r="1.3"/></g></symbol>
+  <symbol id="i-film" viewBox="0 0 16 16"><rect x="1.8" y="2.5" width="12.4" height="11" rx="2" style="fill:none;stroke:currentColor;stroke-width:1.4"/><path d="M5 2.5v11M11 2.5v11M1.8 6h3.2M1.8 10h3.2M11 6h3.2M11 10h3.2" style="stroke:currentColor;stroke-width:1.2"/></symbol>
+  <symbol id="i-file" viewBox="0 0 12 14"><path d="M2.5 1h4.8L10 3.8v8.7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5Z" style="fill:none;stroke:currentColor;stroke-width:1.1;stroke-linejoin:round"/></symbol>
+  <symbol id="i-cursor" viewBox="0 0 13 18"><path d="M1.2 1.2v13.6l3.3-3.1 2.2 5.1 2.2-.95-2.2-5.05h4.6Z" style="fill:#fff;stroke:#111;stroke-width:1;stroke-linejoin:round"/></symbol>
+</svg>
+
+<header class="top">
+  <span class="brand"><img src="icons/favicon-64.png" alt="" width="20" height="20"><span data-i="brand">監看都ok</span></span>
+  <nav><a href="manual/" data-i="nav_manual">使用說明</a><a href="privacy/" data-i="nav_privacy">隱私權政策</a>
+    <div class="lang" id="lang">
+      <button type="button" class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><svg class="lang-ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.3"/><path d="M1.7 8h12.6M8 1.7c1.9 1.8 2.8 3.9 2.8 6.3S9.9 12.5 8 14.3M8 1.7C6.1 3.5 5.2 5.6 5.2 8s.9 4.5 2.8 6.3"/></svg><span class="lang-cur" id="langCur">繁體中文</span><span class="sr" data-i="lang_label">語言</span></button>
+      <ul class="lang-menu" id="langMenu" role="menu" hidden></ul>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div class="block hero">
+    <div class="hero-main">
+      <img class="app-icon" src="icons/app-icon-256.png" alt="監看都ok App 圖示" data-ia="alt:icon_alt" width="64" height="64">
+      <p class="for reveal"><span data-i="for">給影像工作者的 Mac 系統監看工具</span><span class="free" data-i="free">免費</span></p>
+      <h1 id="title" data-i="brand">監看都ok</h1>
+      <p class="sub reveal" data-i="sub!">看得到，不算完。<br>跟得上，才叫監看。</p>
+    </div>
+    <div class="hero-dl reveal">
+      <div class="k" data-i="dl_latest">最新版本</div>
+      <div class="ver" id="dlVer">—</div>
+      <dl class="kv">
+        <dt data-i="dl_size">檔案大小</dt><dd id="dlSize">—</dd>
+        <dt data-i="dl_date">發布日期</dt><dd id="dlDate">—</dd>
+        <dt data-i="dl_req">系統需求</dt><dd data-i="dl_req_v">macOS 13 以上</dd>
+        <dt data-i="dl_price">價格</dt><dd data-i="free">免費</dd>
+        <dt data-i="dl_upd">更新方式</dt><dd data-i="dl_upd_v">App 內自動更新</dd>
+      </dl>
+      <a class="pill line" id="dlBtn" href="#" aria-disabled="true" data-i="dl_soon">即將開放下載</a>
+      <div class="muted" id="dlMeta" data-i="dl_meta" hidden>已通過 Apple 公證</div>
+    </div>
+  </div>
+
+  <section class="block reveal">
+    <div class="block-h"><h2 data-i="what_h">它做什麼</h2><span class="meta" data-i="what_meta">把機器狀況看清楚</span></div>
+    <div class="core">
+      <div class="scene sc-core big" data-scene="core" aria-hidden="true"><div class="stage">
+        <div class="mbar rise"><span class="mbx">
+          <span class="mi"><em>CPU</em><b class="nw hv"><span class="n1" data-from="12" data-to="94" data-at="s4" data-ms="2600" data-fmt="{n}%">12%</span><span class="n2" data-from="94" data-to="16" data-at="s7" data-ms="1400" data-fmt="{n}%">94%</span></b></span>
+          <span class="mi"><em>GPU</em><b class="nw hv"><span class="n1" data-from="8" data-to="88" data-at="s4" data-ms="2600" data-fmt="{n}%">8%</span><span class="n2" data-from="88" data-to="10" data-at="s7" data-ms="1400" data-fmt="{n}%">88%</span></b></span>
+          <span class="mi"><b class="nw hv"><span class="n1" data-from="52" data-to="86" data-at="s4" data-ms="2600" data-fmt="{n}°">52°</span><span class="n2" data-from="86" data-to="60" data-at="s7" data-ms="1400" data-fmt="{n}°">86°</span></b></span>
+          <span class="mi"><em>SSD</em><b>217 GB</b></span>
+          <span class="clk">14:02</span>
+        </span></div>
+        <div class="mwin prw rise" style="--dl:.06s">
+          <div class="mt"><span class="wdots"><i></i><i></i><i></i></span><span class="ttl" data-i="c_export">影片輸出</span>
+            <span class="tags"><span class="tag pri t1" data-i="c_exporting">輸出中</span><span class="tag ok t3" data-i="a_done">完成</span></span></div>
+          <div class="task">
+            <span class="tile"><svg class="ico"><use href="#i-film"/></svg></span>
+            <div class="nm2"><div class="t"><b>Premiere Pro</b></div><span class="sub">4K・H.264</span></div>
+          </div>
+          <div class="bar"><i class="fp"></i><i class="fo"></i></div>
+        </div>
+        <div class="mwin pv">
+          <div class="g2">
+            <div class="mc"><div class="lb2">CPU</div>
+              <div class="big"><span class="nw hv"><span class="n1" data-from="12" data-to="94" data-at="s4" data-ms="2600">12</span><span class="n2" data-from="94" data-to="16" data-at="s7" data-ms="1400">94</span></span><small>%</small></div>
+              <svg class="spk" viewBox="0 0 70 14" preserveAspectRatio="none"><path class="base" d="M0 13.5H70"/><path class="ln" pathLength="100" d="M0 11.5 L7 12 L14 11 L21 12 L28 10.5 L35 9 L42 6.5 L49 4 L56 2.5 L63 2 L70 1.5"/></svg>
+            </div>
+            <div class="mc"><div class="lb2">GPU</div>
+              <div class="big"><span class="nw hv"><span class="n1" data-from="8" data-to="88" data-at="s4" data-ms="2600">8</span><span class="n2" data-from="88" data-to="10" data-at="s7" data-ms="1400">88</span></span><small>%</small></div>
+              <svg class="spk" viewBox="0 0 70 14" preserveAspectRatio="none"><path class="base" d="M0 13.5H70"/><path class="ln" pathLength="100" d="M0 12.5 L7 12 L14 12.5 L21 11.5 L28 11 L35 10 L42 7 L49 5 L56 3 L63 2.5 L70 2.5"/></svg>
+            </div>
+          </div>
+          <div class="mc tc"><div class="lb2"><span data-i="c_temp1h">溫度 · 近 1 小時</span><span class="hv"><span class="nw"><span class="n1" data-from="52" data-to="86" data-at="s4" data-ms="2600" data-fmt="{n}°C">52°C</span><span class="n2" data-from="86" data-to="86" data-at="s7" data-ms="10" data-fmt="{n}°C">86°C</span></span></span></div>
+            <svg viewBox="0 0 160 22" preserveAspectRatio="none"><line class="lim" x1="0" y1="4" x2="160" y2="4"/><path class="ln" pathLength="100" d="M0 16 L10 16.5 L20 15.5 L30 16 L40 15 L50 15.5 L60 14.5 L70 15 L80 14 L90 12.5 L100 11 L110 9 L120 7.5 L130 6.5 L140 6 L150 5.5 L160 5.5"/></svg>
+          </div>
+          <div class="mc fan"><div class="fanrow"><svg class="ico fanico"><use href="#i-fan"/></svg><span class="lb2" data-i="c_fan">風扇</span><span class="pill2 sw2"><span data-i="c_auto">自動</span><span data-i="c_max">全開</span></span>
+            <span class="big"><span class="nw"><span class="n1" data-from="2300" data-to="5800" data-at="s5" data-ms="1800">2300</span><span class="n2" data-from="5800" data-to="2400" data-at="s8" data-ms="1500">5800</span></span><small>rpm</small></span></div></div>
+          <div class="mc"><div class="dkrow"><span>Macintosh HD</span><span><em data-i="a_left">剩</em><b>217.1 GB</b></span></div><div class="bar"><i class="fu"></i></div></div>
+        </div>
+        <div class="atoast warn a1"><svg class="ico"><use href="#i-flame"/></svg><div><b data-i="c_t1b">偵測到 Pr 高負載</b><small data-i="c_t1s">風扇已全開，負載降下來後自動恢復</small></div></div>
+        <div class="atoast ok a2"><svg class="ico"><use href="#i-check"/></svg><div><b data-i="c_t2b">Pr 高負載結束</b><small data-i="c_t2s">持續約 12 分鐘，風扇已回到自動</small></div></div>
+        <div class="cursor"><svg class="ico"><use href="#i-cursor"/></svg></div>
+      </div></div>
+      <div class="core-txt">
+        <div class="core-h" data-i="core_h">看一眼選單列，就知道。</div>
+        <p class="core-d" data-i="core_d">吃重的時候，監看都ok 會自己處理。</p>
+        <ol class="steps">
+          <li class="st1"><b data-i="st1_b">看一眼</b><span data-i="st1_s">CPU、GPU、溫度、硬碟即時更新，超標的數字會變紅</span></li>
+          <li class="st2"><b data-i="st2_b">點開面板</b><span data-i="st2_s">風扇、記憶體、網路、電池，一次看完</span></li>
+          <li class="st3"><b data-i="st3_b">自動全開風扇</b><span data-i="st3_s">Pr、達芬奇高負載時風扇全開，結束後自動恢復</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="feats" id="feats">
+
+      <div class="feat">
+        <div class="scene sc-disk" data-scene="disk" aria-hidden="true"><div class="stage">
+          <div class="mwin w-d rise">
+            <div class="hd"><b data-i="a_storage">儲存空間</b><span class="sw2"><span>↓0 KB/s ↑0 KB/s</span><span>↑ 2.8 GB/s</span></span></div>
+            <div class="dkrow"><span>Macintosh HD</span><span><em data-i="a_left">剩</em><b data-from="2171" data-to="1871" data-dec="1" data-at="s3" data-ms="2200" data-ease="lin" data-fmt="{n} GB">217.1 GB</b><svg class="ico okc"><use href="#i-check"/></svg></span></div>
+            <div class="bar"><i class="fu"></i></div>
+          </div>
+          <div class="fchip"><svg class="ico"><use href="#i-file"/></svg>Export_4K.mov<em>· 30 GB</em></div>
+          <div class="cap"><span class="c1" data-i="d_c1">寫入 30 GB 的影片</span><span class="c2" data-i="d_c2">剩餘空間當下就更新</span></div>
+        </div></div>
+        <div class="h" data-i="f1_h">即時的硬碟數字</div><div class="d" data-i="f1_d">寫入、刪除的當下，剩餘空間就跟著變，不用等系統慢慢更新。</div>
+      </div>
+
+      <div class="feat">
+        <div class="scene sc-temp" data-scene="temp" aria-hidden="true"><div class="stage">
+          <div class="mwin w-t rise">
+            <div class="hd"><b data-i="t_h">溫度 · 近 1 小時</b><span class="pk"><span data-i="t_peak">最高</span> <span data-from="61" data-to="95" data-at="s2" data-ms="2800" data-ease="lin" data-fmt="{n}°C">61°C</span></span></div>
+            <div class="gwrap">
+              <svg class="limsvg" viewBox="0 0 204 54"><line class="lim" x1="0" y1="7.7" x2="204" y2="7.7"/><text class="lt" x="203" y="14.5" text-anchor="end">90°</text></svg>
+              <div class="gclip"><svg viewBox="0 0 204 54">
+                <path class="ga" d="M0 30.9 L6 30.1 L12 31.6 L18 29.3 L24 30.9 L30 30.1 L36 28.5 L42 29.3 L48 27.8 L54 28.5 L60 29.3 L66 27.0 L72 27.8 L78 26.2 L84 27.0 L90 25.5 L96 26.2 L102 24.7 L108 23.1 L114 23.9 L120 21.6 L126 20.1 L132 20.8 L138 18.5 L144 17.0 L150 15.4 L156 16.2 L162 13.9 L168 12.3 L174 10.8 L180 9.3 L186 7.7 L192 6.2 L198 5.4 L204 3.9 L204 54 L0 54 Z"/>
+                <path class="gl" d="M0 30.9 L6 30.1 L12 31.6 L18 29.3 L24 30.9 L30 30.1 L36 28.5 L42 29.3 L48 27.8 L54 28.5 L60 29.3 L66 27.0 L72 27.8 L78 26.2 L84 27.0 L90 25.5 L96 26.2 L102 24.7 L108 23.1 L114 23.9 L120 21.6 L126 20.1 L132 20.8 L138 18.5 L144 17.0 L150 15.4 L156 16.2 L162 13.9 L168 12.3 L174 10.8 L180 9.3 L186 7.7 L192 6.2 L198 5.4 L204 3.9"/>
+              </svg></div>
+            </div>
+          </div>
+          <div class="toast hotw"><svg class="ico"><use href="#i-warn"/></svg><span data-i="t_toast">CPU 過熱：95°C 已持續 15 秒</span></div>
+        </div></div>
+        <div class="h" data-i="f2_h">溫度與過熱提醒</div><div class="d" data-i="f2_d">CPU、GPU、SSD 溫度與一小時曲線；持續過熱時，從選單列跳出通知。</div>
+      </div>
+
+      <div class="feat">
+        <div class="scene sc-ext" data-scene="ext" aria-hidden="true"><div class="stage">
+          <div class="mwin w-e rise">
+            <div class="hd" data-i="a_storage">儲存空間</div>
+            <div class="dkrow"><span>Macintosh HD</span><span><em data-i="a_left">剩</em><b>217.1 GB</b></span></div>
+            <div class="bar"><i class="fu"></i></div>
+            <div class="ex">
+              <div class="dkrow"><span>OK8</span><span><em data-i="a_left">剩</em><b>4.68 TB</b><span class="ej"><svg class="ico"><use href="#i-eject"/></svg></span></span></div>
+              <div class="bar"><i class="fe"></i></div>
+              <div class="io"><span class="on2">↓ 412 MB/s</span><span>↑ 0 KB/s</span></div>
+            </div>
+          </div>
+          <div class="toast ok"><svg class="ico"><use href="#i-eject"/></svg><span data-i="e_toast">OK8 已安全退出</span></div>
+          <div class="cursor"><svg class="ico"><use href="#i-cursor"/></svg></div>
+        </div></div>
+        <div class="h" data-i="f3_h">外接碟一插就出現</div><div class="d" data-i="f3_d">每顆碟的即時讀寫速度與讀寫錯誤次數；要拔之前，退出也在這裡。</div>
+      </div>
+
+      <div class="feat">
+        <div class="scene sc-card" data-scene="card" aria-hidden="true"><div class="stage">
+          <div class="mwin slotw rise"><span class="slot"></span><small data-i="k_slot">SD 卡槽</small></div>
+          <svg class="ico sprite srcsd"><use href="#i-sd"/></svg>
+          <div class="atoast cn"><img src="icons/app-icon-256.png" alt=""><div><b>SONY_A7IV</b><small data-i="k_space">已用 58%，剩 54 GB</small></div></div>
+          <div class="bkapp"><img src="icons/backup-ok-64.png" alt=""><span data-i="k_open">已開啟 備份都ok</span></div>
+        </div></div>
+        <div class="h" data-i="f4_h">插卡就開備份都ok</div><div class="d" data-i="f4_d">只認相機記憶卡（DCIM／M4ROOT），外接硬碟不會觸發；順便告訴你卡還剩多少。</div>
+      </div>
+
+      <div class="feat">
+        <div class="scene sc-compact" data-scene="compact" aria-hidden="true"><div class="stage">
+          <div class="mbar rise"><span class="mbx">
+            <svg class="ico gico"><use href="#i-gauge"/></svg>
+            <span class="mi std"><em>CPU</em><b>12%</b></span><span class="mi std"><em>GPU</em><b>8%</b></span><span class="mi std"><b>52°</b></span><span class="mi std"><em>SSD</em><b>217 GB</b></span>
+            <span class="mi low"><em>SSD</em><b>86 GB</b></span>
+          </span></div>
+          <div class="mwin setw rise" style="--dl:.08s"><div class="row2"><div><span data-i="m_compact">精簡模式</span><small data-i="m_compact_s">只在超標時顯示數字</small></div><span class="tg"></span></div></div>
+          <div class="cap"><span class="c1" data-i="m_c1">平常只留一個小圖示</span><span class="c2" data-i="m_c2">硬碟快滿了，數字才跳出來</span></div>
+          <div class="cursor"><svg class="ico"><use href="#i-cursor"/></svg></div>
+        </div></div>
+        <div class="h" data-i="f5_h">精簡模式</div><div class="d" data-i="f5_d">平常只留一個小圖示，有項目超標才顯示數字；面板要放什麼、怎麼排，也能自己調。</div>
+      </div>
+
+      <div class="feat">
+        <div class="scene sc-update" data-scene="update" aria-hidden="true"><div class="stage">
+          <div class="mwin w6 rise">
+            <div class="wdots"><i></i><i></i><i></i></div>
+            <div class="task">
+              <span class="tile"><svg class="ico"><use href="#i-gauge"/></svg></span>
+              <div class="nm2">
+                <div class="t"><b data-i="brand">監看都ok</b><span class="tags"><span class="tag pri t1" data-i="u_cur">目前 1.0</span><span class="tag ok t3">1.1</span></span></div>
+                <span class="sub" data-i="u_sub">選單列 · 執行中</span>
+              </div>
+            </div>
+            <div class="bar"><i class="fp"></i><i class="fo"></i></div>
+          </div>
+          <div class="noti">
+            <img src="icons/app-icon-256.png" alt="" width="24" height="24">
+            <div class="nt">
+              <div class="m m1"><b data-i="u1_b">有新版本 1.1</b><small data-i="u1_s">點一下就更新</small></div>
+              <div class="m m2"><b data-i="u2_b">正在安裝 1.1</b><small data-i="u2_s">完成後自動重新開啟</small></div>
+              <div class="m m3"><b data-i="u3_b">已更新到 1.1</b><small data-i="u3_s">設定都會保留</small></div>
+              <i class="spin"></i>
+            </div>
+          </div>
+        </div></div>
+        <div class="h" data-i="f6_h">自動更新</div><div class="d" data-i="f6_d">有新版本時在 App 內提示，一鍵更新，設定都會保留。</div>
+      </div>
+
+    </div>
+    <div class="feat-ind" aria-hidden="true"><i></i></div>
+  </section>
+
+  <div class="pair">
+    <section class="block reveal" id="releases">
+      <div class="block-h"><h2 data-i="rel_h">更新紀錄</h2><span class="meta" data-i="rel_meta">與 App 內更新同步</span></div>
+      <div class="block-b">
+        <ol class="rel" id="relList" hidden></ol>
+        <p class="rel-empty" id="relEmpty" data-i="rel_empty">第一個版本即將發布，之後每次更新都會列在這裡。</p>
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <div class="block-h"><h2 data-i="start_h">開始使用</h2><span class="meta" data-i="start_meta">約一分鐘</span></div>
+      <div class="block-b">
+        <ol class="next">
+          <li><span data-i="start1!">按「<b>下載</b>」，打開映像檔，把「監看都ok」拖進「應用程式」資料夾。</span></li>
+          <li><span data-i="start2!">第一次打開時系統會確認一次，按「<b>打開</b>」即可。</span></li>
+          <li><span data-i="start3!">選單列會出現數字，點一下就能打開面板。</span></li>
+          <li><span data-i="start4!">第一次切換風扇時，會請你輸入一次 Mac 密碼（安裝風扇控制元件）。</span></li>
+        </ol>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <a href="manual/" data-i="nav_manual">使用說明</a>
+    <a href="privacy/" data-i="nav_privacy">隱私權政策</a>
+    <span data-i="copyright">© 2026 監看都ok</span>
+  </footer>
+</main>
+
+<script>
+// 多國語言:六種語言與 App 相同。順序 = 網址 ?lang= → 使用者上次選的 → 系統語言 → 英文
+(function () {
+  var D = {"brand": ["監看都ok", "监看都ok", "Monitor OK", "Monitor OK", "Monitor OK", "Monitor OK"], "meta_desc": ["給影像工作者的 Mac 選單列監看工具。CPU、GPU、溫度、硬碟即時更新，輸出時自動全開風扇。", "给影像工作者的 Mac 菜单栏监看工具。CPU、GPU、温度、硬盘实时更新，输出时自动全速风扇。", "A menu bar monitor for photographers and filmmakers. Live CPU, GPU, temperature and disk readings — fans go to max while you export.", "写真・映像クリエイターのためのメニューバー・モニター。CPU・GPU・温度・ディスクをリアルタイム表示し、書き出し中はファンを自動で最大に。", "Monitor de barra de menús para fotógrafos y videógrafos. CPU, GPU, temperatura y disco al instante; ventiladores al máximo al exportar.", "Monitor de barra de menus para fotógrafos e videomakers. CPU, GPU, temperatura e disco ao vivo; ventoinhas no máximo ao exportar."], "nav_manual": ["使用說明", "使用说明", "User guide", "使い方ガイド", "Guía de uso", "Guia de uso"], "nav_privacy": ["隱私權政策", "隐私政策", "Privacy", "プライバシーポリシー", "Privacidad", "Privacidade"], "lang_label": ["語言", "语言", "Language", "言語", "Idioma", "Idioma"], "icon_alt": ["監看都ok App 圖示", "监看都ok App 图标", "Monitor OK app icon", "Monitor OK のアプリアイコン", "Icono de la app Monitor OK", "Ícone do app Monitor OK"], "for": ["給影像工作者的 Mac 系統監看工具", "给影像工作者的 Mac 系统监看工具", "A Mac system monitor for photographers and filmmakers", "写真・映像クリエイターのための Mac システムモニター", "Monitor del sistema Mac para fotógrafos y videógrafos", "Monitor do sistema Mac para fotógrafos e videomakers"], "sub!": ["看得到，不算完。<br>跟得上，才叫監看。", "看得到，不算完。<br>跟得上，才叫监看。", "Seeing it isn’t enough.<br>Keeping up — that’s monitoring.", "見えるだけでは、<wbr>終わらない。<br>追いついて、<wbr>はじめてモニター。", "Verlo no basta.<br>Seguirle el ritmo: eso es monitorear.", "Ver não basta.<br>Acompanhar em tempo real: isso é monitorar."], "free": ["免費", "免费", "Free", "無料", "Gratis", "Grátis"], "dl_latest": ["最新版本", "最新版本", "Latest version", "最新バージョン", "Última versión", "Versão mais recente"], "dl_size": ["檔案大小", "文件大小", "Size", "サイズ", "Tamaño", "Tamanho"], "dl_date": ["發布日期", "发布日期", "Released", "リリース日", "Publicada", "Lançamento"], "dl_req": ["系統需求", "系统要求", "Requires", "動作環境", "Requisitos", "Requisitos"], "dl_req_v": ["macOS 13 以上", "macOS 13 或更高版本", "macOS 13 or later", "macOS 13 以降", "macOS 13 o posterior", "macOS 13 ou posterior"], "dl_price": ["價格", "价格", "Price", "価格", "Precio", "Preço"], "dl_upd": ["更新方式", "更新方式", "Updates", "アップデート", "Actualizaciones", "Atualizações"], "dl_upd_v": ["App 內自動更新", "App 内自动更新", "Automatic, in the app", "アプリ内で自動アップデート", "Automáticas desde la app", "Automáticas, no app"], "dl_soon": ["即將開放下載", "即将开放下载", "Coming soon", "まもなく公開", "Próximamente", "Em breve"], "dl_btn": ["下載", "下载", "Download", "ダウンロード", "Descargar", "Baixar"], "dl_beta": ["測試版", "测试版", "Beta", "ベータ版", "Beta", "Beta"], "dl_meta": ["已通過 Apple 公證", "已通过 Apple 公证", "Notarized by Apple", "Apple による公証済み", "Notarizada por Apple", "Notarizado pela Apple"], "what_h": ["它做什麼", "它做什么", "What it does", "できること", "Qué hace", "O que faz"], "what_meta": ["把機器狀況看清楚", "把机器状况看清楚", "See your Mac clearly", "Mac の状態をはっきりと", "Tu Mac, a la vista", "Seu Mac, às claras"], "core_h": ["看一眼選單列，就知道。", "看一眼菜单栏，就知道。", "One glance at the menu bar.", "メニューバーを見れば、わかる。", "Un vistazo a la barra de menús.", "Uma olhada na barra de menus."], "core_d": ["吃重的時候，監看都ok 會自己處理。", "吃重的时候，监看都ok 会自己处理。", "When things get heavy, Monitor OK handles it.", "負荷が高いときは、Monitor OK が自動で対応します。", "Cuando el trabajo aprieta, Monitor OK se encarga.", "Quando a carga pesa, o Monitor OK cuida disso."], "st1_b": ["看一眼", "看一眼", "Glance", "ひと目で", "Mira", "Olhe"], "st1_s": ["CPU、GPU、溫度、硬碟即時更新，超標的數字會變紅", "CPU、GPU、温度、硬盘实时更新，超标的数字会变红", "CPU, GPU, temperature and disk update live; anything over the limit turns red", "CPU・GPU・温度・ディスクをリアルタイム表示。しきい値を超えると赤に", "CPU, GPU, temperatura y disco al instante; lo que se pasa del límite se pone en rojo", "CPU, GPU, temperatura e disco ao vivo; o que passa do limite fica vermelho"], "st2_b": ["點開面板", "点开面板", "Open the panel", "パネルを開く", "Abre el panel", "Abra o painel"], "st2_s": ["風扇、記憶體、網路、電池，一次看完", "风扇、内存、网络、电池，一次看完", "Fans, memory, network and battery, all in one place", "ファン・メモリ・ネットワーク・バッテリーをまとめて確認", "Ventiladores, memoria, red y batería de un vistazo", "Ventoinhas, memória, rede e bateria num só lugar"], "st3_b": ["自動全開風扇", "自动全速风扇", "Fans to max, automatically", "ファンを自動で最大に", "Ventiladores al máximo, solos", "Ventoinhas no máximo, sozinhas"], "st3_s": ["Pr、達芬奇高負載時風扇全開，結束後自動恢復", "Pr、达芬奇高负载时风扇全速，结束后自动恢复", "Premiere or DaVinci Resolve under heavy load? Fans go to max, then back to Auto", "Pr や DaVinci Resolve が高負荷になるとファンを最大にし、終われば自動に戻します", "Con Premiere o DaVinci Resolve a tope, ventiladores al máximo; luego vuelven a automático", "Premiere ou DaVinci Resolve em carga alta? Ventoinhas no máximo; depois voltam ao automático"], "c_export": ["影片輸出", "视频输出", "Export", "書き出し", "Exportar", "Exportar"], "c_exporting": ["輸出中", "输出中", "Exporting", "書き出し中", "Exportando", "Exportando"], "a_done": ["完成", "完成", "Done", "完了", "Listo", "Pronto"], "c_temp1h": ["溫度 · 近 1 小時", "温度 · 近 1 小时", "Temp · last hour", "温度・直近 1 時間", "Temp. · última hora", "Temp. · última hora"], "c_fan": ["風扇", "风扇", "Fans", "ファン", "Ventil.", "Ventoinhas"], "c_auto": ["自動", "自动", "Auto", "自動", "Auto", "Auto"], "c_max": ["全開", "全速", "Max", "最大", "Máx.", "Máx."], "a_left": ["剩", "剩", "Free", "残り", "Libre", "Livre"], "c_t1b": ["偵測到 Pr 高負載", "检测到 Pr 高负载", "Pr under heavy load", "Pr が高負荷", "Pr con carga alta", "Pr com carga alta"], "c_t1s": ["風扇已全開，負載降下來後自動恢復", "风扇已全速，负载降下来后自动恢复", "Fans set to Max; back to Auto when it eases off", "ファンを最大に。負荷が下がれば自動に戻ります", "Ventiladores al máx.; vuelven a auto al bajar la carga", "Ventoinhas no máx.; voltam ao auto quando aliviar"], "c_t2b": ["Pr 高負載結束", "Pr 高负载结束", "Pr has settled down", "Pr の高負荷が終了", "Pr ya bajó de carga", "Pr aliviou a carga"], "c_t2s": ["持續約 12 分鐘，風扇已回到自動", "持续约 12 分钟，风扇已回到自动", "Lasted about 12 min; fans back to Auto", "約 12 分続きました。ファンは自動に", "Duró unos 12 min; ventiladores en auto", "Durou cerca de 12 min; ventoinhas no auto"], "f1_h": ["即時的硬碟數字", "实时的硬盘数字", "Disk numbers that keep up", "遅れないディスク表示", "Cifras de disco al instante", "Números de disco ao vivo"], "f1_d": ["寫入、刪除的當下，剩餘空間就跟著變，不用等系統慢慢更新。", "写入、删除的当下，剩余空间就跟着变，不用等系统慢慢更新。", "Free space changes the moment you write or delete — no waiting for the system to catch up.", "書き込みや削除のその瞬間に空き容量が変わります。システムの更新を待つ必要はありません。", "El espacio libre cambia en cuanto escribes o borras, sin esperar a que el sistema se ponga al día.", "O espaço livre muda no instante em que você grava ou apaga, sem esperar o sistema atualizar."], "a_storage": ["儲存空間", "存储空间", "Storage", "ストレージ", "Almacenamiento", "Armazenamento"], "d_c1": ["寫入 30 GB 的影片", "写入 30 GB 的视频", "Writing a 30 GB video", "30 GB の動画を書き込み", "Escribiendo un vídeo de 30 GB", "Gravando um vídeo de 30 GB"], "d_c2": ["剩餘空間當下就更新", "剩余空间当下就更新", "Free space updates right away", "空き容量がすぐに更新", "El espacio libre se actualiza al momento", "O espaço livre atualiza na hora"], "f2_h": ["溫度與過熱提醒", "温度与过热提醒", "Temperature & overheat alerts", "温度と過熱の通知", "Temperatura y avisos de calor", "Temperatura e alertas de calor"], "f2_d": ["CPU、GPU、SSD 溫度與一小時曲線；持續過熱時，從選單列跳出通知。", "CPU、GPU、SSD 温度与一小时曲线；持续过热时，从菜单栏弹出通知。", "CPU, GPU and SSD temperatures with a one-hour chart. Stay too hot, and an alert drops from the menu bar.", "CPU・GPU・SSD の温度と 1 時間のグラフ。高温が続くとメニューバーから通知が出ます。", "Temperaturas de CPU, GPU y SSD con gráfica de una hora. Si sigue demasiado caliente, aparece un aviso.", "Temperaturas de CPU, GPU e SSD com gráfico de uma hora. Se continuar quente demais, um alerta aparece."], "t_h": ["溫度 · 近 1 小時", "温度 · 近 1 小时", "Temperature · last hour", "温度・直近 1 時間", "Temperatura · última hora", "Temperatura · última hora"], "t_peak": ["最高", "最高", "Peak", "最高", "Máx.", "Máx."], "t_toast": ["CPU 過熱：95°C 已持續 15 秒", "CPU 过热：95°C 已持续 15 秒", "CPU too hot: 95°C for 15 s", "CPU 過熱：95°C が 15 秒継続", "CPU muy caliente: 95 °C durante 15 s", "CPU muito quente: 95 °C por 15 s"], "f3_h": ["外接碟一插就出現", "外接盘一插就出现", "Drives show up instantly", "外付けドライブをすぐ表示", "Discos externos al instante", "Discos externos na hora"], "f3_d": ["每顆碟的即時讀寫速度與讀寫錯誤次數；要拔之前，退出也在這裡。", "每块盘的实时读写速度与读写错误次数；要拔之前，推出也在这里。", "Live read/write speed and I/O error count for each drive — and an Eject button for when you’re done.", "ドライブごとの読み書き速度とエラー回数をリアルタイム表示。取り外すときの取り出しボタンもここに。", "Velocidad de lectura/escritura y errores de cada disco en vivo, y el botón de expulsar a mano.", "Velocidade de leitura/gravação e erros de cada disco ao vivo, e o botão de ejetar à mão."], "e_toast": ["OK8 已安全退出", "OK8 已安全推出", "OK8 ejected safely", "OK8 を安全に取り出しました", "OK8 expulsado con seguridad", "OK8 ejetado com segurança"], "f4_h": ["插卡就開備份都ok", "插卡就开备份都ok", "Insert a card, open Backup OK", "カードを挿すと Backup OK が開く", "Tarjeta dentro, Backup OK abierto", "Cartão inserido, Backup OK aberto"], "f4_d": ["只認相機記憶卡（DCIM／M4ROOT），外接硬碟不會觸發；順便告訴你卡還剩多少。", "只认相机存储卡（DCIM／M4ROOT），外接硬盘不会触发；顺便告诉你卡还剩多少。", "Camera cards only (DCIM / M4ROOT) — external drives won’t trigger it. You’ll also see how much space is left.", "カメラのメモリーカード（DCIM／M4ROOT）だけに反応し、外付けドライブでは開きません。残り容量もお知らせ。", "Solo tarjetas de cámara (DCIM / M4ROOT); los discos externos no lo activan. Además, verás el espacio libre.", "Só cartões de câmera (DCIM / M4ROOT); discos externos não disparam. E você vê quanto espaço resta."], "k_slot": ["SD 卡槽", "SD 卡槽", "SD slot", "SD スロット", "Ranura SD", "Entrada SD"], "k_space": ["已用 58%，剩 54 GB", "已用 58%，剩 54 GB", "58% used, 54 GB free", "使用 58%・残り 54 GB", "58 % usado, 54 GB libres", "58% usado, 54 GB livres"], "k_open": ["已開啟 備份都ok", "已打开 备份都ok", "Backup OK opened", "Backup OK を起動", "Backup OK abierto", "Backup OK aberto"], "f5_h": ["精簡模式", "精简模式", "Compact mode", "コンパクト表示", "Modo compacto", "Modo compacto"], "f5_d": ["平常只留一個小圖示，有項目超標才顯示數字；面板要放什麼、怎麼排，也能自己調。", "平常只留一个小图标，有项目超标才显示数字；面板要放什么、怎么排，也能自己调。", "Just a small icon until something needs attention. You can also choose what the panel shows, and in what order.", "ふだんは小さなアイコンだけ。注意が必要なときだけ数値を表示します。パネルの項目や並び順も自由に。", "Solo un icono hasta que algo requiere atención. También eliges qué muestra el panel y en qué orden.", "Só um ícone até algo precisar de atenção. Você também escolhe o que o painel mostra e em que ordem."], "m_compact": ["精簡模式", "精简模式", "Compact mode", "コンパクト表示", "Modo compacto", "Modo compacto"], "m_compact_s": ["只在超標時顯示數字", "只在超标时显示数字", "Numbers only when needed", "必要なときだけ数値を表示", "Cifras solo si hace falta", "Números só quando preciso"], "m_c1": ["平常只留一個小圖示", "平常只留一个小图标", "Normally, just one small icon", "ふだんは小さなアイコンだけ", "Normalmente, solo un icono", "Normalmente, só um ícone"], "m_c2": ["硬碟快滿了，數字才跳出來", "硬盘快满了，数字才跳出来", "Disk almost full — the number appears", "ディスクが残りわずかになると数値が出現", "Disco casi lleno: aparece la cifra", "Disco quase cheio: o número aparece"], "f6_h": ["自動更新", "自动更新", "Automatic updates", "自動アップデート", "Actualizaciones automáticas", "Atualizações automáticas"], "f6_d": ["有新版本時在 App 內提示，一鍵更新，設定都會保留。", "有新版本时在 App 内提示，一键更新，设置都会保留。", "Get notified in the app when a new version is out. One click to update; your settings stay.", "新しいバージョンが出るとアプリ内でお知らせ。ワンクリックで更新でき、設定はそのまま。", "La app te avisa cuando hay una versión nueva. Un clic para actualizar y tus ajustes se conservan.", "O app avisa quando há uma versão nova. Um clique para atualizar, e seus ajustes ficam."], "u_cur": ["目前 1.0", "当前 1.0", "Now 1.0", "現在 1.0", "Ahora 1.0", "Agora 1.0"], "u_sub": ["選單列 · 執行中", "菜单栏 · 运行中", "Menu bar · running", "メニューバー・実行中", "Barra de menús · activa", "Barra de menus · ativo"], "u1_b": ["有新版本 1.1", "有新版本 1.1", "Version 1.1 is available", "バージョン 1.1 があります", "Versión 1.1 disponible", "Versão 1.1 disponível"], "u1_s": ["點一下就更新", "点一下就更新", "Click to update", "クリックで更新", "Haz clic para actualizar", "Clique para atualizar"], "u2_b": ["正在安裝 1.1", "正在安装 1.1", "Installing 1.1", "1.1 をインストール中", "Instalando 1.1", "Instalando 1.1"], "u2_s": ["完成後自動重新開啟", "完成后自动重新打开", "Reopens when it’s done", "完了後に自動で再起動", "Se reabre al terminar", "Reabre ao terminar"], "u3_b": ["已更新到 1.1", "已更新到 1.1", "Updated to 1.1", "1.1 に更新しました", "Actualizado a 1.1", "Atualizado para 1.1"], "u3_s": ["設定都會保留", "设置都会保留", "Your settings are kept", "設定はそのまま", "Tus ajustes se conservan", "Seus ajustes foram mantidos"], "rel_h": ["更新紀錄", "更新记录", "Release notes", "アップデート履歴", "Novedades", "Novidades"], "rel_meta": ["與 App 內更新同步", "与 App 内更新同步", "Same as in-app updates", "アプリ内アップデートと同じ内容", "Igual que en la app", "Igual ao app"], "rel_empty": ["第一個版本即將發布，之後每次更新都會列在這裡。", "第一个版本即将发布，之后每次更新都会列在这里。", "The first version is on its way. Every update will be listed here.", "最初のバージョンをまもなく公開します。今後のアップデートはここに掲載します。", "La primera versión llegará pronto. Cada actualización aparecerá aquí.", "A primeira versão chega em breve. Cada atualização aparecerá aqui."], "start_h": ["開始使用", "开始使用", "Get started", "はじめかた", "Primeros pasos", "Primeiros passos"], "start_meta": ["約一分鐘", "约一分钟", "About a minute", "約 1 分", "Un minuto", "Cerca de um minuto"], "start1!": ["按「<b>下載</b>」，打開映像檔，把「監看都ok」拖進「應用程式」資料夾。", "按“<b>下载</b>”，打开映像文件，把“监看都ok”拖进“应用程序”文件夹。", "Click <b>Download</b>, open the disk image, and drag Monitor OK into Applications.", "「<b>ダウンロード</b>」を押してディスクイメージを開き、Monitor OK を「アプリケーション」へドラッグします。", "Pulsa <b>Descargar</b>, abre la imagen de disco y arrastra Monitor OK a Aplicaciones.", "Clique em <b>Baixar</b>, abra a imagem de disco e arraste o Monitor OK para Aplicativos."], "start2!": ["第一次打開時系統會確認一次，按「<b>打開</b>」即可。", "第一次打开时系统会确认一次，按“<b>打开</b>”即可。", "The first time you open it, macOS asks once — click <b>Open</b>.", "初めて開くときに確認が出たら「<b>開く</b>」を押します。", "La primera vez macOS lo confirmará: pulsa <b>Abrir</b>.", "Na primeira vez o macOS confirma: clique em <b>Abrir</b>."], "start3!": ["選單列會出現數字，點一下就能打開面板。", "菜单栏会出现数字，点一下就能打开面板。", "Numbers appear in the menu bar — click them to open the panel.", "メニューバーに数値が表示されます。クリックするとパネルが開きます。", "Aparecerán cifras en la barra de menús: haz clic para abrir el panel.", "Números aparecem na barra de menus: clique para abrir o painel."], "start4!": ["第一次切換風扇時，會請你輸入一次 Mac 密碼（安裝風扇控制元件）。", "第一次切换风扇时，会请你输入一次 Mac 密码（安装风扇控制组件）。", "The first time you switch the fans, you’ll enter your Mac password once (to install the fan helper).", "初めてファンを切り替えるときに、Mac のパスワードを一度だけ入力します（ファン制御ツールのインストール）。", "La primera vez que cambies los ventiladores, introducirás la contraseña del Mac una vez (para instalar el asistente).", "Na primeira vez que trocar as ventoinhas, digite a senha do Mac uma vez (para instalar o auxiliar)."], "copyright": ["© 2026 監看都ok", "© 2026 监看都ok", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK"]};
+  var LANGS = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'es', 'pt'];
+  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', es: 'Español', pt: 'Português' };
+  var SHORT = { 'zh-Hant': '繁中', 'zh-Hans': '简中', en: 'EN', ja: '日本語', es: 'ES', pt: 'PT' };
+  var cur = 'zh-Hant';
+  function norm(t) {
+    t = String(t || '').toLowerCase();
+    if (t.indexOf('zh') === 0) return /hant|-tw|-hk|-mo/.test(t) ? 'zh-Hant' : 'zh-Hans';
+    return { en: 'en', ja: 'ja', es: 'es', pt: 'pt' }[t.split('-')[0]] || null;
+  }
+  function detect() {
+    var q = /[?&]lang=([\w-]+)/.exec(location.search);
+    if (q) { var n = LANGS.indexOf(q[1]) >= 0 ? q[1] : norm(q[1]); if (n) return n; }
+    try { var saved = localStorage.getItem('mk-lang'); if (LANGS.indexOf(saved) >= 0) return saved; } catch (e) {}
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return 'en';
+  }
+  function t(key, lang) { var v = D[key]; return v ? v[LANGS.indexOf(lang || cur)] : ''; }
+  function apply(lang) {
+    cur = lang;
+    var root = document.documentElement;
+    root.lang = lang;
+    document.querySelectorAll('[data-i]').forEach(function (el) {
+      var k = el.getAttribute('data-i'), v = t(k);
+      if (!v) return;
+      if (k.slice(-1) === '!') el.innerHTML = v; else el.textContent = v;
+    });
+    document.querySelectorAll('[data-ia]').forEach(function (el) {
+      var p = el.getAttribute('data-ia').split(':'); el.setAttribute(p[0], t(p[1]));
+    });
+    document.title = t('brand');
+    var md = document.querySelector('meta[name="description"]'); if (md) md.setAttribute('content', t('meta_desc'));
+    // 選單
+    var curEl = document.getElementById('langCur'); if (curEl) { curEl.textContent = NAMES[lang]; curEl.setAttribute('data-short', SHORT[lang]); }
+    document.querySelectorAll('#langMenu [role="menuitemradio"]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('lang') === lang)); });
+    document.dispatchEvent(new CustomEvent('bk:lang', { detail: lang }));
+  }
+  window.BK = { t: t, lang: function () { return cur; }, apply: apply };
+
+  // 語言選單
+  var btn = document.getElementById('langBtn'), menu = document.getElementById('langMenu');
+  LANGS.forEach(function (l) {
+    var li = document.createElement('li'); li.setAttribute('role', 'none');
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'menuitemradio'); b.setAttribute('lang', l); b.textContent = NAMES[l];
+    b.addEventListener('click', function () {
+      try { localStorage.setItem('mk-lang', l); } catch (e) {}
+      close(); apply(l); btn.focus();
+    });
+    li.appendChild(b); menu.appendChild(li);
+  });
+  function open() { menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); var c = menu.querySelector('[aria-checked="true"]') || menu.querySelector('button'); c.focus(); }
+  function close() { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+  btn.addEventListener('click', function () { menu.hidden ? open() : close(); });
+  document.addEventListener('click', function (e) { if (!menu.hidden && !document.getElementById('lang').contains(e.target)) close(); });
+  menu.addEventListener('keydown', function (e) {
+    var items = Array.prototype.slice.call(menu.querySelectorAll('button')), i = items.indexOf(document.activeElement);
+    if (e.key === 'Escape') { close(); btn.focus(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+  });
+
+  apply(detect());
+})();
+</script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 開場:標題逐字浮現 → 其餘依序淡入（同備份都ok）
+  var title = document.getElementById('title');
+  var text = title.textContent;
+  title.textContent = '';
+  var chars = [];
+  Array.from(text).forEach(function (c) {
+    var s = document.createElement('span');
+    s.className = 'ch'; s.textContent = c === ' ' ? ' ' : c;
+    title.appendChild(s); chars.push(s);
+  });
+  var reveals = Array.from(document.querySelectorAll('.reveal'));
+  if (reduce) {
+    chars.concat(reveals).forEach(function (el) { el.classList.add('in'); });
+  } else {
+    requestAnimationFrame(function () {
+      chars.forEach(function (s, i) { setTimeout(function () { s.classList.add('in'); }, 450 + i * 55); });
+      var after = 450 + chars.length * 55 + 450;
+      reveals.forEach(function (el, i) { setTimeout(function () { el.classList.add('in'); }, after + i * 150); });
+    });
+  }
+  // 語言切換時標題要重新拆字
+  document.addEventListener('bk:lang', function () {
+    var t = BK.t('brand');
+    if (title.textContent === t) return;
+    title.textContent = '';
+    Array.from(t).forEach(function (c) {
+      var s = document.createElement('span'); s.className = 'ch in'; s.textContent = c === ' ' ? ' ' : c; title.appendChild(s);
+    });
+  });
+
+  // 下載:讀最新版本資訊（latest.json，跟 App 內更新用同一份網站資料）;還沒發版時維持「即將開放下載」
+  fetch('latest.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.file) return;
+    var b = document.getElementById('dlBtn');
+    b.href = d.file;
+    if (/^https?:/.test(d.file)) { b.target = '_blank'; b.rel = 'noopener'; }
+    b.removeAttribute('aria-disabled');
+    b.setAttribute('data-i', 'dl_btn'); b.textContent = BK.t('dl_btn');
+    var ver = document.getElementById('dlVer');
+    if (d.version) ver.textContent = d.version; else { ver.setAttribute('data-i', 'dl_beta'); ver.textContent = BK.t('dl_beta'); }
+    document.getElementById('dlSize').textContent = d.size || '—';
+    document.getElementById('dlDate').textContent = d.date || '—';
+    if (d.notarized !== false) document.getElementById('dlMeta').hidden = false;   // 公證過才顯示「已通過 Apple 公證」
+  }).catch(function () {});
+
+  // 更新紀錄:直接讀 App 自動更新用的 appcast.xml,網頁和 App 內看到的是同一份
+  fetch('appcast.xml', { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : null; }).then(function (xml) {
+    if (!xml) return;
+    var doc = new DOMParser().parseFromString(xml, 'application/xml');
+    var items = Array.prototype.slice.call(doc.getElementsByTagName('item'), 0, 4);
+    if (!items.length) return;
+    var list = document.getElementById('relList');
+    items.forEach(function (it) {
+      var v = (it.getElementsByTagNameNS('*', 'shortVersionString')[0] || it.getElementsByTagName('title')[0] || {}).textContent || '';
+      var pd = (it.getElementsByTagName('pubDate')[0] || {}).textContent || '';
+      var dt = pd ? new Date(pd) : null;
+      var ds = dt && !isNaN(dt) ? dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0') : '';
+      var desc = (it.getElementsByTagName('description')[0] || {}).textContent || '';
+      var li = document.createElement('li');
+      li.innerHTML = '<div class="rv"><b></b><span></span></div><div class="rd"></div>';
+      li.querySelector('b').textContent = v;
+      li.querySelector('span').textContent = ds;
+      li.querySelector('.rd').innerHTML = desc;
+      list.appendChild(li);
+    });
+    list.hidden = false;
+    document.getElementById('relEmpty').hidden = true;
+  }).catch(function () {});
+})();
+
+// 功能小動畫:每個畫面照時間表依序加上 s1、s2…(累加),過場交給 CSS;捲出畫面或切到別的分頁就暫停（同備份都ok）
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var PLAN = {
+    core: [14200, [150, 's1'], [900, 's2'], [1650, 's3'], [2600, 's4'], [5000, 's5'], [5500, 's6'], [8700, 's7'], [9500, 's8'], [12300, 's9'], [13300, 'out']],
+    disk: [8200, [150, 's1'], [700, 's2'], [1700, 's3'], [4000, 's4'], [7400, 'out']],
+    temp: [8400, [150, 's1'], [450, 's2'], [3000, 's3'], [3450, 's4'], [7600, 'out']],
+    ext: [8400, [150, 's1'], [700, 's2'], [2700, 's3'], [3500, 's4'], [3900, 's5'], [7600, 'out']],
+    card: [8400, [150, 's1'], [600, 's2'], [1500, 's3'], [2700, 's4'], [7600, 'out']],
+    compact: [9000, [150, 's1'], [900, 's2'], [1700, 's3'], [2400, 's4'], [4400, 's5'], [8200, 'out']],
+    update: [9500, [150, 's1'], [400, 's2'], [1200, 's3'], [5100, 's4'], [5700, 's5'], [7000, 's6'], [8700, 'out']]
+  };
+  var scenes = Array.prototype.slice.call(document.querySelectorAll('.scene[data-scene]'));
+  if (!scenes.length) return;
+
+  function Runner(el, plan) {
+    var loop = plan[0], steps = plan.slice(1);
+    var names = steps.map(function (s) { return s[1]; });
+    var timers = [], playing = false, rafs = [];
+    var nums = Array.prototype.slice.call(el.querySelectorAll('[data-to]'));
+    function fmt(e, v) {
+      var dec = +e.getAttribute('data-dec') || 0;
+      var s = dec ? (v / Math.pow(10, dec)).toFixed(dec) : String(v);
+      return (e.getAttribute('data-fmt') || '{n}').replace('{n}', s);
+    }
+    function from(e) { return +e.getAttribute('data-from') || 0; }
+    function setNums(final) { nums.forEach(function (e) { e.textContent = fmt(e, final ? +e.getAttribute('data-to') : from(e)); }); }
+    function count(step) {
+      var list = nums.filter(function (e) { return e.getAttribute('data-at') === step; });
+      if (!list.length) return;
+      var t0 = performance.now();
+      function tick(now) {
+        var left = false;
+        list.forEach(function (e) {
+          var r = Math.min(1, (now - t0) / (+e.getAttribute('data-ms') || 1000)), p = r;
+          if (e.getAttribute('data-ease') !== 'lin') p = r < .5 ? 2 * r * r : 1 - Math.pow(-2 * r + 2, 2) / 2;
+          var a = from(e), b = +e.getAttribute('data-to');
+          e.textContent = fmt(e, Math.round(a + (b - a) * p));
+          if (r < 1) left = true;
+        });
+        if (left && playing) rafs.push(requestAnimationFrame(tick));
+      }
+      rafs.push(requestAnimationFrame(tick));
+    }
+    function clear() { timers.forEach(clearTimeout); timers = []; rafs.forEach(cancelAnimationFrame); rafs = []; }
+    function reset() {
+      setNums(false);
+      el.classList.add('rs');
+      names.forEach(function (c) { el.classList.remove(c); });
+      void el.offsetWidth;
+      el.classList.remove('rs');
+    }
+    function cycle() {
+      clear(); reset();
+      steps.forEach(function (s) { timers.push(setTimeout(function () { el.classList.add(s[1]); count(s[1]); }, s[0])); });
+      timers.push(setTimeout(cycle, loop));
+    }
+    this.playing = function () { return playing; };
+    var first = true;
+    var frozen = false;
+    this.play = function (lag) {
+      if (playing || frozen) return; playing = true; el.classList.add('on');
+      if (first && lag) { first = false; reset(); timers.push(setTimeout(cycle, lag)); } else { first = false; cycle(); }
+    };
+    this.stop = function () { if (!playing) return; playing = false; el.classList.remove('on'); clear(); };
+    this.still = function () { el.classList.add('still'); setNums(true); names.forEach(function (c) { if (c !== 'out') el.classList.add(c); }); };
+    this.seek = function (step) {   // 截圖檢查用:直接跳到某一步
+      clear(); reset(); playing = false; frozen = true; el.classList.add('on');
+      for (var i = 0; i < steps.length; i++) { if (steps[i][1] === 'out') break; el.classList.add(steps[i][1]); if (steps[i][1] === step) break; }
+      nums.forEach(function (e) {
+        var at = names.indexOf(e.getAttribute('data-at')), now = names.indexOf(step);
+        e.textContent = fmt(e, at >= 0 && at <= now ? +e.getAttribute('data-to') : from(e));
+      });
+    };
+  }
+
+  // 依面板大小縮放內容(手機略小、桌機略大)
+  function fit() {
+    scenes.forEach(function (el) {
+      var st = el.querySelector('.stage');
+      var max = el.classList.contains('big') ? 1.3 : 1.12;
+      var k = Math.min(max, (el.clientWidth - 16) / st.offsetWidth, (el.clientHeight - 20) / st.offsetHeight);
+      el.style.setProperty('--k', Math.max(.5, k).toFixed(3));
+    });
+  }
+  fit();
+  if ('ResizeObserver' in window) { var ro = new ResizeObserver(fit); scenes.forEach(function (el) { ro.observe(el); }); }
+  else window.addEventListener('resize', fit);
+
+  // 各語言字寬不同:每一列量實際寬度,超出外框就把那一列的字等比例縮小(最多縮到 72%)
+  var FIT = [
+    ['.sc-core .prw .task', '.prw'], ['.sc-core .prw .mt', '.prw'], ['.sc-core .pv .lb2', '.mc'], ['.sc-core .fanrow', '.mc'], ['.sc-core .pv .dkrow', '.mc'], ['.sc-core .atoast > div', '.atoast'], ['.sc-core .mbar .mbx', null],
+    ['.sc-disk .hd', '.w-d'], ['.sc-disk .dkrow', '.w-d'], ['.sc-disk .cap span', null], ['.sc-disk .fchip', null],
+    ['.sc-temp .hd', '.w-t'], ['.sc-temp .toast', null],
+    ['.sc-ext .dkrow', '.w-e'], ['.sc-ext .toast', null],
+    ['.sc-card .atoast > div', '.atoast'], ['.sc-card .bkapp span', null], ['.sc-card .slotw small', null],
+    ['.sc-compact .row2', '.setw'], ['.sc-compact .cap span', null],
+    ['.sc-update .w6 .task', '.w6'], ['.sc-update .noti', null]
+  ];
+  function leaves(el) {
+    var out = [];
+    (function walk(n) {
+      if (n.nodeType !== 1) return;
+      if ([].some.call(n.childNodes, function (c) { return c.nodeType === 3 && c.textContent.trim(); })) out.push(n);
+      [].forEach.call(n.children, walk);
+    })(el);
+    return out;
+  }
+  function fitRows() {
+    FIT.forEach(function (f) {
+      document.querySelectorAll(f[0]).forEach(function (row) {
+        var st = row.closest('.stage'), box = f[1] ? row.closest(f[1]) : st;
+        var ls = leaves(row);
+        ls.forEach(function (l) { l.style.fontSize = ''; });
+        var base = ls.map(function (l) { return parseFloat(getComputedStyle(l).fontSize); });
+        var k = st.getBoundingClientRect().width / st.offsetWidth || 1;
+        var cs = getComputedStyle(box), br = box.getBoundingClientRect();
+        var minX = br.left + parseFloat(cs.paddingLeft) * k - 2, maxX = br.right - parseFloat(cs.paddingRight) * k + 2;
+        if (box === st) { minX = br.left; maxX = br.right; }
+        function over() {
+          return ls.some(function (l) {
+            var r = document.createRange(); r.selectNodeContents(l); var b = r.getBoundingClientRect();
+            return b.right > maxX || b.left < minX;
+          });
+        }
+        var s = 1;
+        while (over() && s > .72) {
+          s -= .04;
+          ls.forEach(function (l, i) { l.style.fontSize = (base[i] * s).toFixed(2) + 'px'; });
+        }
+      });
+    });
+  }
+  fitRows();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitRows);
+  document.addEventListener('bk:lang', function () { fitRows(); fit(); });
+
+  var runners = scenes.map(function (el) { return new Runner(el, PLAN[el.getAttribute('data-scene')] || [8000]); });
+  window.__scenes = { seek: function (name, step) { var i = scenes.findIndex(function (e) { return e.getAttribute('data-scene') === name; }); if (i >= 0) runners[i].seek(step); } };
+  if (reduce || !('IntersectionObserver' in window)) { runners.forEach(function (r) { r.still(); }); return; }
+
+  var seen = new Map();
+  function ready(el) { var b = el.closest('.reveal'); return !b || b.classList.contains('in'); }
+  function sync(el) {
+    var r = runners[scenes.indexOf(el)];
+    if (seen.get(el) && !document.hidden) {
+      if (ready(el)) r.play((scenes.indexOf(el) % 3) * 260); else setTimeout(function () { sync(el); }, 300);
+    } else r.stop();
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen.set(e.target, e.isIntersecting); sync(e.target); });
+  }, { threshold: .35 });
+  scenes.forEach(function (el) { io.observe(el); });
+  document.addEventListener('visibilitychange', function () { scenes.forEach(sync); });
+
+  // 手機橫向滑動的位置指示
+  var feats = document.getElementById('feats'), ind = document.querySelector('.feat-ind i');
+  function syncInd() {
+    if (!feats || !ind) return;
+    var sw = feats.scrollWidth, cw = feats.clientWidth;
+    if (sw <= cw + 2) return;
+    var frac = cw / sw;
+    ind.style.width = (frac * 100).toFixed(2) + '%';
+    ind.style.transform = 'translateX(' + (feats.scrollLeft / (sw - cw) * (1 - frac) / frac * 100).toFixed(2) + '%)';
+  }
+  if (feats) { feats.addEventListener('scroll', syncInd, { passive: true }); window.addEventListener('resize', syncInd); syncInd(); }
+})();
+
+</script>
+</body>
+</html>

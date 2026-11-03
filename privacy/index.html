@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>隱私權政策 · 監看都ok</title>
+<link rel="icon" type="image/png" sizes="64x64" href="../icons/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<style>
+:root {
+  --paper: #F4F4F1;
+  --ink: #1D1D1B;
+  --ink-2: #5A5A52;
+  --mute: #9C9C95;
+  --line: rgba(29,29,27,.10);
+  --line-strong: rgba(29,29,27,.24);
+  --ai: #44617B;
+  --font: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+  --col: 620px;
+  --top-h: 52px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--font); font-weight: 400; font-size: 16.5px; line-height: 1.95; letter-spacing: .02em;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-variant-numeric: tabular-nums;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+h1, h2, h3, b, strong { font-weight: 600; }
+a { color: inherit; }
+::selection { background: rgba(68,97,123,.18); }
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+
+.top {
+  position: sticky; top: 0; z-index: 20; height: var(--top-h);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 clamp(18px, 3vw, 40px);
+  padding-top: env(safe-area-inset-top, 0px);
+  background: rgba(244,244,241,.74);
+  -webkit-backdrop-filter: saturate(160%) blur(18px); backdrop-filter: saturate(160%) blur(18px);
+  border-bottom: 1px solid var(--line);
+  font-size: 14px; letter-spacing: .05em;
+}
+.top nav { display: flex; gap: 22px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: inherit; }
+.brand img { width: 20px; height: 20px; display: block; }
+.top nav a { text-decoration: none; color: var(--ink-2); transition: color .3s; }
+.top nav a:hover { color: var(--ink); }
+
+.wrap { max-width: calc(var(--col) + 96px); margin: 0 auto; padding: 0 clamp(22px, 4vw, 48px); }
+
+.hero { padding: clamp(84px, 16vh, 176px) 0 clamp(56px, 9vh, 96px); }
+.hero .for { font-size: 14px; color: var(--ink-2); letter-spacing: .14em; margin: 0 0 28px; }
+.hero h1 { font-size: clamp(64px, 12vw, 128px); line-height: 1.02; letter-spacing: -.015em; margin: 0 0 30px; }
+.hero .sub { font-size: clamp(18px, 2.2vw, 22px); color: var(--ink-2); letter-spacing: .06em; line-height: 1.8; margin: 0 0 48px; }
+.ch { display: inline-block; }
+
+.dl { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid var(--line); }
+.btn {
+  font-family: var(--font); font-weight: 400; font-size: 16px; letter-spacing: .14em;
+  color: var(--ink); background: transparent; text-decoration: none; display: inline-block;
+  border: 1px solid var(--ink); border-radius: 999px; padding: 10px 30px; cursor: pointer;
+  transition: transform .4s var(--ease-spring), background .3s, color .3s, border-color .3s;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn:active { transform: scale(.96); }
+.btn[aria-disabled="true"] { border-color: var(--line-strong); color: var(--mute); pointer-events: none; }
+.dl .meta { font-size: 13.5px; color: var(--mute); letter-spacing: .05em; }
+
+section { padding: 72px 0 80px; border-top: 1px solid var(--line); }
+.no { font-size: 13px; color: var(--mute); letter-spacing: .14em; margin: 0 0 14px; }
+h2 { font-size: clamp(28px, 4vw, 38px); line-height: 1.3; letter-spacing: -.005em; margin: 0 0 16px; }
+.lede { font-size: 18px; color: var(--ink-2); line-height: 1.9; margin: 0 0 36px; }
+p { margin: 0 0 14px; }
+.muted { color: var(--ink-2); }
+
+/* 領取表單:髮絲線底線輸入框 */
+.claim { display: flex; gap: 18px; align-items: flex-end; flex-wrap: wrap; }
+.field { flex: 1 1 260px; min-width: 0; }
+.field label { display: block; font-size: 13px; color: var(--mute); letter-spacing: .12em; margin-bottom: 4px; }
+.field input {
+  width: 100%; border: 0; border-bottom: 1px solid var(--line-strong); background: transparent;
+  font-family: var(--font); font-weight: 400; font-size: 19px; letter-spacing: .03em; color: var(--ink);
+  padding: 8px 0 10px; border-radius: 0; outline: none; transition: border-color .3s;
+}
+.field input:focus { border-bottom-color: var(--ink); }
+.field input::placeholder { color: var(--mute); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.msg { min-height: 26px; margin-top: 14px; font-size: 14.5px; color: var(--ink-2); letter-spacing: .03em; }
+.msg.err { color: #8A3B2E; }
+
+.result { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .7s var(--ease-out); }
+.result.on { grid-template-rows: 1fr; }
+.result > div { overflow: hidden; }
+.result .inner { padding-top: 26px; opacity: 0; filter: blur(6px); transform: translateY(6px);
+  transition: opacity .7s .1s var(--ease-out), filter .7s .1s var(--ease-out), transform .7s .1s var(--ease-out); }
+.result.on .inner { opacity: 1; filter: blur(0); transform: none; }
+.keyrow { display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); padding: 16px 0; }
+.keyrow code { flex: 1 1 auto; font-family: ui-monospace, Menlo, monospace; font-size: clamp(16px, 2.4vw, 21px); letter-spacing: .06em; color: var(--ink); word-break: break-all; }
+.ghost {
+  font-family: var(--font); font-weight: 400; font-size: 14px; letter-spacing: .1em; color: var(--ink);
+  background: transparent; border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 18px; min-width: 92px; cursor: pointer;
+  transition: transform .35s var(--ease-spring), border-color .3s;
+}
+.ghost:hover { border-color: var(--ink); }
+.ghost:active { transform: scale(.96); }
+.swap-t { display: inline-block; transition: opacity .28s, filter .28s, transform .28s; }
+.swap-t.out { opacity: 0; filter: blur(6px); transform: translateY(5px); }
+.next { list-style: none; margin: 22px 0 0; padding: 0; counter-reset: s; }
+.next li { counter-increment: s; display: grid; grid-template-columns: 34px minmax(0, 1fr); padding: 10px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 15.5px; }
+.next li::before { content: counter(s); color: var(--ink); font-size: 18px; line-height: 1.6; }
+.note { border-left: 1px solid var(--ai); padding: 2px 0 2px 20px; margin: 28px 0 0; color: var(--ink-2); font-size: 15px; }
+
+.rows { border-top: 1px solid var(--line); }
+.rows .r { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.rows .h { font-size: 17px; letter-spacing: .03em; }
+.rows .d { color: var(--ink-2); font-size: 15.5px; }
+
+footer { border-top: 1px solid var(--line); padding: 26px 0 56px; font-size: 13px; color: var(--mute); letter-spacing: .05em; display: flex; gap: 22px; flex-wrap: wrap; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+.js .hero .ch { opacity: 0; filter: blur(10px); transform: translateY(.14em); }
+.js .hero .ch.in { opacity: 1; filter: blur(0); transform: none; transition: opacity .8s var(--ease-out), filter .8s var(--ease-out), transform .8s var(--ease-out); }
+.js .reveal { opacity: 0; filter: blur(6px); transform: translateY(8px); }
+.js .reveal.in { opacity: 1; filter: blur(0); transform: none; transition: opacity .9s var(--ease-out), filter .9s var(--ease-out), transform .9s var(--ease-out); }
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .rows .r { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .top nav { gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+  .js .hero .ch, .js .reveal, .result .inner { opacity: 1 !important; filter: none !important; transform: none !important; }
+}
+</style>
+<style>
+/* ---------- 區塊版(與後台同一套) ---------- */
+:root { --block: #FBFBF9; --line: rgba(29,29,27,.15); --line-strong: rgba(29,29,27,.32); --mute: #8E8E86; }
+body { font-size: 15px; line-height: 1.75; }
+.top { height: 50px; border-bottom: 1px solid var(--line-strong); padding: 0 20px; background: rgba(244,244,241,.82); }
+.wrap { max-width: 900px; padding: 16px 20px 0; display: flex; flex-direction: column; gap: 14px; }
+.block { background: var(--block); border: 1px solid var(--line-strong); border-radius: 12px; overflow: hidden; }
+.block-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 18px;
+  border-bottom: 1px solid var(--line-strong); background: rgba(29,29,27,.025); }
+.block-h h2 { margin: 0; font-size: 15px; line-height: 1.5; letter-spacing: .06em; }
+.block-h .meta { font-size: 12px; color: var(--mute); letter-spacing: .06em; }
+.block-b { padding: 18px 22px 22px; }
+.doc { padding: 0; }
+.doc h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.2; letter-spacing: -.01em; margin: 0 0 12px; }
+.doc .lede { font-size: 15px; line-height: 1.8; margin: 0 0 6px; }
+.doc h3 { font-size: 14px; letter-spacing: .06em; color: var(--ink-2); margin: 20px 0 6px; padding-bottom: 5px; border-bottom: 1px solid var(--line-strong); }
+.doc ul { margin: 0 0 8px; padding-left: 1.2em; color: var(--ink-2); font-size: 14px; }
+.doc li { margin-bottom: 4px; }
+.doc p.muted { font-size: 14px; margin: 0 0 6px; }
+.btn { background: var(--ink); color: var(--paper); border: 0; font-size: 15px; padding: 9px 26px; margin-top: 10px; }
+.btn:hover { background: #2C2C29; }
+footer { border-top: 0; padding: 6px 2px 40px; font-size: 12.5px; }
+@media (max-width: 520px) { .wrap { padding: 12px 12px 0; } .block-b { padding: 16px 16px 18px; } }
+/* 字體跟 App 一樣用系統字:中文蘋方、日文冬青黑體、西文 San Francisco */
+html[lang="zh-Hans"] { --font: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+html[lang="ja"] { --font: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif; }
+html[lang="en"], html[lang="es"], html[lang="pt"] { --font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif; }
+html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang="es"], [lang="pt"]) body * { letter-spacing: normal !important; }
+/* 語言切換 */
+.lang { position: relative; display: inline-block; vertical-align: middle; }
+.lang-btn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13px; letter-spacing: 0; color: var(--ink-2); background: transparent;
+  border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 11px 3px 8px; cursor: pointer; transition: color .3s, border-color .3s; }
+.lang-btn:hover, .lang-btn[aria-expanded="true"] { color: var(--ink); border-color: rgba(29,29,27,.55); }
+.lang-ico { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.1; flex: none; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.lang-menu { position: absolute; right: 0; top: calc(100% + 8px); min-width: 168px; margin: 0; padding: 5px; list-style: none; background: #FBFBF9;
+  border: 1px solid var(--line-strong); border-radius: 10px; box-shadow: 0 14px 34px rgba(29,29,27,.14); z-index: 30; text-align: left; }
+.lang-menu button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 14px; font-size: 14px; line-height: 1.4; letter-spacing: 0;
+  color: var(--ink); background: transparent; border: 0; border-radius: 6px; padding: 7px 10px; cursor: pointer; text-align: left; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+.lang-menu button[lang="zh-Hant"] { font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", sans-serif; }
+.lang-menu button[lang="zh-Hans"] { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif; }
+.lang-menu button[lang="ja"] { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; }
+.lang-menu button:hover, .lang-menu button:focus-visible { background: rgba(29,29,27,.06); outline: none; }
+.lang-menu button[aria-checked="true"]::after { content: ""; width: 9px; height: 5px; margin-top: -3px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); }
+/* 區塊標題:日期不拆行,放不下就換到下一行 */
+.block-h { flex-wrap: wrap; row-gap: 2px; }
+.block-h .meta { white-space: nowrap; }
+/* 頂欄放得下切換鈕 */
+.top nav { align-items: center; }
+.top-r { display: flex; align-items: center; gap: 14px; }
+.top .brand, .top nav a, .top-l .ttl, .top-r .home, .lang-btn { white-space: nowrap; }
+@media (max-width: 520px) { .top-l .sep, .top-l .ttl, .top-r .home, .top nav > a { display: none; } }
+@media (max-width: 520px) { .lang-cur { font-size: 0; } .lang-cur::after { content: attr(data-short); font-size: 13px; } .lang-btn { padding: 3px 9px 3px 7px; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="../"><img src="../icons/favicon-64.png" alt="" width="20" height="20"><span data-i="brand">監看都ok</span></a>
+  <nav><a href="../manual/" data-i="nav_manual">使用說明</a><a href="../privacy/" data-i="nav_privacy">隱私權政策</a> <div class="lang" id="lang"><button type="button" class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><svg class="lang-ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.3"/><path d="M1.7 8h12.6M8 1.7c1.9 1.8 2.8 3.9 2.8 6.3S9.9 12.5 8 14.3M8 1.7C6.1 3.5 5.2 5.6 5.2 8s.9 4.5 2.8 6.3"/></svg><span class="lang-cur" id="langCur">繁體中文</span><span class="sr" data-i="lang_label">語言</span></button><ul class="lang-menu" id="langMenu" role="menu" hidden></ul></div></nav>
+</header>
+<main class="wrap">
+  <article class="doc block">
+    <div class="block-h"><h2>隱私權政策</h2><span class="meta">最後更新：2026 年 11 月 3 日</span></div>
+    <div class="block-b">
+    <h1>你的資料只留在你的 Mac</h1>
+    <p class="lede">監看都ok 在你的 Mac 上讀取感測器與系統狀態，所有數字都在本機計算與顯示，不需要帳號，也不會上傳。唯一的對外連線是檢查更新。</p>
+
+    <h3>檢查更新時</h3>
+    <ul>
+      <li>App 會連到本網站讀取最新版本資訊（appcast.xml），只附帶 App 名稱與版本號，不附帶任何個人資料。</li>
+      <li>每次打開 App 檢查一次，之後每小時一次。</li>
+    </ul>
+
+    <h3>在你的 Mac 上讀取、但不會離開的資料</h3>
+    <ul>
+      <li>CPU、GPU、記憶體、溫度、風扇、電池、硬碟與網路的使用狀況。</li>
+      <li>正在執行的 App 名稱，只用來判斷 Premiere Pro、Media Encoder、Lightroom、DaVinci Resolve 是否在高負載。</li>
+      <li>插入的記憶卡與外接硬碟的名稱與容量。</li>
+      <li>你的設定，存在這台 Mac 的偏好設定裡。</li>
+    </ul>
+
+    <h3>風扇控制元件</h3>
+    <ul>
+      <li>第一次切換風扇時，經你輸入 Mac 密碼同意後，會安裝一個小工具到系統資料夾，只接受風扇與充電控制的固定指令。</li>
+      <li>隨時可以在 設定 › 關於 移除。</li>
+    </ul>
+
+    <h3>我們不收集的</h3>
+    <ul>
+      <li>任何監看數據、檔案內容、檔名、資料夾路徑。</li>
+      <li>使用行為分析、廣告追蹤、當機回報。</li>
+    </ul>
+
+    <h3>網站</h3>
+    <p class="muted">本網站由 GitHub Pages 提供，GitHub 可能為了安全目的記錄瀏覽者的網路位址。網站會在你的瀏覽器記住你選的語言，不使用追蹤用的 Cookie。</p>
+
+    <h3>聯絡我們</h3>
+    <p class="muted">有任何問題，請來信 <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a>。</p>
+    </div>
+  </article>
+
+  <footer>
+    <a href="../" data-i="dl_btn">下載</a>
+    <a href="../manual/" data-i="nav_manual">使用說明</a>
+    <a href="../privacy/" data-i="nav_privacy">隱私權政策</a>
+    <span data-i="copyright">© 2026 監看都ok</span>
+  </footer>
+</main>
+
+<template data-lang="zh-Hans" data-region="article.doc">
+  <article class="doc block">
+    <div class="block-h"><h2>隐私政策</h2><span class="meta">最后更新：2026 年 11 月 3 日</span></div>
+    <div class="block-b">
+    <h1>你的数据只留在你的 Mac 上</h1>
+    <p class="lede">监看都ok 在你的 Mac 上读取传感器与系统状态，所有数字都在本机计算与显示，不需要账号，也不会上传。唯一的对外连接是检查更新。</p>
+
+    <h3>检查更新时</h3>
+    <ul>
+      <li>App 会连接本网站读取最新版本信息（appcast.xml），只附带 App 名称与版本号，不附带任何个人数据。</li>
+      <li>每次打开 App 检查一次，之后每小时一次。</li>
+    </ul>
+
+    <h3>在你的 Mac 上读取、但不会离开的数据</h3>
+    <ul>
+      <li>CPU、GPU、内存、温度、风扇、电池、硬盘与网络的使用状况。</li>
+      <li>正在运行的 App 名称，只用来判断 Premiere Pro、Media Encoder、Lightroom、DaVinci Resolve 是否处于高负载。</li>
+      <li>插入的存储卡与外置硬盘的名称与容量。</li>
+      <li>你的设置，保存在这台 Mac 的偏好设置里。</li>
+    </ul>
+
+    <h3>风扇控制组件</h3>
+    <ul>
+      <li>第一次切换风扇时，经你输入 Mac 密码同意后，会安装一个小工具到系统文件夹，只接受风扇与充电控制的固定指令。</li>
+      <li>随时可以在“设置 › 关于”中移除。</li>
+    </ul>
+
+    <h3>我们不收集的</h3>
+    <ul>
+      <li>任何监看数据、文件内容、文件名、文件夹路径。</li>
+      <li>使用行为分析、广告追踪、崩溃报告。</li>
+    </ul>
+
+    <h3>网站</h3>
+    <p class="muted">本网站由 GitHub Pages 托管，GitHub 可能出于安全目的记录访问者的网络地址。网站会在你的浏览器记住你选择的语言，不使用追踪用的 Cookie。</p>
+
+    <h3>联系我们</h3>
+    <p class="muted">如有任何问题，请发邮件至 <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a>。</p>
+
+    <p class="muted">本译文仅供参考。如与繁体中文版本有出入，以繁体中文版本为准。</p>
+    </div>
+  </article>
+</template>
+<template data-lang="en" data-region="article.doc">
+  <article class="doc block">
+    <div class="block-h"><h2>Privacy policy</h2><span class="meta">Last updated: November 3, 2026</span></div>
+    <div class="block-b">
+    <h1>Your data stays on your Mac</h1>
+    <p class="lede">Monitor OK reads sensors and system status on your Mac. Every number is calculated and shown locally — no account, no uploads. The only time it goes online is to check for updates.</p>
+
+    <h3>When checking for updates</h3>
+    <ul>
+      <li>The app reads the latest version information (appcast.xml) from this website. Only the app name and version are sent — no personal data.</li>
+      <li>It checks each time the app opens, then once an hour.</li>
+    </ul>
+
+    <h3>Read on your Mac, never sent anywhere</h3>
+    <ul>
+      <li>CPU, GPU, memory, temperature, fan, battery, disk and network usage.</li>
+      <li>The names of running apps, used only to tell whether Premiere Pro, Media Encoder, Lightroom or DaVinci Resolve is under heavy load.</li>
+      <li>Names and capacities of memory cards and external drives you connect.</li>
+      <li>Your settings, stored in this Mac’s preferences.</li>
+    </ul>
+
+    <h3>The fan helper</h3>
+    <ul>
+      <li>The first time you switch the fans, and only after you approve with your Mac password, a small tool is installed in a system folder. It accepts only fixed fan and charging commands.</li>
+      <li>You can remove it anytime in Settings › About.</li>
+    </ul>
+
+    <h3>What we don’t collect</h3>
+    <ul>
+      <li>Any monitoring data, file contents, file names or folder paths.</li>
+      <li>Usage analytics, ad tracking or crash reports.</li>
+    </ul>
+
+    <h3>This website</h3>
+    <p class="muted">This website is hosted on GitHub Pages, and GitHub may log visitors’ IP addresses for security. The site remembers your language choice in your browser and uses no tracking cookies.</p>
+
+    <h3>Contact us</h3>
+    <p class="muted">Questions? Email <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a>.</p>
+
+    <p class="muted">This translation is provided for reference. If it differs from the Traditional Chinese version, the Traditional Chinese version prevails.</p>
+    </div>
+  </article>
+</template>
+<template data-lang="ja" data-region="article.doc">
+  <article class="doc block">
+    <div class="block-h"><h2>プライバシーポリシー</h2><span class="meta">最終更新：2026年11月3日</span></div>
+    <div class="block-b">
+    <h1>データはあなたの Mac から出ません</h1>
+    <p class="lede">Monitor OK は Mac 上でセンサーとシステムの状態を読み取り、すべての数値をその Mac の中で計算・表示します。アカウントは不要で、アップロードもしません。インターネットに接続するのはアップデートの確認時だけです。</p>
+
+    <h3>アップデートの確認時</h3>
+    <ul>
+      <li>このサイトから最新バージョンの情報（appcast.xml）を読み込みます。送信されるのはアプリ名とバージョンだけで、個人情報は含まれません。</li>
+      <li>アプリを起動するたびに1回、その後は1時間ごとに確認します。</li>
+    </ul>
+
+    <h3>Mac 上で読み取り、外部には送らない情報</h3>
+    <ul>
+      <li>CPU、GPU、メモリ、温度、ファン、バッテリー、ディスク、ネットワークの使用状況。</li>
+      <li>起動中のアプリの名前。Premiere Pro、Media Encoder、Lightroom、DaVinci Resolve が高負荷かどうかの判定にだけ使います。</li>
+      <li>接続したメモリーカードや外付けディスクの名前と容量。</li>
+      <li>あなたの設定。この Mac の環境設定に保存されます。</li>
+    </ul>
+
+    <h3>ファン制御ヘルパー</h3>
+    <ul>
+      <li>初めてファンを切り替えるとき、Mac のパスワードで許可された場合に限り、小さなツールをシステムフォルダにインストールします。受け付けるのはファンと充電制御の決まった命令だけです。</li>
+      <li>設定 › 情報 からいつでも削除できます。</li>
+    </ul>
+
+    <h3>収集しない情報</h3>
+    <ul>
+      <li>モニターのデータ、ファイルの内容、ファイル名、フォルダのパス。</li>
+      <li>利用状況の分析、広告トラッキング、クラッシュレポート。</li>
+    </ul>
+
+    <h3>このサイトについて</h3>
+    <p class="muted">このサイトは GitHub Pages で公開しており、GitHub がセキュリティのために閲覧者の IP アドレスを記録することがあります。選んだ言語はブラウザに保存しますが、トラッキング用の Cookie は使いません。</p>
+
+    <h3>お問い合わせ</h3>
+    <p class="muted">ご不明な点は <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a> までご連絡ください。</p>
+
+    <p class="muted">この翻訳は参考用です。繁体字中国語版と内容が異なる場合は、繁体字中国語版が優先されます。</p>
+    </div>
+  </article>
+</template>
+<template data-lang="es" data-region="article.doc">
+  <article class="doc block">
+    <div class="block-h"><h2>Política de privacidad</h2><span class="meta">Última actualización: 3 de noviembre de 2026</span></div>
+    <div class="block-b">
+    <h1>Tus datos se quedan en tu Mac</h1>
+    <p class="lede">Monitor OK lee los sensores y el estado del sistema en tu Mac. Todos los valores se calculan y se muestran en tu equipo: sin cuenta y sin subir nada. Solo se conecta a internet para buscar actualizaciones.</p>
+
+    <h3>Al buscar actualizaciones</h3>
+    <ul>
+      <li>La app lee la información de la última versión (appcast.xml) en esta web. Solo se envían el nombre y la versión de la app, sin datos personales.</li>
+      <li>Busca cada vez que se abre la app y luego una vez por hora.</li>
+    </ul>
+
+    <h3>Se lee en tu Mac y nunca sale de él</h3>
+    <ul>
+      <li>Uso de CPU, GPU, memoria, temperatura, ventiladores, batería, discos y red.</li>
+      <li>Los nombres de las apps abiertas, solo para saber si Premiere Pro, Media Encoder, Lightroom o DaVinci Resolve tienen carga alta.</li>
+      <li>Nombres y capacidades de las tarjetas de memoria y discos externos que conectes.</li>
+      <li>Tus ajustes, guardados en las preferencias de este Mac.</li>
+    </ul>
+
+    <h3>El asistente de ventiladores</h3>
+    <ul>
+      <li>La primera vez que cambias los ventiladores, y solo si lo autorizas con la contraseña de tu Mac, se instala una pequeña herramienta en una carpeta del sistema. Solo acepta órdenes fijas de ventiladores y carga.</li>
+      <li>Puedes quitarla cuando quieras en Ajustes › Acerca de.</li>
+    </ul>
+
+    <h3>Lo que no recopilamos</h3>
+    <ul>
+      <li>Datos de monitorización, contenido de archivos, nombres de archivo ni rutas de carpetas.</li>
+      <li>Análisis de uso, seguimiento publicitario ni informes de fallos.</li>
+    </ul>
+
+    <h3>Esta web</h3>
+    <p class="muted">Esta web está alojada en GitHub Pages, y GitHub puede registrar las direcciones IP de los visitantes por seguridad. La web recuerda el idioma que elijas en tu navegador y no usa cookies de seguimiento.</p>
+
+    <h3>Contacto</h3>
+    <p class="muted">¿Dudas? Escribe a <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a>.</p>
+
+    <p class="muted">Esta traducción es solo de referencia. Si difiere de la versión en chino tradicional, prevalece la versión en chino tradicional.</p>
+    </div>
+  </article>
+</template>
+<template data-lang="pt" data-region="article.doc">
+  <article class="doc block">
+    <div class="block-h"><h2>Política de privacidade</h2><span class="meta">Última atualização: 3 de novembro de 2026</span></div>
+    <div class="block-b">
+    <h1>Seus dados ficam no seu Mac</h1>
+    <p class="lede">O Monitor OK lê os sensores e o estado do sistema no seu Mac. Todos os valores são calculados e exibidos no próprio computador: sem conta e sem uploads. Ele só se conecta à internet para verificar atualizações.</p>
+
+    <h3>Ao verificar atualizações</h3>
+    <ul>
+      <li>O app lê as informações da versão mais recente (appcast.xml) neste site. Só o nome e a versão do app são enviados, sem dados pessoais.</li>
+      <li>A verificação acontece sempre que o app é aberto e depois uma vez por hora.</li>
+    </ul>
+
+    <h3>Lido no seu Mac, nunca enviado</h3>
+    <ul>
+      <li>Uso de CPU, GPU, memória, temperatura, ventoinhas, bateria, discos e rede.</li>
+      <li>Os nomes dos apps em execução, usados só para saber se o Premiere Pro, Media Encoder, Lightroom ou DaVinci Resolve estão com carga alta.</li>
+      <li>Nomes e capacidades dos cartões de memória e discos externos que você conectar.</li>
+      <li>Seus ajustes, guardados nas preferências deste Mac.</li>
+    </ul>
+
+    <h3>O auxiliar das ventoinhas</h3>
+    <ul>
+      <li>Na primeira vez que você muda as ventoinhas, e só depois que você autoriza com a senha do Mac, uma pequena ferramenta é instalada em uma pasta do sistema. Ela aceita apenas comandos fixos de ventoinhas e carga.</li>
+      <li>Você pode removê-la a qualquer momento em Ajustes › Sobre.</li>
+    </ul>
+
+    <h3>O que não coletamos</h3>
+    <ul>
+      <li>Dados de monitoramento, conteúdo de arquivos, nomes de arquivos ou caminhos de pastas.</li>
+      <li>Análise de uso, rastreamento de anúncios ou relatórios de falhas.</li>
+    </ul>
+
+    <h3>Este site</h3>
+    <p class="muted">Este site é hospedado no GitHub Pages, e o GitHub pode registrar o endereço IP dos visitantes por segurança. O site lembra o idioma escolhido no seu navegador e não usa cookies de rastreamento.</p>
+
+    <h3>Contato</h3>
+    <p class="muted">Dúvidas? Escreva para <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a>.</p>
+
+    <p class="muted">Esta tradução é apenas para referência. Em caso de divergência, prevalece a versão em chinês tradicional.</p>
+    </div>
+  </article>
+</template>
+<script>
+// 多國語言(與首頁相同的六種語言與偵測順序:網址 ?lang= → 上次選的 → 系統語言 → 英文)
+// 內文的各語言版本放在 <template data-lang data-region>,載入時換上;切換語言會重新載入頁面
+(function () {
+  var D = {"brand": ["監看都ok", "监看都ok", "Monitor OK", "Monitor OK", "Monitor OK", "Monitor OK"], "nav_manual": ["使用說明", "使用说明", "User guide", "使い方ガイド", "Guía de uso", "Guia de uso"], "nav_privacy": ["隱私權政策", "隐私政策", "Privacy", "プライバシーポリシー", "Privacidad", "Privacidade"], "dl_btn": ["下載", "下载", "Download", "ダウンロード", "Descargar", "Baixar"], "copyright": ["© 2026 監看都ok", "© 2026 监看都ok", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK"], "lang_label": ["語言", "语言", "Language", "言語", "Idioma", "Idioma"], "title_manual": ["監看都ok 使用說明", "监看都ok 使用说明", "Monitor OK User Guide", "Monitor OK 使い方ガイド", "Guía de uso de Monitor OK", "Guia de uso do Monitor OK"], "title_privacy": ["監看都ok 隱私權政策", "监看都ok 隐私政策", "Monitor OK Privacy Policy", "Monitor OK プライバシーポリシー", "Política de privacidad de Monitor OK", "Política de Privacidade do Monitor OK"]}, PAGE = 'privacy';
+  var LANGS = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'es', 'pt'];
+  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', es: 'Español', pt: 'Português' };
+  var SHORT = { 'zh-Hant': '繁中', 'zh-Hans': '简中', en: 'EN', ja: '日本語', es: 'ES', pt: 'PT' };
+  function norm(t) {
+    t = String(t || '').toLowerCase();
+    if (t.indexOf('zh') === 0) return /hant|-tw|-hk|-mo/.test(t) ? 'zh-Hant' : 'zh-Hans';
+    return { en: 'en', ja: 'ja', es: 'es', pt: 'pt' }[t.split('-')[0]] || null;
+  }
+  function detect() {
+    var q = /[?&]lang=([\w-]+)/.exec(location.search);
+    if (q) { var n = LANGS.indexOf(q[1]) >= 0 ? q[1] : norm(q[1]); if (n) return n; }
+    try { var s = localStorage.getItem('mk-lang'); if (LANGS.indexOf(s) >= 0) return s; } catch (e) {}
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return 'en';
+  }
+  var lang = detect(), idx = LANGS.indexOf(lang);
+  function t(k) { return D[k] ? D[k][idx] : ''; }
+  document.documentElement.lang = lang;
+  if (lang !== 'zh-Hant') {
+    document.querySelectorAll('template[data-lang="' + lang + '"]').forEach(function (tp) {
+      var target = document.querySelector(tp.getAttribute('data-region'));
+      if (target) target.replaceWith(tp.content.cloneNode(true));
+    });
+  }
+  document.querySelectorAll('[data-i]').forEach(function (el) { var v = t(el.getAttribute('data-i')); if (v) el.textContent = v; });
+  document.title = t(PAGE === 'manual' ? 'title_manual' : 'title_privacy');
+  var cur = document.getElementById('langCur'); cur.textContent = NAMES[lang]; cur.setAttribute('data-short', SHORT[lang]);
+  var btn = document.getElementById('langBtn'), menu = document.getElementById('langMenu');
+  LANGS.forEach(function (l) {
+    var li = document.createElement('li'); li.setAttribute('role', 'none');
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'menuitemradio'); b.setAttribute('lang', l); b.textContent = NAMES[l];
+    b.setAttribute('aria-checked', String(l === lang));
+    b.addEventListener('click', function () {
+      try { localStorage.setItem('mk-lang', l); } catch (e) {}
+      if (l === lang) { close(); return; }
+      var u = location.href.replace(/([?&])lang=[\w-]+&?/, '$1').replace(/[?&]$/, '');
+      location.href = u;
+    });
+    li.appendChild(b); menu.appendChild(li);
+  });
+  function close() { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+  btn.addEventListener('click', function () {
+    if (menu.hidden) { menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); (menu.querySelector('[aria-checked="true"]') || menu.querySelector('button')).focus(); } else close();
+  });
+  document.addEventListener('click', function (e) { if (!menu.hidden && !document.getElementById('lang').contains(e.target)) close(); });
+  menu.addEventListener('keydown', function (e) {
+    var items = Array.prototype.slice.call(menu.querySelectorAll('button')), i = items.indexOf(document.activeElement);
+    if (e.key === 'Escape') { close(); btn.focus(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+  });
+})();
+</script>
+</body>
+</html>
