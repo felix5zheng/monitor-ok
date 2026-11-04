@@ -414,7 +414,7 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <li><span class="n">3</span><div><div class="h">切回「自動」</div><div class="d">風扇交還系統控制，跟沒裝監看都ok 時一樣。</div></div></li>
       </ol>
       <h3>高負載時自動全開</h3>
-      <p class="muted">Premiere Pro、Media Encoder、Lightroom、DaVinci Resolve 持續吃重時，風扇會自動全開，並從選單列跳出「偵測到 Pr 高負載」；負載降下來後自動回到「自動」。可以在 <span class="path">設定<i>›</i>一般</span> 關閉。</p>
+      <p class="muted">不管是 Premiere Pro、Final Cut Pro、DaVinci Resolve 輸出，還是其他 App 吃重，只要整台 Mac 的 CPU 或 GPU 持續超過一半約 10 秒，風扇就會自動全開，並從選單列跳出「偵測到 Pr 高負載」（顯示最吃重的 App）；負載降下來約 30 秒後回到「自動」。可以在 <span class="path">設定<i>›</i>一般</span> 關閉。</p>
       <div class="tbl"><table>
         <tr><td>高負載結束提醒</td><td>高負載結束時通知你，通常代表輸出完成，會寫出持續了多久</td></tr>
         <tr><td>記住風扇設定</td><td>重開 App 後沿用上次的自動或全開</td></tr>
@@ -468,8 +468,9 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <div class="qa"><button type="button" aria-expanded="false">每次切換風扇都要求密碼<span class="pm"></span></button><div class="body"><div><p>代表控制元件沒有安裝成功，或被移除了。到 <span class="path">設定<i>›</i>關於</span> 確認控制元件顯示「已安裝」。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">溫度顯示「—」<span class="pm"></span></button><div class="body"><div><p>部分機型或系統版本讀不到某些感測器，對應的數字會顯示「—」，不影響其他功能。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">看不到充電上限<span class="pm"></span></button><div class="body"><div><p>充電控制需要機型與系統版本支援。不支援時請改用 <span class="path">系統設定<i>›</i>電池</span> 內建的充電上限。</p></div></div></div>
-        <div class="qa"><button type="button" aria-expanded="false">Pr 在輸出，風扇卻沒有全開<span class="pm"></span></button><div class="body"><div><p>需要持續吃重一段時間才會觸發，短暫的高負載不會。確認 <span class="path">設定<i>›</i>一般</span> 的「高負載時自動全開」是打開的。</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">在輸出，風扇卻沒有全開<span class="pm"></span></button><div class="body"><div><p>需要持續吃重一段時間才會觸發，短暫的高負載不會。確認 <span class="path">設定<i>›</i>一般</span> 的「高負載時自動全開」是打開的。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">怎麼完全移除<span class="pm"></span></button><div class="body"><div><p>先到 <span class="path">設定<i>›</i>關於</span> 按「移除控制元件」，再結束監看都ok，把 App 從「應用程式」丟到垃圾桶。</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">剩餘空間比 Finder 顯示的少<span class="pm"></span></button><div class="body"><div><p>監看都ok 的「剩」是硬碟現在真正空著的空間。差的部分通常是時光機本機快照或快取，面板會用灰色標出「時光機本機快照（仍佔用中）」：它們還在硬碟上，空間不夠時 macOS 才會清除，Finder 則先把它們算進「可用」。想馬上清出空間，可在終端機執行 tmutil thinlocalsnapshots / 999999999999 4。</p></div></div></div>
       </div>
       </div>
     </section>
@@ -587,7 +588,7 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <li><span class="n">3</span><div><div class="h">切回“自动”</div><div class="d">风扇交还系统控制，跟没装监看都ok 时一样。</div></div></li>
       </ol>
       <h3>高负载时自动全速</h3>
-      <p class="muted">Premiere Pro、Media Encoder、Lightroom、DaVinci Resolve 持续高负载时，风扇会自动全速，并从菜单栏弹出“检测到 Pr 高负载”；负载降下来后自动回到“自动”。可以在 <span class="path">设置<i>›</i>通用</span> 关闭。</p>
+      <p class="muted">不管是 Premiere Pro、Final Cut Pro、DaVinci Resolve 导出，还是其他 App 高负载，只要整台 Mac 的 CPU 或 GPU 持续超过一半约 10 秒，风扇就会自动全速，并从菜单栏弹出“检测到 Pr 高负载”（显示最吃重的 App）；负载降下来约 30 秒后回到“自动”。可以在 <span class="path">设置<i>›</i>通用</span> 关闭。</p>
       <div class="tbl"><table>
         <tr><td>高负载结束提醒</td><td>高负载结束时通知你，通常代表导出完成，会写出持续了多久</td></tr>
         <tr><td>记住风扇设置</td><td>重新打开 App 后沿用上次的自动或全速</td></tr>
@@ -641,8 +642,9 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <div class="qa"><button type="button" aria-expanded="false">每次切换风扇都要求密码<span class="pm"></span></button><div class="body"><div><p>说明控制组件没有安装成功，或被移除了。在 <span class="path">设置<i>›</i>关于</span> 确认控制组件显示“已安装”。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">温度显示“—”<span class="pm"></span></button><div class="body"><div><p>部分机型或系统版本读不到某些传感器，对应的数字会显示“—”，不影响其他功能。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">看不到充电上限<span class="pm"></span></button><div class="body"><div><p>充电控制需要机型与系统版本支持。不支持时请改用 <span class="path">系统设置<i>›</i>电池</span> 内置的充电上限。</p></div></div></div>
-        <div class="qa"><button type="button" aria-expanded="false">Pr 在导出，风扇却没有全速<span class="pm"></span></button><div class="body"><div><p>需要持续高负载一段时间才会触发，短暂的高负载不会。确认 <span class="path">设置<i>›</i>通用</span> 的“高负载时自动全速”已打开。</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">在导出，风扇却没有全速<span class="pm"></span></button><div class="body"><div><p>需要持续高负载一段时间才会触发，短暂的高负载不会。确认 <span class="path">设置<i>›</i>通用</span> 的“高负载时自动全速”已打开。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">怎么完全移除<span class="pm"></span></button><div class="body"><div><p>先在 <span class="path">设置<i>›</i>关于</span> 点“移除控制组件”，再退出监看都ok，把 App 从“应用程序”拖到废纸篓。</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">剩余空间比 Finder 显示的少<span class="pm"></span></button><div class="body"><div><p>监看都ok 的“剩”是硬盘现在真正空着的空间。差的部分通常是时间机器本地快照或缓存，面板会用灰色标出“时间机器本地快照（仍占用中）”：它们还在硬盘上，空间不够时 macOS 才会清除，Finder 则先把它们算进“可用”。想马上清出空间，可在终端执行 tmutil thinlocalsnapshots / 999999999999 4。</p></div></div></div>
       </div>
       </div>
     </section>
@@ -760,7 +762,7 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <li><span class="n">3</span><div><div class="h">Switch back to Auto</div><div class="d">The fans go back to macOS control, exactly as if Monitor OK weren’t installed.</div></div></li>
       </ol>
       <h3>Max fans under heavy load</h3>
-      <p class="muted">When Premiere Pro, Media Encoder, Lightroom or DaVinci Resolve stays under heavy load, the fans go to Max and the menu bar shows “Pr under heavy load”. When the load drops, they return to Auto. You can turn this off in <span class="path">Settings<i>›</i>General</span>.</p>
+      <p class="muted">Whether it’s an export from Premiere Pro, Final Cut Pro or DaVinci Resolve or any other app working hard, when your Mac’s CPU or GPU stays over half busy for about 10 seconds, the fans go to Max and the menu bar shows “Pr under heavy load” (naming the busiest app). About 30 seconds after the load drops, they return to Auto. You can turn this off in <span class="path">Settings<i>›</i>General</span>.</p>
       <div class="tbl"><table>
         <tr><td>Heavy-load finished alert</td><td>Lets you know when the heavy load ends — usually your export is done — and how long it lasted</td></tr>
         <tr><td>Remember fan mode</td><td>Keeps Auto or Max after the app restarts</td></tr>
@@ -814,8 +816,9 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <div class="qa"><button type="button" aria-expanded="false">It asks for my password every time<span class="pm"></span></button><div class="body"><div><p>The helper didn’t install, or it was removed. Check that <span class="path">Settings<i>›</i>About</span> shows the helper as Installed.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">A temperature shows “—”<span class="pm"></span></button><div class="body"><div><p>Some Mac models or macOS versions don’t expose every sensor. That reading shows “—”; everything else still works.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">I don’t see the charge limit<span class="pm"></span></button><div class="body"><div><p>Charge control depends on your Mac model and macOS version. If it isn’t supported, use the built-in charge limit in <span class="path">System Settings<i>›</i>Battery</span>.</p></div></div></div>
-        <div class="qa"><button type="button" aria-expanded="false">Premiere is exporting but the fans aren’t at Max<span class="pm"></span></button><div class="body"><div><p>It kicks in after the load stays high for a while, not on brief spikes. Make sure Max fans under heavy load is on in <span class="path">Settings<i>›</i>General</span>.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">I’m exporting but the fans aren’t at Max<span class="pm"></span></button><div class="body"><div><p>It kicks in after the load stays high for a while, not on brief spikes. Make sure Max fans under heavy load is on in <span class="path">Settings<i>›</i>General</span>.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">How do I remove it completely?<span class="pm"></span></button><div class="body"><div><p>Click Remove helper in <span class="path">Settings<i>›</i>About</span>, quit Monitor OK, then drag the app from Applications to the Trash.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Free space is lower than Finder shows<span class="pm"></span></button><div class="body"><div><p>Monitor OK shows the space that is actually free right now. The difference is usually Time Machine local snapshots or caches, which the panel marks in grey as “Time Machine local snapshots (still on disk)”. They really are on the disk; macOS only clears them when space runs low, while Finder already counts them as available. To free it now, run tmutil thinlocalsnapshots / 999999999999 4 in Terminal.</p></div></div></div>
       </div>
       </div>
     </section>
@@ -933,7 +936,7 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <li><span class="n">3</span><div><div class="h">「自動」に戻す</div><div class="d">ファンの制御が macOS に戻り、Monitor OK を入れていないときと同じになります。</div></div></li>
       </ol>
       <h3>高負荷時はファン最大</h3>
-      <p class="muted">Premiere Pro、Media Encoder、Lightroom、DaVinci Resolve の高負荷が続くと、ファンが自動で最大になり、メニューバーに「Pr が高負荷」と表示されます。負荷が下がると「自動」に戻ります。<span class="path">設定<i>›</i>一般</span> でオフにできます。</p>
+      <p class="muted">Premiere Pro、Final Cut Pro、DaVinci Resolve の書き出しはもちろん、どのアプリでも Mac の CPU か GPU が半分以上の状態が約10秒続くと、ファンが自動で最大になり、メニューバーに「Pr が高負荷」（いちばん負荷の高いアプリ名）と表示されます。負荷が下がって約30秒たつと「自動」に戻ります。<span class="path">設定<i>›</i>一般</span> でオフにできます。</p>
       <div class="tbl"><table>
         <tr><td>高負荷終了の通知</td><td>高負荷が終わったとき（たいていは書き出し完了）に、続いた時間とあわせてお知らせします</td></tr>
         <tr><td>ファン設定を記憶</td><td>アプリを再起動しても前回の「自動」「最大」を引き継ぎます</td></tr>
@@ -987,8 +990,9 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <div class="qa"><button type="button" aria-expanded="false">切り替えるたびにパスワードを求められる<span class="pm"></span></button><div class="body"><div><p>ヘルパーのインストールに失敗したか、削除されています。<span class="path">設定<i>›</i>情報</span> でヘルパーが「インストール済み」になっているか確認してください。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">温度が「—」と表示される<span class="pm"></span></button><div class="body"><div><p>機種や macOS のバージョンによっては読み取れないセンサーがあります。その項目は「—」になりますが、ほかの機能には影響しません。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">充電上限が表示されない<span class="pm"></span></button><div class="body"><div><p>充電制御は機種と macOS のバージョンによって対応が異なります。非対応の場合は <span class="path">システム設定<i>›</i>バッテリー</span> の充電上限をお使いください。</p></div></div></div>
-        <div class="qa"><button type="button" aria-expanded="false">Premiere で書き出し中なのにファンが最大にならない<span class="pm"></span></button><div class="body"><div><p>高負荷がしばらく続いたときに動作し、一時的な負荷では反応しません。<span class="path">設定<i>›</i>一般</span> の「高負荷時はファン最大」がオンか確認してください。</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">書き出し中なのにファンが最大にならない<span class="pm"></span></button><div class="body"><div><p>高負荷がしばらく続いたときに動作し、一時的な負荷では反応しません。<span class="path">設定<i>›</i>一般</span> の「高負荷時はファン最大」がオンか確認してください。</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">完全に削除するには<span class="pm"></span></button><div class="body"><div><p><span class="path">設定<i>›</i>情報</span> で「ヘルパーを削除」をクリックし、Monitor OK を終了してから、「アプリケーション」からゴミ箱へドラッグします。</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">空き容量が Finder より少ない<span class="pm"></span></button><div class="body"><div><p>Monitor OK の「空き」は、今実際に空いている容量です。差はたいてい Time Machine のローカルスナップショットやキャッシュで、パネルでは灰色で「Time Machine ローカルスナップショット（使用中）」と表示します。実際にディスク上にあり、空きが足りなくなったときだけ macOS が削除しますが、Finder は先に空き容量に含めています。すぐに空けるには、ターミナルで tmutil thinlocalsnapshots / 999999999999 4 を実行します。</p></div></div></div>
       </div>
       </div>
     </section>
@@ -1106,7 +1110,7 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <li><span class="n">3</span><div><div class="h">Vuelve a Auto</div><div class="d">Los ventiladores vuelven al control de macOS, igual que sin Monitor OK.</div></div></li>
       </ol>
       <h3>Ventiladores al máximo con carga alta</h3>
-      <p class="muted">Cuando Premiere Pro, Media Encoder, Lightroom o DaVinci Resolve mantienen una carga alta, los ventiladores se ponen al máximo y la barra de menús muestra «Pr con carga alta». Cuando la carga baja, vuelven a Auto. Puedes desactivarlo en <span class="path">Ajustes<i>›</i>General</span>.</p>
+      <p class="muted">Ya sea una exportación desde Premiere Pro, Final Cut Pro o DaVinci Resolve o cualquier otra app trabajando a tope, cuando la CPU o la GPU de tu Mac se mantienen por encima de la mitad unos 10 segundos, los ventiladores se ponen al máximo y la barra de menús muestra «Pr con carga alta» (con la app más exigente). Unos 30 segundos después de que baje la carga, vuelven a Auto. Puedes desactivarlo en <span class="path">Ajustes<i>›</i>General</span>.</p>
       <div class="tbl"><table>
         <tr><td>Aviso al terminar la carga alta</td><td>Te avisa cuando termina la carga alta (normalmente, cuando acaba la exportación) y cuánto duró</td></tr>
         <tr><td>Recordar ventiladores</td><td>Mantiene Auto o Máx. al reiniciar la app</td></tr>
@@ -1160,8 +1164,9 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <div class="qa"><button type="button" aria-expanded="false">Me pide la contraseña cada vez<span class="pm"></span></button><div class="body"><div><p>El asistente no se instaló o se eliminó. Comprueba que <span class="path">Ajustes<i>›</i>Acerca de</span> lo muestra como Instalado.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">Una temperatura muestra «—»<span class="pm"></span></button><div class="body"><div><p>Algunos modelos o versiones de macOS no ofrecen todos los sensores. Ese valor aparece como «—»; lo demás funciona igual.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">No veo el límite de carga<span class="pm"></span></button><div class="body"><div><p>El control de carga depende del modelo de Mac y de la versión de macOS. Si no es compatible, usa el límite de carga de <span class="path">Ajustes del Sistema<i>›</i>Batería</span>.</p></div></div></div>
-        <div class="qa"><button type="button" aria-expanded="false">Premiere está exportando y los ventiladores no están al máximo<span class="pm"></span></button><div class="body"><div><p>Se activa cuando la carga se mantiene alta un rato, no con picos breves. Comprueba que Ventiladores al máx. con carga alta esté activado en <span class="path">Ajustes<i>›</i>General</span>.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Estoy exportando y los ventiladores no están al máximo<span class="pm"></span></button><div class="body"><div><p>Se activa cuando la carga se mantiene alta un rato, no con picos breves. Comprueba que Ventiladores al máx. con carga alta esté activado en <span class="path">Ajustes<i>›</i>General</span>.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">¿Cómo la desinstalo por completo?<span class="pm"></span></button><div class="body"><div><p>Haz clic en Quitar asistente en <span class="path">Ajustes<i>›</i>Acerca de</span>, cierra Monitor OK y arrastra la app de Aplicaciones a la Papelera.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">El espacio libre es menor que el del Finder<span class="pm"></span></button><div class="body"><div><p>Monitor OK muestra el espacio realmente libre ahora mismo. La diferencia suele ser instantáneas locales de Time Machine o cachés, que el panel marca en gris como «Instantáneas locales de Time Machine (en el disco)». Siguen en el disco; macOS solo las borra cuando falta espacio, pero el Finder ya las cuenta como disponibles. Para liberarlo ya, ejecuta tmutil thinlocalsnapshots / 999999999999 4 en Terminal.</p></div></div></div>
       </div>
       </div>
     </section>
@@ -1279,7 +1284,7 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <li><span class="n">3</span><div><div class="h">Volte para Auto</div><div class="d">As ventoinhas voltam ao controle do macOS, como se o Monitor OK não estivesse instalado.</div></div></li>
       </ol>
       <h3>Ventoinhas no máximo com carga alta</h3>
-      <p class="muted">Quando o Premiere Pro, Media Encoder, Lightroom ou DaVinci Resolve ficam com carga alta por um tempo, as ventoinhas vão para o máximo e a barra de menus mostra “Pr com carga alta”. Quando a carga cai, voltam para Auto. Você pode desativar isso em <span class="path">Ajustes<i>›</i>Geral</span>.</p>
+      <p class="muted">Seja uma exportação do Premiere Pro, Final Cut Pro ou DaVinci Resolve ou qualquer outro app trabalhando pesado, quando a CPU ou a GPU do Mac fica acima da metade por cerca de 10 segundos, as ventoinhas vão para o máximo e a barra de menus mostra “Pr com carga alta” (com o app mais exigente). Cerca de 30 segundos depois que a carga cai, voltam para Auto. Você pode desativar isso em <span class="path">Ajustes<i>›</i>Geral</span>.</p>
       <div class="tbl"><table>
         <tr><td>Aviso ao terminar a carga alta</td><td>Avisa quando a carga alta termina (geralmente, quando a exportação acaba) e quanto tempo durou</td></tr>
         <tr><td>Lembrar ventoinhas</td><td>Mantém Auto ou Máx. quando o app reinicia</td></tr>
@@ -1333,8 +1338,9 @@ html:is([lang="en"], [lang="es"], [lang="pt"]) body, html:is([lang="en"], [lang=
         <div class="qa"><button type="button" aria-expanded="false">Ele pede a senha toda vez<span class="pm"></span></button><div class="body"><div><p>O auxiliar não foi instalado ou foi removido. Confira se <span class="path">Ajustes<i>›</i>Sobre</span> mostra o auxiliar como Instalado.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">Uma temperatura aparece como “—”<span class="pm"></span></button><div class="body"><div><p>Alguns modelos ou versões do macOS não oferecem todos os sensores. Esse valor aparece como “—”; o resto funciona normalmente.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">Não vejo o limite de carga<span class="pm"></span></button><div class="body"><div><p>O controle de carga depende do modelo do Mac e da versão do macOS. Se não for compatível, use o limite de carga em <span class="path">Ajustes do Sistema<i>›</i>Bateria</span>.</p></div></div></div>
-        <div class="qa"><button type="button" aria-expanded="false">O Premiere está exportando, mas as ventoinhas não estão no máximo<span class="pm"></span></button><div class="body"><div><p>Isso acontece quando a carga fica alta por um tempo, não em picos rápidos. Verifique se Ventoinhas no máx. com carga alta está ativado em <span class="path">Ajustes<i>›</i>Geral</span>.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Estou exportando, mas as ventoinhas não estão no máximo<span class="pm"></span></button><div class="body"><div><p>Isso acontece quando a carga fica alta por um tempo, não em picos rápidos. Verifique se Ventoinhas no máx. com carga alta está ativado em <span class="path">Ajustes<i>›</i>Geral</span>.</p></div></div></div>
         <div class="qa"><button type="button" aria-expanded="false">Como removo tudo?<span class="pm"></span></button><div class="body"><div><p>Clique em Remover auxiliar em <span class="path">Ajustes<i>›</i>Sobre</span>, saia do Monitor OK e arraste o app de Aplicativos para o Lixo.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">O espaço livre é menor que o do Finder<span class="pm"></span></button><div class="body"><div><p>O Monitor OK mostra o espaço realmente livre agora. A diferença costuma ser snapshots locais do Time Machine ou caches, que o painel marca em cinza como “Snapshots locais do Time Machine (ainda no disco)”. Eles continuam no disco; o macOS só os apaga quando falta espaço, mas o Finder já os conta como disponíveis. Para liberar agora, execute tmutil thinlocalsnapshots / 999999999999 4 no Terminal.</p></div></div></div>
       </div>
       </div>
     </section>

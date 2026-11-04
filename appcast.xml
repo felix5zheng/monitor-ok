@@ -3,6 +3,23 @@
     <channel>
         <title>監看都ok</title>
         <item>
+            <title>1.1</title>
+            <pubDate>Wed, 04 Nov 2026 15:42:23 +0800</pubDate>
+            <link>https://felix5zheng.github.io/monitor-ok</link>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>1.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h2>監看都ok 1.1</h2>
+<ul>
+  <li>高負載偵測不再限定特定 App：Final Cut Pro、Compressor 或任何 App 讓 CPU 或 GPU 持續超過一半時，風扇都會自動全開，結束後自動恢復。</li>
+  <li>通知會顯示最吃重的 App 名稱，背景程式會算到開啟它的 App 名下。</li>
+  <li>儲存空間會明確標出時光機本機快照（或系統可清除空間）佔用多少：它們還在硬碟上，空間不夠時系統才會清除，所以 Finder 顯示的可用空間會比較多。</li>
+  <li>有大量時光機快照時，選單列與「硬碟快滿」提醒不再誤報。</li>
+</ul>
+]]></description>
+            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.1.dmg" length="2356624" type="application/octet-stream" sparkle:edSignature="UIM1Pe39h2KjOb+kB6VYp07GJR9Acik4KoSepSpmmr1cqYHIs/M97vNKolEpBuYum1cT8OTpYdJIddDn3H0oBw=="/>
+        </item>
+        <item>
             <title>1.0</title>
             <pubDate>Wed, 04 Nov 2026 00:24:36 +0800</pubDate>
             <link>https://felix5zheng.github.io/monitor-ok</link>
