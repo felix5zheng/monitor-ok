@@ -3,6 +3,27 @@
     <channel>
         <title>監看都ok</title>
         <item>
+            <title>1.2</title>
+            <pubDate>Thu, 05 Nov 2026 17:51:14 +0800</pubDate>
+            <link>https://felix5zheng.github.io/monitor-ok</link>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h2>監看都ok 1.2</h2>
+<ul>
+  <li>新增「空間分配」：點面板裡的硬碟就能看每個資料夾佔多少空間，點一下往下一層。會標出可以直接刪的暫存檔、要到原本 App 裡刪的、以及不要動的；勾選後移到垃圾桶，刪之前會再確認。另有「最大的 50 個」和「重複檔案」。</li>
+  <li>滑鼠停在 CPU／GPU、硬碟、電池、防止睡眠上會浮出小卡：負載走勢（1 小時到 7 天，點一下切換、右鍵選擇）、記憶卡裡的照片與影片數量、電池健康度紀錄。</li>
+  <li>自動全開風扇改成看「熱度」：突然吃重約 3 秒就全開；慢慢變重會多觀察一下；溫度升得快會更快開；一兩秒的尖峰不會誤開。輸出時會正確認出 Pr、Me 等剪輯軟體，整台還很吃重時不會提早恢復。</li>
+  <li>插入記憶卡時通知會寫「記憶卡」並列出卡裡的內容，同一張卡只通知一次。</li>
+  <li>輸出影片時可以自動防止 Mac 睡眠。</li>
+  <li>第一次打開會說明需要哪些權限、用途是什麼；之後可在 設定 › 一般 › 權限與說明 再打開。</li>
+  <li>點面板外面會自動收起；外接碟展開、收合的動畫更順。</li>
+  <li>風扇控制元件需要重新授權時，會跳出提醒，不會默默沒轉。</li>
+</ul>
+]]></description>
+            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.2.dmg" length="3147341" type="application/octet-stream" sparkle:edSignature="hvPZZ8O+KJFkn3sq6auIbmo5x5G/DjS4ci3mPKOIaLvJK7VJb5kOqP/dsEyUpOREag1oNDbBy6yCQodq6aPkBQ=="/>
+        </item>
+        <item>
             <title>1.1</title>
             <pubDate>Wed, 04 Nov 2026 15:42:23 +0800</pubDate>
             <link>https://felix5zheng.github.io/monitor-ok</link>
