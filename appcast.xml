@@ -3,6 +3,22 @@
     <channel>
         <title>監看都ok</title>
         <item>
+            <title>1.2.1</title>
+            <pubDate>Sat, 07 Nov 2026 10:23:56 +0800</pubDate>
+            <link>https://felix5zheng.github.io/monitor-ok</link>
+            <sparkle:version>4</sparkle:version>
+            <sparkle:shortVersionString>1.2.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h2>監看都ok 1.2.1</h2>
+<ul>
+  <li>自動全開風扇不再被短暫的忙碌觸發：GPU 吃重要連續 10 秒、只有 CPU 吃重要連續 25 秒才會全開。編譯程式、開網頁、App 啟動這類幾秒鐘的忙碌，不會再讓風扇轉個幾十秒；輸出影片時一樣會自動全開。</li>
+  <li>負載降下來後，風扇約 15 秒就交還系統自動（機器還很燙時會多吹一下）。</li>
+  <li>App 被強制結束後重新打開時，如果風扇還卡在全開，會自動交還系統。</li>
+</ul>
+]]></description>
+            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.2.1.dmg" length="3148104" type="application/octet-stream" sparkle:edSignature="ugPTANn7thIqGgRg/60jTnnAAbvCS6siJ1mbqhjFyQqYA66piXf7bE4VBAfVRJAw3vJRop6Fqfk0WdNGEU34DQ=="/>
+        </item>
+        <item>
             <title>1.2</title>
             <pubDate>Thu, 05 Nov 2026 17:51:14 +0800</pubDate>
             <link>https://felix5zheng.github.io/monitor-ok</link>
@@ -39,25 +55,6 @@
 </ul>
 ]]></description>
             <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.1.dmg" length="2356624" type="application/octet-stream" sparkle:edSignature="UIM1Pe39h2KjOb+kB6VYp07GJR9Acik4KoSepSpmmr1cqYHIs/M97vNKolEpBuYum1cT8OTpYdJIddDn3H0oBw=="/>
-        </item>
-        <item>
-            <title>1.0</title>
-            <pubDate>Wed, 04 Nov 2026 00:24:36 +0800</pubDate>
-            <link>https://felix5zheng.github.io/monitor-ok</link>
-            <sparkle:version>1</sparkle:version>
-            <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<h2>監看都ok 1.0</h2>
-<ul>
-  <li>第一個正式版本。選單列即時顯示 CPU、GPU、溫度、記憶體、硬碟與電池，超標的數字會變紅。</li>
-  <li>Premiere Pro、Media Encoder、Lightroom、DaVinci Resolve 高負載時風扇自動全開，結束後自動恢復並通知你。</li>
-  <li>過熱、記憶體不足、硬碟快滿、硬碟讀寫錯誤時，從選單列滑出提醒。</li>
-  <li>插入相機記憶卡時自動打開備份都ok。</li>
-  <li>面板可以自己決定要放哪些項目、怎麼排。</li>
-  <li>新增自動更新：有新版本時從選單列提醒，點一下就能安裝，設定都會保留。</li>
-</ul>
-]]></description>
-            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.0.dmg" length="2329527" type="application/octet-stream" sparkle:edSignature="kEcefZJ+tfZ0KlIcML1Mi7cLv4mbyoa42PnOExSJWAD5+JpHyuIzJBJehqcgbMeJtEetBs9ccNUQhbKQY9LwDg=="/>
         </item>
     </channel>
 </rss>
