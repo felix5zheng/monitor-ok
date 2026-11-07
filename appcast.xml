@@ -3,6 +3,22 @@
     <channel>
         <title>監看都ok</title>
         <item>
+            <title>1.2.2</title>
+            <pubDate>Sat, 07 Nov 2026 14:00:59 +0800</pubDate>
+            <link>https://felix5zheng.github.io/monitor-ok</link>
+            <sparkle:version>5</sparkle:version>
+            <sparkle:shortVersionString>1.2.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h2>監看都ok 1.2.2</h2>
+<ul>
+  <li>選單列預設只顯示「剩餘空間」：項目一多，瀏海機種的選單列會被擠到看不見、點不到。CPU、GPU、溫度、記憶體、電池可以在設定裡自己勾回來。（之前沒改過這些勾選的人，更新後也會變成只顯示剩餘空間。）</li>
+  <li>選單列的「SSD／GPU／RAM」標籤改成跟數字同色、小一號粗體，並且上下置中；彩色或淺色桌布上也看得清楚。</li>
+  <li>電池區直接顯示充電器實際輸入的瓦數，充電時一起顯示電池正在充的瓦數，例如「輸入 84W · 充 51W」。</li>
+</ul>
+]]></description>
+            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.2.2.dmg" length="3152958" type="application/octet-stream" sparkle:edSignature="+uMDMc45+Dejg4A5jK3kKheV5Hp8/3yIrsLqUYI06oR1BSaox3BEl+i+MoPP6ZnpDjhy2pBykn6vaUVytBSXCw=="/>
+        </item>
+        <item>
             <title>1.2.1</title>
             <pubDate>Sat, 07 Nov 2026 10:23:56 +0800</pubDate>
             <link>https://felix5zheng.github.io/monitor-ok</link>
@@ -38,23 +54,6 @@
 </ul>
 ]]></description>
             <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.2.dmg" length="3147341" type="application/octet-stream" sparkle:edSignature="hvPZZ8O+KJFkn3sq6auIbmo5x5G/DjS4ci3mPKOIaLvJK7VJb5kOqP/dsEyUpOREag1oNDbBy6yCQodq6aPkBQ=="/>
-        </item>
-        <item>
-            <title>1.1</title>
-            <pubDate>Wed, 04 Nov 2026 15:42:23 +0800</pubDate>
-            <link>https://felix5zheng.github.io/monitor-ok</link>
-            <sparkle:version>2</sparkle:version>
-            <sparkle:shortVersionString>1.1</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<h2>監看都ok 1.1</h2>
-<ul>
-  <li>高負載偵測不再限定特定 App：Final Cut Pro、Compressor 或任何 App 讓 CPU 或 GPU 持續超過一半時，風扇都會自動全開，結束後自動恢復。</li>
-  <li>通知會顯示最吃重的 App 名稱，背景程式會算到開啟它的 App 名下。</li>
-  <li>儲存空間會明確標出時光機本機快照（或系統可清除空間）佔用多少：它們還在硬碟上，空間不夠時系統才會清除，所以 Finder 顯示的可用空間會比較多。</li>
-  <li>有大量時光機快照時，選單列與「硬碟快滿」提醒不再誤報。</li>
-</ul>
-]]></description>
-            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.1.dmg" length="2356624" type="application/octet-stream" sparkle:edSignature="UIM1Pe39h2KjOb+kB6VYp07GJR9Acik4KoSepSpmmr1cqYHIs/M97vNKolEpBuYum1cT8OTpYdJIddDn3H0oBw=="/>
         </item>
     </channel>
 </rss>
