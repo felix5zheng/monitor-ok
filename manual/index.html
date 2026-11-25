@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-sceIOt0gpxLDvytZNnuUxyoiETSsYgsc3dvZy9iKEdg=' 'sha256-DlllX1xnD2nqXs33Q0fbURQHOMYWruhVvUasEAt8V2E=' 'sha256-2lHeL3R28/QKKPZZlW/S4j3Ct9afBBaZQY/LGLNNsxI='; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-sceIOt0gpxLDvytZNnuUxyoiETSsYgsc3dvZy9iKEdg=' 'sha256-h8u3/kGl9Pu609tuUOWjywKZUYN/ox1J0Xw8nnpJWQ0=' 'sha256-b7yBnrIOIj5Nbz/zuT0USI3TY+JkoKHNx9DFGvNpNb8=' 'sha256-0klgMgCIXYK94pIWj8rbDbc99rdXtV6wF1V0Go84eq4=' 'sha256-D3caKY73TRkcxqV2fgw47Yta+Zq5LjPKTcOZ6GLD+VQ='; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>if (window.top !== window.self) document.documentElement.style.display = 'none';</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -45,7 +45,7 @@
 }
 html[lang="zh-Hans"] { --font: var(--font-hans); --font-display: var(--font-hans); }
 html[lang="ja"] { --font: var(--font-ja); --font-display: var(--font-ja); }
-html:is([lang="en"], [lang="es"], [lang="pt"]) { --font: var(--font-latin); --font-display: var(--font-latin); }
+html:is([lang="en"], [lang="es"], [lang="pt"], [lang="ms"]) { --font: var(--font-latin); --font-display: var(--font-latin); }
 *, *::before, *::after { box-sizing: border-box; }
 html, body { overflow-x: clip; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 72px; }
@@ -63,21 +63,9 @@ a { color: inherit; }
 .brand { display: flex; align-items: baseline; gap: var(--space-sm); text-decoration: none; color: var(--color-ink); font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: 0.012em; white-space: nowrap; border-radius: 6px; }
 .brand small { font-size: var(--text-xs); font-weight: 400; letter-spacing: 0; color: var(--color-muted); }
 .nav { display: flex; align-items: center; gap: var(--space-lg); }
-.nav a, .lang-btn { white-space: nowrap; font-size: var(--text-xs); color: var(--color-ink-2); text-decoration: none; padding-block: var(--space-sm); border-radius: 4px; transition: color var(--dur) var(--ease); }
-.nav a:hover, .lang-btn:hover, .lang-btn[aria-expanded="true"] { color: var(--color-ink); text-decoration: underline; text-underline-offset: 0.3em; text-decoration-color: var(--color-hairline); }
+.nav a { white-space: nowrap; font-size: var(--text-xs); color: var(--color-ink-2); text-decoration: none; padding-block: var(--space-sm); border-radius: 4px; transition: color var(--dur) var(--ease); }
+.nav a:hover { color: var(--color-ink); text-decoration: underline; text-underline-offset: 0.3em; text-decoration-color: var(--color-hairline); }
 .nav a[aria-current="page"] { color: var(--color-ink); }
-.lang { position: relative; }
-.lang-btn { font-family: inherit; letter-spacing: inherit; background: none; border: 0; padding-inline: 0; cursor: pointer; }
-.lang-btn:active { color: var(--color-ink); }
-.lang-menu { position: absolute; right: 0; top: calc(100% + 2px); min-width: 168px; margin: 0; padding: var(--space-2xs); list-style: none; background: var(--color-card); border-radius: var(--radius-md); box-shadow: var(--shadow-menu); z-index: 31; }
-.lang-menu[hidden] { display: none; }
-.lang-menu button { width: 100%; display: flex; align-items: center; font-family: var(--font-latin); font-size: var(--text-sm); line-height: 1.4; letter-spacing: 0; color: var(--color-ink); background: none; border: 0; border-radius: 9px; padding: var(--space-xs) var(--space-sm); cursor: pointer; text-align: left; }
-.lang-menu button[lang="zh-Hant"] { font-family: var(--font-display); }
-.lang-menu button[lang="zh-Hans"] { font-family: var(--font-hans); }
-.lang-menu button[lang="ja"] { font-family: var(--font-ja); }
-.lang-menu button:hover, .lang-menu button:focus-visible { background: var(--tint-hover); }
-.lang-menu button:focus-visible { outline-offset: -2px; }
-.lang-menu button[aria-checked="true"] { font-weight: 600; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 var(--space-lg); border-radius: var(--radius-pill); border: 1px solid var(--color-ink); color: var(--color-ink); background: transparent; font: inherit; font-size: var(--text-sm); text-decoration: none; cursor: pointer; white-space: nowrap; transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
 .btn:hover { background: var(--color-ink); color: var(--color-paper); }
@@ -151,6 +139,43 @@ footer.foot a:hover { color: var(--color-ink); text-decoration: underline; }
 .doc .qa .body { display: none; padding-bottom: var(--space-sm); font-size: var(--text-sm); }
 .doc .qa.open .body { display: block; }
 .doc .closing { margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-muted); }
+/* ok-i18n 語言選單用的陰影（本頁叫 --shadow-menu） */
+:root { --shadow-lift: var(--shadow-menu); }
+/* ok-i18n:start */
+/* ok-i18n：語言選單與各語言字體。顏色、圓角、陰影全部走頁面自己的 token。 */
+:root {
+  --font-lang-tc: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", sans-serif;
+  --font-lang-sc: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
+  --font-lang-ja: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --font-lang-ko: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-lang-hi: -apple-system, BlinkMacSystemFont, "Kohinoor Devanagari", "Noto Sans Devanagari", sans-serif;
+}
+:root:lang(zh-Hans) { --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", "Noto Sans SC", "Microsoft YaHei", sans-serif; --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", "Noto Sans SC", "Microsoft YaHei", sans-serif; }
+:root:lang(ja) { --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; }
+:root:lang(ko) { --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif; }
+:root:lang(hi) { --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Kohinoor Devanagari", "Noto Sans Devanagari", "Nirmala UI", sans-serif; --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Kohinoor Devanagari", "Noto Sans Devanagari", "Nirmala UI", sans-serif; }
+:root:lang(hi) body, :root:lang(ko) body, :root:lang(ja) body { letter-spacing: 0; }
+:root:lang(en), :root:lang(es), :root:lang(pt), :root:lang(ms), :root:lang(hi) { word-break: normal; overflow-wrap: break-word; }
+
+.lang { position: relative; flex: none; }
+.lang-btn { display: inline-flex; align-items: center; gap: var(--space-xs, 8px); height: 32px; padding: 0 var(--space-sm, 12px) 0 var(--space-xs, 8px); font: inherit; font-size: var(--text-xs, 12px); color: var(--color-ink-2); background: transparent; border: 1px solid var(--color-hairline); border-radius: var(--radius-pill, 9999px); cursor: pointer; white-space: nowrap; transition: color var(--dur, 240ms) var(--ease), border-color var(--dur, 240ms) var(--ease), background-color var(--dur, 240ms) var(--ease); }
+.lang-btn svg { width: 14px; height: 14px; flex: none; }
+.lang-btn:hover, .lang-btn[aria-expanded="true"] { color: var(--color-ink); border-color: var(--color-ink); }
+.lang-btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; transition: none; }
+.lang-btn:active { background: var(--color-band); }
+.lang-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; min-width: 176px; max-height: min(70dvh, 420px); overflow-y: auto; margin: 0; padding: var(--space-xs, 8px); list-style: none; background: var(--color-card); border-radius: var(--radius-md, 14px); box-shadow: var(--shadow-lift); }
+.lang-menu[hidden] { display: none; }
+.lang-menu button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: var(--space-md, 16px); padding: var(--space-xs, 8px) var(--space-sm, 12px); font: inherit; font-size: var(--text-sm, 14px); line-height: 1.35; letter-spacing: 0; color: var(--color-ink); background: transparent; border: 0; border-radius: 9px; cursor: pointer; text-align: left; }
+.lang-menu button[lang="zh-Hant"] { font-family: var(--font-lang-tc); }
+.lang-menu button[lang="zh-Hans"] { font-family: var(--font-lang-sc); }
+.lang-menu button[lang="ja"] { font-family: var(--font-lang-ja); }
+.lang-menu button[lang="ko"] { font-family: var(--font-lang-ko); }
+.lang-menu button[lang="hi"] { font-family: var(--font-lang-hi); }
+.lang-menu button:hover { background: var(--color-band); }
+.lang-menu button:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.lang-menu button[aria-checked="true"]::after { content: ""; width: 9px; height: 5px; transform-origin: center; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) { .lang-btn { transition: none; } }
+/* ok-i18n:end */
 </style>
 </head>
 <body>
@@ -160,6 +185,10 @@ footer.foot a:hover { color: var(--color-ink); text-decoration: underline; }
     <nav class="nav" aria-label="監看都ok">
       <a href="../manual/" data-i="nav_manual" aria-current="page">使用說明</a>
       <a class="opt" href="../privacy/" data-i="nav_privacy">隱私權政策</a>
+      <div class="lang" id="lang">
+  <button type="button" class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" aria-label="Language"><svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="8" cy="8" r="6.3"/><path d="M1.7 8h12.6M8 1.7c1.8 1.7 2.7 3.8 2.7 6.3S9.8 12.6 8 14.3M8 1.7C6.2 3.4 5.3 5.5 5.3 8s.9 4.6 2.7 6.3"/></svg><span id="langCur">繁中</span></button>
+  <ul class="lang-menu" id="langMenu" role="menu" aria-label="Language" hidden></ul>
+</div>
     </nav>
   </div>
 </header>
@@ -894,54 +923,394 @@ footer.foot a:hover { color: var(--color-ink); text-decoration: underline; }
     </section>
   </article>
 </template>
+<template data-lang="ko" data-region="article.doc">
+  <article class="doc">
+    <h1>Monitor OK 사용 설명서</h1>
+    <p class="lede">사진가와 영상 제작자를 위한 Mac 시스템 모니터.<br>메뉴 막대를 한 번 보면 Mac 상태를 알 수 있어요.</p>
+    <p class="meta">macOS 13 이상 지원</p>
+    <p class="meta">처음이라면 앞의 세 장을 먼저 읽어 주세요. 약 5분이면 됩니다</p>
+    <nav class="toc" aria-label="Chapters"><a href="#install">설치</a><a href="#open">처음 열기</a><a href="#menubar">메뉴 막대와 패널</a><a href="#fan">팬</a><a href="#alerts">알림과 메모리 카드</a><a href="#update">자동 업데이트</a><a href="#faq">자주 묻는 질문</a><a href="#feedback">문제 신고</a></nav>
+    <section class="part" id="install">
+      <h2>설치</h2>
+      <p>Monitor OK는 독립된 Mac 앱입니다. 응용 프로그램 폴더로 끌어다 놓으면 설치가 끝납니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">다운로드한 디스크 이미지 열기</div><div class="d">공식 웹사이트에서 받은 파일은 MonitorOK로 시작하고 .dmg로 끝납니다. 더블클릭해서 여세요.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">응용 프로그램으로 끌어다 놓기</div><div class="d">Monitor OK를 옆에 있는 응용 프로그램 바로 가기로 끌어다 놓으세요. 디스크 이미지 안에서 바로 실행하지 마세요. 이미지를 꺼내면 사라집니다.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">디스크 이미지 꺼내기</div><div class="d">Finder 사이드바에서 이미지 옆의 꺼내기 버튼을 누르세요. 그다음 .dmg 파일은 지워도 됩니다.</div></div></li>
+      </ol>
+      <h3>요구 사항</h3>
+      <div class="tbl"><table>
+        <tr><td>시스템</td><td>macOS 13 이상</td></tr>
+        <tr><td>팬 제어</td><td>최대로 전환하려면 팬이 있는 Mac이 필요합니다. MacBook Air처럼 팬이 없는 모델에서도 나머지 기능은 모두 쓸 수 있습니다</td></tr>
+        <tr><td>인터넷</td><td>업데이트 확인에만 씁니다. 모니터링 자체는 오프라인에서도 완전히 작동합니다</td></tr>
+        <tr><td>가격</td><td>무료. 계정이나 라이선스 키가 필요 없습니다</td></tr>
+      </table></div>
+    </section>
+    <section class="part" id="open">
+      <h2>처음 열기</h2>
+      <p>Monitor OK는 Apple의 공증을 받았습니다. 처음 열 때 macOS가 인터넷에서 받은 앱인지 한 번 확인합니다.</p>
+      <h3>이런 창이 나타납니다</h3>
+      <div class="quote">
+        <div class="cap">macOS</div>
+        <div>“Monitor OK”은(는) 인터넷에서 다운로드한 앱입니다. 정말로 여시겠습니까?</div>
+      </div>
+      <p>열기를 누르세요. 다시 묻지 않습니다.</p>
+      <div class="note"><div class="h">창이 안 나타나요</div>Monitor OK는 메뉴 막대에 있습니다. Dock에 나타나지 않고 메인 창도 없습니다. 화면 오른쪽 위를 보세요. 숫자가 보이면 실행 중입니다.</div>
+      <h3>로그인 시 열기</h3>
+      <p> <span class="path">설정<i>›</i>일반</span> 에서 로그인 시 열기를 켜면 로그인할 때마다 메뉴 막대에 나타납니다.</p>
+    </section>
+    <section class="part" id="menubar">
+      <h2>메뉴 막대와 패널</h2>
+      <p>대부분은 메뉴 막대의 숫자만 보면 충분합니다. 자세히 보려면 클릭하세요.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">메뉴 막대 보기</div><div class="d">기본으로 GPU, 온도, 메모리, 남은 디스크 공간, 배터리를 보여 줍니다. 한도를 넘은 숫자는 빨간색이 됩니다.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">클릭해서 패널 열기</div><div class="d">CPU, GPU, 온도 그래프, 메모리, 모든 디스크, 네트워크, 팬, 배터리를 한곳에서 볼 수 있습니다. ⌃⌥M으로도 열고 닫을 수 있습니다.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">아래쪽 버튼</div><div class="d">잠자기 방지, 설정, 종료. 잠자기 방지를 켜면 Mac이 잠자기에 들어가지 않아 긴 내보내기, 업로드, 백업에 편리합니다.</div></div></li>
+      </ol>
+      <h3>메뉴 막대에 표시할 항목 고르기</h3>
+      <p> <span class="path">설정<i>›</i>메뉴 막대</span>에서 표시할 항목을 고르세요: CPU, GPU, 온도, 메모리, 네트워크 속도, 남은 디스크 공간, 배터리.</p>
+      <div class="tbl"><table>
+        <tr><td>간결 모드</td><td>작은 아이콘만 표시하고, 한도를 넘는 항목이 있을 때 숫자가 나타납니다</td></tr>
+        <tr><td>갱신 주기</td><td>0.5초, 1초, 2초마다</td></tr>
+      </table></div>
+      <h3>패널 배치하기</h3>
+      <p> <span class="path">설정<i>›</i>패널</span>에서 타일을 끌어 순서를 바꾸고, ⊖를 눌러 숨길 수 있습니다. 숨긴 항목은 아래에 모여 있으니 클릭하면 다시 추가됩니다. 작은 타일(CPU, GPU, 네트워크, 팬)은 서로 이웃하면 나란히 배치됩니다. 기본값으로 재설정을 누르면 원래 배치로 돌아갑니다.</p>
+    </section>
+    <section class="part" id="fan">
+      <h2>팬</h2>
+      <p>팬에는 두 가지 모드가 있습니다. 자동은 macOS에 맡기고, 최대는 최고 속도로 돌립니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">패널에서 팬 타일 클릭</div><div class="d">자동과 최대가 서로 전환됩니다.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">처음 한 번은 Mac 암호 입력</div><div class="d">팬 도우미를 설치하기 위해서입니다. 암호 창은 macOS가 띄우며, Monitor OK는 암호를 보지도 저장하지도 않습니다. 다시 묻지 않습니다.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">다시 자동으로</div><div class="d">팬 제어가 macOS로 돌아가며, Monitor OK를 설치하지 않은 것과 똑같아집니다.</div></div></li>
+      </ol>
+      <h3>고부하 시 팬 최대</h3>
+      <p>Premiere Pro, Final Cut Pro, DaVinci Resolve의 내보내기든 다른 앱의 무거운 작업이든, Mac의 CPU나 GPU가 약 10초 동안 절반 이상 바쁘면 팬이 최대로 바뀌고 메뉴 막대에 “Pr 고부하 감지”(가장 바쁜 앱 이름)가 표시됩니다. 부하가 내려가고 약 30초 뒤에는 자동으로 돌아갑니다. <span class="path">설정<i>›</i>일반</span>에서 끌 수 있습니다.</p>
+      <div class="tbl"><table>
+        <tr><td>고부하 종료 알림</td><td>고부하가 끝나면(보통 내보내기가 끝났다는 뜻) 얼마나 지속됐는지와 함께 알려 줍니다</td></tr>
+        <tr><td>팬 모드 기억</td><td>앱을 다시 시작해도 자동 또는 최대를 유지합니다</td></tr>
+      </table></div>
+      <div class="note"><div class="h">팬 도우미 제거</div> <span class="path">설정<i>›</i>정보</span> 에서 도우미 제거를 누르고 암호를 한 번 더 입력하세요. 팬 제어가 완전히 macOS로 돌아갑니다.</div>
+    </section>
+    <section class="part" id="alerts">
+      <h2>알림과 메모리 카드</h2>
+      <p>신경 써야 할 일이 생기면 메뉴 막대 아래로 작은 카드가 내려옵니다. 몇 초 뒤 저절로 닫히고, 클릭해서 닫을 수도 있습니다.</p>
+      <div class="tbl"><table>
+        <tr><th>알림</th><th>나타나는 때</th></tr>
+        <tr><td>과열</td><td>CPU 95°C가 15초 지속</td></tr>
+        <tr><td>메모리 부족</td><td>메모리 압력이 위험 수준이거나 SSD 스왑이 10 GB를 넘은 상태가 20초 지속</td></tr>
+        <tr><td>디스크가 거의 참</td><td>어느 디스크든 남은 공간이 5% 또는 20 GB 미만</td></tr>
+        <tr><td>디스크 오류</td><td>디스크에 새로운 읽기/쓰기 오류가 보고됨. 먼저 촬영 원본을 다른 디스크에 백업하세요</td></tr>
+      </table></div>
+      <p>알림마다 대기 시간이 있어 계속 뜨지 않습니다. <span class="path">설정<i>›</i>일반</span>에서 끌 수 있습니다.</p>
+      <h3>메모리 카드를 꽂으면 Backup OK 열기</h3>
+      <p>카메라 메모리 카드(DCIM 또는 M4ROOT 폴더가 있는 카드)를 꽂으면 Backup OK가 자동으로 열리고, 카드에 남은 공간도 알려 줍니다. 외장 디스크에는 반응하지 않습니다. Backup OK가 설치되어 있지 않으면 카드 공간만 표시합니다. <span class="path">설정<i>›</i>일반</span>에서 끌 수 있습니다.</p>
+      <h3>외장 디스크</h3>
+      <p>패널의 디스크 영역에 외장 디스크마다 실시간 읽기/쓰기 속도와 오류 횟수가 표시되고, 바로 옆에 꺼내기 버튼이 있습니다.</p>
+    </section>
+    <section class="part" id="update">
+      <h2>자동 업데이트</h2>
+      <p>Monitor OK는 열 때마다 업데이트를 확인하고, 이후에는 백그라운드에서 1시간마다 확인합니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">“새 버전의 Monitor OK” 카드가 내려옴</div><div class="d">같은 버전은 하루에 한 번까지만 알려 주니 작업을 방해하지 않습니다.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">카드 클릭</div><div class="d">새로운 내용이 담긴 업데이트 창이 열립니다. 업데이트 설치를 누르세요.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">저절로 다시 열림</div><div class="d">설치가 끝나면 앱이 다시 실행되고, 설정은 모두 그대로 유지됩니다.</div></div></li>
+      </ol>
+      <p> <span class="path">설정<i>›</i>정보</span>에서 업데이트 확인…을 눌러도 됩니다. 모든 버전은 공식 웹사이트에도 나와 있습니다.</p>
+    </section>
+    <section class="part" id="faq">
+      <h2>자주 묻는 질문</h2>
+      <p>대부분의 문제는 권한이나 Mac 모델 때문입니다.</p>
+      <div class="faq">
+        <div class="qa"><button type="button" aria-expanded="false">메뉴 막대에 Monitor OK가 안 보여요<span class="pm"></span></button><div class="body"><div><p>메뉴 막대가 붐비면 macOS는 들어가지 않는 아이콘을 숨깁니다. <span class="path">설정<i>›</i>메뉴 막대</span>에서 간결 모드를 써 보거나, 다른 메뉴 막대 앱을 몇 개 정리하세요.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">팬이 최대로 바뀌지 않아요<span class="pm"></span></button><div class="body"><div><p>Mac에 팬이 없거나(예: MacBook Air) 다른 팬 앱이 제어하고 있을 수 있습니다. 이 경우 패널에 “다른 앱이 제어 중”이라고 표시됩니다. 다른 앱을 종료하고 다시 시도하세요.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">매번 암호를 물어요<span class="pm"></span></button><div class="body"><div><p>도우미가 설치되지 않았거나 제거된 상태입니다. <span class="path">설정<i>›</i>정보</span> 에서 도우미가 설치됨으로 표시되는지 확인하세요.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">온도가 “—”로 표시돼요<span class="pm"></span></button><div class="body"><div><p>일부 Mac 모델이나 macOS 버전은 모든 센서를 제공하지 않습니다. 그 항목은 “—”로 표시되고, 나머지는 정상적으로 작동합니다.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">충전 한도가 안 보여요<span class="pm"></span></button><div class="body"><div><p>충전 제어는 Mac 모델과 macOS 버전에 따라 다릅니다. 지원되지 않으면 <span class="path">시스템 설정<i>›</i>배터리</span>에서 끌 수 있습니다.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">내보내는 중인데 팬이 최대가 아니에요<span class="pm"></span></button><div class="body"><div><p>잠깐의 순간 부하가 아니라 부하가 한동안 높게 유지될 때 작동합니다. <span class="path">설정<i>›</i>일반</span>에서 끌 수 있습니다.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">완전히 제거하려면?<span class="pm"></span></button><div class="body"><div><p> <span class="path">설정<i>›</i>정보</span>에서 도우미 제거를 누르고 Monitor OK를 종료한 다음, 응용 프로그램에서 앱을 휴지통으로 끌어다 놓으세요.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">남은 공간이 Finder보다 적게 나와요<span class="pm"></span></button><div class="body"><div><p>Monitor OK는 지금 실제로 비어 있는 공간을 보여 줍니다. 차이는 대개 Time Machine 로컬 스냅샷이나 캐시이며, 패널에서 회색으로 “Time Machine 로컬 스냅샷(아직 디스크에 있음)”이라고 표시됩니다. 이들은 실제로 디스크를 차지하고 있고 macOS는 공간이 부족할 때만 지우지만, Finder는 이미 사용 가능한 공간으로 계산합니다. 지금 바로 비우려면 터미널에서 tmutil thinlocalsnapshots / 999999999999 4 를 실행하세요.</p></div></div></div>
+      </div>
+    </section>
+    <section class="part" id="feedback">
+      <h2>문제 신고</h2>
+      <p>아래 내용을 담아 <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a> 으로 메일을 보내 주시면 원인을 더 빨리 찾을 수 있습니다.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">스크린샷</div><div class="d">패널 화면과 <span class="path">설정<i>›</i>정보</span>에서 끌 수 있습니다.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">사용 환경</div><div class="d">Mac 모델, 칩, macOS 버전.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">무슨 일이 있었고, 원래 어떻게 되길 기대했는지</div><div class="d">한두 문장이면 충분합니다. 재현 방법이 가장 큰 도움이 됩니다.</div></div></li>
+      </ol>
+      <p class="closing">Monitor OK는 어떤 모니터링 데이터도 수집하거나 업로드하지 않습니다. 자세한 내용은 <a href="../privacy/">개인정보 처리방침</a>에서 끌 수 있습니다.</p>
+    </section>
+  </article>
+</template>
+<template data-lang="hi" data-region="article.doc">
+  <article class="doc">
+    <h1>Monitor OK उपयोग गाइड</h1>
+    <p class="lede">फ़ोटोग्राफ़रों और फ़िल्ममेकरों के लिए Mac सिस्टम मॉनिटर।<br>मेन्यू बार पर एक नज़र, और पता चल जाता है कि आपका Mac कैसा है।</p>
+    <p class="meta">macOS 13 या नया ज़रूरी</p>
+    <p class="meta">पहली बार? पहले तीन अध्याय पढ़ें, लगभग पाँच मिनट</p>
+    <nav class="toc" aria-label="Chapters"><a href="#install">इंस्टॉल</a><a href="#open">पहली बार खोलना</a><a href="#menubar">मेन्यू बार और पैनल</a><a href="#fan">फ़ैन</a><a href="#alerts">अलर्ट और मेमोरी कार्ड</a><a href="#update">अपने-आप अपडेट</a><a href="#faq">अक्सर पूछे जाने वाले सवाल</a><a href="#feedback">समस्या बताएँ</a></nav>
+    <section class="part" id="install">
+      <h2>इंस्टॉल</h2>
+      <p>Monitor OK एक अलग Mac ऐप है। इसे Applications फ़ोल्डर में खींचें, और इंस्टॉल हो गया।</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">डाउनलोड की गई डिस्क इमेज खोलें</div><div class="d">आधिकारिक वेबसाइट से मिली फ़ाइल MonitorOK से शुरू होती है और .dmg पर ख़त्म। इसे खोलने के लिए डबल-क्लिक करें।</div></div></li>
+        <li><span class="n">2</span><div><div class="h">Applications में खींचें</div><div class="d">Monitor OK को बगल वाले Applications शॉर्टकट पर खींचें। इसे डिस्क इमेज के अंदर से न चलाएँ, इमेज निकालते ही यह ग़ायब हो जाएगा।</div></div></li>
+        <li><span class="n">3</span><div><div class="h">डिस्क इमेज निकालें</div><div class="d">Finder साइडबार में इमेज के बगल वाले Eject बटन पर क्लिक करें। इसके बाद .dmg फ़ाइल मिटा सकते हैं।</div></div></li>
+      </ol>
+      <h3>ज़रूरतें</h3>
+      <div class="tbl"><table>
+        <tr><td>सिस्टम</td><td>macOS 13 या नया</td></tr>
+        <tr><td>फ़ैन कंट्रोल</td><td>फ़ुल पर स्विच करने के लिए फ़ैन वाला Mac चाहिए। MacBook Air जैसे बिना फ़ैन वाले मॉडल पर बाक़ी सब कुछ वैसे ही चलता है</td></tr>
+        <tr><td>इंटरनेट</td><td>सिर्फ़ अपडेट जाँचने के लिए। मॉनिटरिंग पूरी तरह ऑफ़लाइन चलती है</td></tr>
+        <tr><td>कीमत</td><td>मुफ़्त। न अकाउंट चाहिए, न लाइसेंस की</td></tr>
+      </table></div>
+    </section>
+    <section class="part" id="open">
+      <h2>पहली बार खोलना</h2>
+      <p>Monitor OK, Apple द्वारा नोटराइज़्ड है। पहली बार खोलने पर macOS सिर्फ़ एक बार पुष्टि करता है कि यह इंटरनेट से डाउनलोड किया गया है।</p>
+      <h3>आपको यह दिखेगा</h3>
+      <div class="quote">
+        <div class="cap">macOS</div>
+        <div>“Monitor OK” इंटरनेट से डाउनलोड किया गया ऐप है। क्या आप वाकई इसे खोलना चाहते हैं?</div>
+      </div>
+      <p>खोलें पर क्लिक करें। यह दोबारा नहीं पूछा जाएगा।</p>
+      <div class="note"><div class="h">कोई विंडो नहीं खुली</div>Monitor OK मेन्यू बार में रहता है। यह Dock में नहीं दिखता और इसकी कोई मुख्य विंडो नहीं है। स्क्रीन के ऊपर दाईं ओर देखें, संख्याएँ दिखें, तो यह चल रहा है।</div>
+      <h3>लॉगिन पर खोलें</h3>
+      <p> <span class="path">सेटिंग्स<i>›</i>सामान्य</span> में लॉगिन पर खोलें चालू करें, फिर हर बार लॉगिन करने पर यह मेन्यू बार में दिखेगा।</p>
+    </section>
+    <section class="part" id="menubar">
+      <h2>मेन्यू बार और पैनल</h2>
+      <p>ज़्यादातर समय मेन्यू बार की संख्याएँ ही काफ़ी हैं। ब्योरे के लिए उन पर क्लिक करें।</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">मेन्यू बार पर नज़र डालें</div><div class="d">डिफ़ॉल्ट रूप से GPU, तापमान, मेमोरी, ख़ाली डिस्क और बैटरी दिखती है। सीमा पार करने वाली संख्याएँ लाल हो जाती हैं।</div></div></li>
+        <li><span class="n">2</span><div><div class="h">क्लिक करके पैनल खोलें</div><div class="d">CPU, GPU, तापमान का ग्राफ़, मेमोरी, हर डिस्क, नेटवर्क, फ़ैन और बैटरी, सब एक जगह। ⌃⌥M दबाकर भी इसे खोल या बंद कर सकते हैं।</div></div></li>
+        <li><span class="n">3</span><div><div class="h">नीचे के बटन</div><div class="d">जागते रहें, सेटिंग्स और बंद करें। जागते रहें चालू होने पर Mac स्लीप में नहीं जाता, लंबे एक्सपोर्ट, अपलोड और बैकअप के लिए काम का।</div></div></li>
+      </ol>
+      <h3>मेन्यू बार में क्या दिखे, चुनें</h3>
+      <p> <span class="path">सेटिंग्स<i>›</i>मेन्यू बार</span>में दिखाने वाले आइटम चुनें: CPU, GPU, तापमान, मेमोरी, नेटवर्क स्पीड, ख़ाली डिस्क और बैटरी।</p>
+      <div class="tbl"><table>
+        <tr><td>कॉम्पैक्ट मोड</td><td>सिर्फ़ एक छोटा आइकन दिखता है; कोई चीज़ सीमा पार करे तभी संख्याएँ आती हैं</td></tr>
+        <tr><td>रिफ़्रेश रेट</td><td>हर 0.5, 1 या 2 सेकंड</td></tr>
+      </table></div>
+      <h3>पैनल सजाएँ</h3>
+      <p> <span class="path">सेटिंग्स<i>›</i>पैनल</span>में टाइलों को खींचकर क्रम बदलें, और छिपाने के लिए ⊖ पर क्लिक करें। छिपे आइटम नीचे रहते हैं, वापस जोड़ने के लिए उन पर क्लिक करें। छोटी टाइलें (CPU, GPU, नेटवर्क, फ़ैन) पास-पास हों तो एक साथ अगल-बगल बैठती हैं। डिफ़ॉल्ट पर रीसेट करें से मूल लेआउट वापस आता है।</p>
+    </section>
+    <section class="part" id="fan">
+      <h2>फ़ैन</h2>
+      <p>फ़ैन के दो मोड हैं: ऑटो में कंट्रोल macOS के पास रहता है, फ़ुल में फ़ैन सबसे तेज़ चलते हैं।</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">पैनल में फ़ैन टाइल पर क्लिक करें</div><div class="d">यह ऑटो और फ़ुल के बीच बदलता है।</div></div></li>
+        <li><span class="n">2</span><div><div class="h">पहली बार एक बार Mac पासवर्ड डालें</div><div class="d">इससे फ़ैन हेल्पर इंस्टॉल होता है। पासवर्ड विंडो macOS दिखाता है, Monitor OK आपका पासवर्ड न देखता है, न सहेजता है। यह दोबारा नहीं पूछा जाएगा।</div></div></li>
+        <li><span class="n">3</span><div><div class="h">वापस ऑटो पर</div><div class="d">फ़ैन फिर macOS के कंट्रोल में चले जाते हैं, बिल्कुल वैसे जैसे Monitor OK इंस्टॉल ही न हो।</div></div></li>
+      </ol>
+      <h3>भारी लोड पर फ़ैन फ़ुल</h3>
+      <p>चाहे Premiere Pro, Final Cut Pro या DaVinci Resolve से एक्सपोर्ट हो या कोई और ऐप भारी काम कर रहा हो, जब Mac का CPU या GPU लगभग 10 सेकंड तक आधे से ज़्यादा व्यस्त रहे, फ़ैन फ़ुल पर चले जाते हैं और मेन्यू बार में “Pr पर भारी लोड” दिखता है (सबसे व्यस्त ऐप के नाम के साथ)। लोड घटने के लगभग 30 सेकंड बाद वे ऑटो पर लौट आते हैं। इसे <span class="path">सेटिंग्स<i>›</i>सामान्य</span>में बंद कर सकते हैं।</p>
+      <div class="tbl"><table>
+        <tr><td>भारी लोड ख़त्म होने का अलर्ट</td><td>भारी लोड ख़त्म होने पर बताता है, आम तौर पर इसका मतलब एक्सपोर्ट पूरा, और यह कितनी देर चला</td></tr>
+        <tr><td>फ़ैन मोड याद रखें</td><td>ऐप दोबारा शुरू होने पर भी ऑटो या फ़ुल बना रहता है</td></tr>
+      </table></div>
+      <div class="note"><div class="h">फ़ैन हेल्पर हटाना</div> <span class="path">सेटिंग्स<i>›</i>जानकारी</span> में हेल्पर हटाएँ पर क्लिक करें और एक बार फिर पासवर्ड डालें। फ़ैन पूरी तरह macOS के पास लौट जाते हैं।</div>
+    </section>
+    <section class="part" id="alerts">
+      <h2>अलर्ट और मेमोरी कार्ड</h2>
+      <p>जब किसी चीज़ पर ध्यान देना हो, मेन्यू बार के नीचे एक छोटा कार्ड खिसककर आता है। यह कुछ सेकंड में अपने-आप बंद हो जाता है, या क्लिक करके बंद करें।</p>
+      <div class="tbl"><table>
+        <tr><th>अलर्ट</th><th>कब दिखता है</th></tr>
+        <tr><td>ज़्यादा गर्म</td><td>CPU 15 सेकंड तक 95°C पर</td></tr>
+        <tr><td>मेमोरी कम</td><td>मेमोरी प्रेशर गंभीर हो, या SSD स्वैप 10 GB से ज़्यादा हो, 20 सेकंड तक</td></tr>
+        <tr><td>डिस्क लगभग भरी</td><td>किसी भी डिस्क में 5% या 20 GB से कम जगह बची हो</td></tr>
+        <tr><td>डिस्क एरर</td><td>किसी डिस्क पर नए रीड/राइट एरर आएँ, पहले अपनी फ़ुटेज का दूसरी ड्राइव पर बैकअप लें</td></tr>
+      </table></div>
+      <p>हर अलर्ट के बाद एक ठहराव होता है, ताकि वह बार-बार न आए। सारे अलर्ट <span class="path">सेटिंग्स<i>›</i>सामान्य</span>में बंद कर सकते हैं।</p>
+      <h3>मेमोरी कार्ड के लिए Backup OK खोलें</h3>
+      <p>कैमरा मेमोरी कार्ड (जिसमें DCIM या M4ROOT फ़ोल्डर हो) लगाने पर Backup OK अपने-आप खुल जाता है और बताया जाता है कि कार्ड में कितनी जगह बची है। बाहरी ड्राइव से यह शुरू नहीं होता। Backup OK इंस्टॉल न हो, तो सिर्फ़ कार्ड की जगह दिखती है। इसे <span class="path">सेटिंग्स<i>›</i>सामान्य</span>में बंद कर सकते हैं।</p>
+      <h3>बाहरी ड्राइव</h3>
+      <p>पैनल के डिस्क सेक्शन में हर बाहरी ड्राइव की लाइव रीड/राइट स्पीड और एरर की गिनती दिखती है, और ठीक बगल में Eject बटन होता है।</p>
+    </section>
+    <section class="part" id="update">
+      <h2>अपने-आप अपडेट</h2>
+      <p>Monitor OK हर बार खुलने पर अपडेट जाँचता है, फिर बैकग्राउंड में हर घंटे।</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">“Monitor OK का नया संस्करण उपलब्ध है” कार्ड आता है</div><div class="d">एक संस्करण के लिए दिन में ज़्यादा से ज़्यादा एक बार याद दिलाया जाता है, ताकि आपका काम न रुके।</div></div></li>
+        <li><span class="n">2</span><div><div class="h">कार्ड पर क्लिक करें</div><div class="d">अपडेट विंडो खुलती है, जिसमें बताया गया है कि क्या नया है। अपडेट इंस्टॉल करें पर क्लिक करें।</div></div></li>
+        <li><span class="n">3</span><div><div class="h">यह अपने-आप फिर खुलता है</div><div class="d">अपडेट इंस्टॉल होने पर ऐप दोबारा शुरू होता है, आपकी सारी सेटिंग्स के साथ।</div></div></li>
+      </ol>
+      <p>आप <span class="path">सेटिंग्स<i>›</i>जानकारी</span>में अपडेट जाँचें… पर भी क्लिक कर सकते हैं। हर रिलीज़ आधिकारिक वेबसाइट पर भी दी गई है।</p>
+    </section>
+    <section class="part" id="faq">
+      <h2>अक्सर पूछे जाने वाले सवाल</h2>
+      <p>ज़्यादातर दिक़्क़तें अनुमतियों या Mac मॉडल से जुड़ी होती हैं।</p>
+      <div class="faq">
+        <div class="qa"><button type="button" aria-expanded="false">मेन्यू बार में Monitor OK नहीं दिख रहा<span class="pm"></span></button><div class="body"><div><p>मेन्यू बार भरा होने पर macOS वे आइकन छिपा देता है जो जगह में नहीं आते। <span class="path">सेटिंग्स<i>›</i>मेन्यू बार</span>में कॉम्पैक्ट मोड आज़माएँ, या मेन्यू बार के कुछ दूसरे ऐप हटाएँ।</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">फ़ैन फ़ुल पर नहीं जा रहे<span class="pm"></span></button><div class="body"><div><p>हो सकता है आपके Mac में फ़ैन न हों (जैसे MacBook Air), या कोई दूसरा फ़ैन ऐप कंट्रोल कर रहा हो, तब पैनल में “दूसरा ऐप कंट्रोल कर रहा है” दिखता है। दूसरा ऐप बंद करके फिर कोशिश करें।</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">हर बार पासवर्ड माँगता है<span class="pm"></span></button><div class="body"><div><p>हेल्पर इंस्टॉल नहीं हुआ, या हटा दिया गया। देखें कि <span class="path">सेटिंग्स<i>›</i>जानकारी</span> में हेल्पर इंस्टॉल है दिख रहा है या नहीं।</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">कोई तापमान “—” दिखा रहा है<span class="pm"></span></button><div class="body"><div><p>कुछ Mac मॉडल या macOS संस्करण हर सेंसर नहीं दिखाते। वह रीडिंग “—” दिखाती है; बाक़ी सब वैसे ही काम करता है।</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">चार्ज लिमिट नहीं दिख रही<span class="pm"></span></button><div class="body"><div><p>चार्ज कंट्रोल आपके Mac मॉडल और macOS संस्करण पर निर्भर है। सपोर्ट न हो, तो <span class="path">सिस्टम सेटिंग्स<i>›</i>बैटरी</span>में बंद कर सकते हैं।</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">एक्सपोर्ट चल रहा है, पर फ़ैन फ़ुल पर नहीं हैं<span class="pm"></span></button><div class="body"><div><p>यह तब शुरू होता है जब लोड कुछ देर तक ऊँचा रहे, छोटे उछालों पर नहीं। देखें कि <span class="path">सेटिंग्स<i>›</i>सामान्य</span>में बंद कर सकते हैं।</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">इसे पूरी तरह कैसे हटाएँ?<span class="pm"></span></button><div class="body"><div><p> <span class="path">सेटिंग्स<i>›</i>जानकारी</span>में हेल्पर हटाएँ पर क्लिक करें, Monitor OK बंद करें, फिर ऐप को Applications से ट्रैश में खींचें।</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">ख़ाली जगह Finder से कम दिख रही है<span class="pm"></span></button><div class="body"><div><p>Monitor OK वह जगह दिखाता है जो अभी सच में ख़ाली है। फ़र्क़ आम तौर पर Time Machine के लोकल स्नैपशॉट या कैश का होता है, जिन्हें पैनल धूसर रंग में “Time Machine लोकल स्नैपशॉट (अब भी डिस्क पर)” के रूप में दिखाता है। ये सच में डिस्क पर हैं; macOS इन्हें तभी हटाता है जब जगह कम हो, जबकि Finder इन्हें पहले से ही उपलब्ध मान लेता है। अभी जगह ख़ाली करने के लिए Terminal में tmutil thinlocalsnapshots / 999999999999 4 चलाएँ।</p></div></div></div>
+      </div>
+    </section>
+    <section class="part" id="feedback">
+      <h2>समस्या बताएँ</h2>
+      <p>नीचे दी गई जानकारी के साथ <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a> पर ईमेल करें, तो हम वजह जल्दी ढूँढ पाएँगे।</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">एक स्क्रीनशॉट</div><div class="d">पैनल का, और <span class="path">सेटिंग्स<i>›</i>जानकारी</span>में बंद कर सकते हैं।</div></div></li>
+        <li><span class="n">2</span><div><div class="h">आपका सेटअप</div><div class="d">Mac मॉडल, चिप और macOS संस्करण।</div></div></li>
+        <li><span class="n">3</span><div><div class="h">क्या हुआ और आप क्या उम्मीद कर रहे थे</div><div class="d">एक-दो वाक्य काफ़ी हैं। दोहराने के स्टेप्स सबसे ज़्यादा मदद करते हैं।</div></div></li>
+      </ol>
+      <p class="closing">Monitor OK कभी भी कोई मॉनिटरिंग डेटा इकट्ठा या अपलोड नहीं करता। <a href="../privacy/">गोपनीयता नीति</a>में बंद कर सकते हैं।</p>
+    </section>
+  </article>
+</template>
+<template data-lang="ms" data-region="article.doc">
+  <article class="doc">
+    <h1>Panduan Pengguna Monitor OK</h1>
+    <p class="lede">Pemantau sistem Mac untuk jurugambar dan pembuat filem.<br>Sekali pandang bar menu, anda tahu keadaan Mac anda.</p>
+    <p class="meta">Memerlukan macOS 13 atau lebih baharu</p>
+    <p class="meta">Baru di sini? Baca tiga bab pertama dahulu, kira-kira lima minit</p>
+    <nav class="toc" aria-label="Chapters"><a href="#install">Pasang</a><a href="#open">Buka kali pertama</a><a href="#menubar">Bar menu dan panel</a><a href="#fan">Kipas</a><a href="#alerts">Amaran dan kad memori</a><a href="#update">Kemas kini automatik</a><a href="#faq">Soalan lazim</a><a href="#feedback">Laporkan masalah</a></nav>
+    <section class="part" id="install">
+      <h2>Pasang</h2>
+      <p>Monitor OK ialah aplikasi Mac yang berdiri sendiri. Seret ke folder Aplikasi dan siap.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">Buka imej cakera yang dimuat turun</div><div class="d">Fail dari laman web rasmi bermula dengan MonitorOK dan berakhir dengan .dmg. Dwiklik untuk membukanya.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">Seret ke Aplikasi</div><div class="d">Seret Monitor OK ke pintasan Aplikasi di sebelahnya. Jangan jalankan dari dalam imej cakera, ia hilang apabila imej dikeluarkan.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">Keluarkan imej cakera</div><div class="d">Klik butang keluarkan di sebelah imej dalam bar sisi Finder. Selepas itu fail .dmg boleh dipadam.</div></div></li>
+      </ol>
+      <h3>Keperluan</h3>
+      <div class="tbl"><table>
+        <tr><td>Sistem</td><td>macOS 13 atau lebih baharu</td></tr>
+        <tr><td>Kawalan kipas</td><td>Untuk menukar ke Maks, Mac perlu ada kipas. Pada model tanpa kipas seperti MacBook Air, semua fungsi lain tetap berfungsi</td></tr>
+        <tr><td>Internet</td><td>Hanya untuk menyemak kemas kini. Pemantauan berfungsi sepenuhnya tanpa talian</td></tr>
+        <tr><td>Harga</td><td>Percuma. Tiada akaun atau kunci lesen</td></tr>
+      </table></div>
+    </section>
+    <section class="part" id="open">
+      <h2>Buka kali pertama</h2>
+      <p>Monitor OK telah disahkan (notarized) oleh Apple. Kali pertama anda membukanya, macOS bertanya sekali untuk mengesahkan ia dimuat turun dari internet.</p>
+      <h3>Apa yang anda akan nampak</h3>
+      <div class="quote">
+        <div class="cap">macOS</div>
+        <div>“Monitor OK” ialah aplikasi yang dimuat turun dari internet. Adakah anda pasti mahu membukanya?</div>
+      </div>
+      <p>Klik Buka. Anda tidak akan ditanya lagi.</p>
+      <div class="note"><div class="h">Tiada tetingkap muncul</div>Monitor OK tinggal di bar menu. Ia tidak muncul dalam Dock dan tiada tetingkap utama. Lihat di bahagian atas kanan skrin, jika ada nombor, ia sedang berjalan.</div>
+      <h3>Buka semasa log masuk</h3>
+      <p>Hidupkan Buka semasa log masuk dalam <span class="path">Tetapan<i>›</i>Umum</span> dan ia akan muncul di bar menu setiap kali anda log masuk.</p>
+    </section>
+    <section class="part" id="menubar">
+      <h2>Bar menu dan panel</h2>
+      <p>Selalunya nombor di bar menu sudah cukup. Klik untuk melihat butiran.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">Pandang bar menu</div><div class="d">Secara lalai ia memaparkan GPU, suhu, memori, ruang cakera kosong dan bateri. Nombor yang melepasi had bertukar merah.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">Klik untuk membuka panel</div><div class="d">CPU, GPU, carta suhu, memori, setiap cakera, rangkaian, kipas dan bateri di satu tempat. Anda juga boleh tekan ⌃⌥M untuk membuka atau menutupnya.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">Butang di bawah</div><div class="d">Kekal berjaga, Tetapan dan Keluar. Dengan Kekal berjaga dihidupkan, Mac tidak akan tidur, berguna untuk eksport, muat naik dan sandaran yang panjang.</div></div></li>
+      </ol>
+      <h3>Pilih apa yang dipaparkan di bar menu</h3>
+      <p>Dalam <span class="path">Tetapan<i>›</i>Bar Menu</span>, pilih item untuk dipaparkan: CPU, GPU, suhu, memori, kelajuan rangkaian, ruang cakera kosong dan bateri.</p>
+      <div class="tbl"><table>
+        <tr><td>Mod padat</td><td>Hanya ikon kecil dipaparkan, dan nombor muncul apabila ada item melepasi had</td></tr>
+        <tr><td>Kadar segar semula</td><td>Setiap 0.5, 1 atau 2 saat</td></tr>
+      </table></div>
+      <h3>Susun panel</h3>
+      <p>Dalam <span class="path">Tetapan<i>›</i>Panel</span>, seret jubin untuk menukar susunan dan klik ⊖ untuk menyembunyikannya. Item tersembunyi menunggu di bawah, klik untuk menambahnya semula. Jubin kecil (CPU, GPU, rangkaian, kipas) duduk sebelah-menyebelah apabila bersebelahan. Tetapkan semula ke lalai memulihkan susunan asal.</p>
+    </section>
+    <section class="part" id="fan">
+      <h2>Kipas</h2>
+      <p>Kipas ada dua mod: Auto menyerahkannya kepada macOS, Maks memutarnya pada kelajuan penuh.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">Klik jubin kipas dalam panel</div><div class="d">Ia bertukar antara Auto dan Maks.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">Kali pertama, masukkan kata laluan Mac sekali</div><div class="d">Ini memasang pembantu kipas. Tetingkap kata laluan dipaparkan oleh macOS, Monitor OK tidak pernah melihat atau menyimpan kata laluan anda. Anda tidak akan ditanya lagi.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">Tukar kembali ke Auto</div><div class="d">Kipas kembali di bawah kawalan macOS, sama seperti Monitor OK tidak dipasang.</div></div></li>
+      </ol>
+      <h3>Kipas maksimum semasa beban berat</h3>
+      <p>Sama ada eksport dari Premiere Pro, Final Cut Pro atau DaVinci Resolve, atau aplikasi lain yang bekerja keras, apabila CPU atau GPU Mac sibuk lebih separuh selama kira-kira 10 saat, kipas ke Maks dan bar menu memaparkan “Pr di bawah beban berat” (menamakan aplikasi paling sibuk). Kira-kira 30 saat selepas beban turun, kipas kembali ke Auto. Anda boleh mematikannya dalam <span class="path">Tetapan<i>›</i>Umum</span>.</p>
+      <div class="tbl"><table>
+        <tr><td>Amaran beban berat selesai</td><td>Memberitahu anda apabila beban berat tamat, biasanya eksport anda sudah siap, dan berapa lama ia berlangsung</td></tr>
+        <tr><td>Ingat mod kipas</td><td>Mengekalkan Auto atau Maks selepas aplikasi dimulakan semula</td></tr>
+      </table></div>
+      <div class="note"><div class="h">Membuang pembantu kipas</div>Klik Buang pembantu dalam <span class="path">Tetapan<i>›</i>Perihal</span> dan masukkan kata laluan sekali lagi. Kipas kembali sepenuhnya kepada macOS.</div>
+    </section>
+    <section class="part" id="alerts">
+      <h2>Amaran dan kad memori</h2>
+      <p>Apabila ada sesuatu yang perlu diberi perhatian, kad kecil meluncur keluar di bawah bar menu. Ia tertutup sendiri selepas beberapa saat, atau klik untuk menutupnya.</p>
+      <div class="tbl"><table>
+        <tr><th>Amaran</th><th>Bila ia muncul</th></tr>
+        <tr><td>Terlalu panas</td><td>CPU pada 95°C selama 15 saat</td></tr>
+        <tr><td>Memori rendah</td><td>Tekanan memori kritikal, atau swap SSD melebihi 10 GB, selama 20 saat</td></tr>
+        <tr><td>Cakera hampir penuh</td><td>Mana-mana cakera berbaki kurang daripada 5% atau 20 GB</td></tr>
+        <tr><td>Ralat cakera</td><td>Cakera melaporkan ralat baca/tulis baharu, sandarkan rakaman anda ke pemacu lain dahulu</td></tr>
+      </table></div>
+      <p>Setiap amaran ada tempoh bertenang supaya ia tidak muncul berulang kali. Anda boleh mematikan semua amaran dalam <span class="path">Tetapan<i>›</i>Umum</span>.</p>
+      <h3>Buka Backup OK untuk kad memori</h3>
+      <p>Apabila anda memasukkan kad memori kamera (yang ada folder DCIM atau M4ROOT), Backup OK dibuka secara automatik dan anda diberitahu baki ruang pada kad. Pemacu luaran tidak mencetuskannya. Jika Backup OK tidak dipasang, hanya ruang kad dipaparkan. Anda boleh mematikannya dalam <span class="path">Tetapan<i>›</i>Umum</span>.</p>
+      <h3>Pemacu luaran</h3>
+      <p>Bahagian cakera dalam panel menyenaraikan kelajuan baca/tulis langsung dan bilangan ralat bagi setiap pemacu luaran, dengan butang keluarkan betul-betul di sebelahnya.</p>
+    </section>
+    <section class="part" id="update">
+      <h2>Kemas kini automatik</h2>
+      <p>Monitor OK menyemak kemas kini setiap kali dibuka, kemudian setiap jam di latar belakang.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">Kad “Monitor OK versi baharu tersedia” meluncur keluar</div><div class="d">Anda diingatkan paling banyak sekali sehari bagi setiap versi, jadi kerja anda tidak terganggu.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">Klik kad itu</div><div class="d">Tetingkap kemas kini dibuka dengan senarai perubahan. Klik Pasang Kemas Kini.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">Ia dibuka semula sendiri</div><div class="d">Apabila kemas kini dipasang, aplikasi dilancarkan semula dengan semua tetapan anda dikekalkan.</div></div></li>
+      </ol>
+      <p>Anda juga boleh klik Semak Kemas Kini… dalam <span class="path">Tetapan<i>›</i>Perihal</span>. Setiap keluaran turut disenaraikan di laman web rasmi.</p>
+    </section>
+    <section class="part" id="faq">
+      <h2>Soalan lazim</h2>
+      <p>Kebanyakan masalah berpunca daripada kebenaran atau model Mac.</p>
+      <div class="faq">
+        <div class="qa"><button type="button" aria-expanded="false">Saya tidak nampak Monitor OK di bar menu<span class="pm"></span></button><div class="body"><div><p>Apabila bar menu sesak, macOS menyembunyikan ikon yang tidak muat. Cuba Mod padat dalam <span class="path">Tetapan<i>›</i>Bar Menu</span>, atau buang beberapa aplikasi bar menu yang lain.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Kipas tidak mahu bertukar ke Maks<span class="pm"></span></button><div class="body"><div><p>Mac anda mungkin tiada kipas (contohnya MacBook Air), atau aplikasi kipas lain sedang mengawalnya, panel akan memaparkan “Dikawal oleh aplikasi lain”. Keluar daripada aplikasi itu dan cuba lagi.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Ia meminta kata laluan setiap kali<span class="pm"></span></button><div class="body"><div><p>Pembantu tidak berjaya dipasang, atau telah dibuang. Semak sama ada <span class="path">Tetapan<i>›</i>Perihal</span> menunjukkan pembantu sebagai Dipasang.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Satu suhu memaparkan “—”<span class="pm"></span></button><div class="body"><div><p>Sesetengah model Mac atau versi macOS tidak mendedahkan setiap sensor. Bacaan itu memaparkan “—”; yang lain tetap berfungsi.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Saya tidak nampak had cas<span class="pm"></span></button><div class="body"><div><p>Kawalan cas bergantung pada model Mac dan versi macOS anda. Jika tidak disokong, gunakan had cas terbina dalam di <span class="path">Tetapan Sistem<i>›</i>Bateri</span>.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Saya sedang mengeksport tetapi kipas tidak pada Maks<span class="pm"></span></button><div class="body"><div><p>Ia hanya bermula apabila beban kekal tinggi untuk seketika, bukan pada lonjakan singkat. Pastikan Kipas maksimum semasa beban berat dihidupkan dalam <span class="path">Tetapan<i>›</i>Umum</span>.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Bagaimana untuk membuangnya sepenuhnya?<span class="pm"></span></button><div class="body"><div><p>Klik Buang pembantu dalam <span class="path">Tetapan<i>›</i>Perihal</span>, keluar daripada Monitor OK, kemudian seret aplikasi dari Aplikasi ke Tong Sampah.</p></div></div></div>
+        <div class="qa"><button type="button" aria-expanded="false">Ruang kosong lebih rendah daripada yang Finder tunjukkan<span class="pm"></span></button><div class="body"><div><p>Monitor OK memaparkan ruang yang benar-benar kosong sekarang. Perbezaannya biasanya ialah syot kilat setempat Time Machine atau cache, yang ditanda kelabu dalam panel sebagai “Syot kilat setempat Time Machine (masih di cakera)”. Ia memang masih di cakera; macOS hanya membersihkannya apabila ruang hampir habis, manakala Finder sudah mengiranya sebagai tersedia. Untuk mengosongkannya sekarang, jalankan tmutil thinlocalsnapshots / 999999999999 4 dalam Terminal.</p></div></div></div>
+      </div>
+    </section>
+    <section class="part" id="feedback">
+      <h2>Laporkan masalah</h2>
+      <p>E-mel <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a> dengan maklumat berikut, dan kami dapat mencari puncanya lebih cepat.</p>
+      <ol class="steps">
+        <li><span class="n">1</span><div><div class="h">Tangkapan skrin</div><div class="d">Panel, serta nombor versi dalam <span class="path">Tetapan<i>›</i>Perihal</span>.</div></div></li>
+        <li><span class="n">2</span><div><div class="h">Persediaan anda</div><div class="d">Model Mac, cip dan versi macOS.</div></div></li>
+        <li><span class="n">3</span><div><div class="h">Apa yang berlaku dan apa yang anda jangkakan</div><div class="d">Satu dua ayat sudah cukup. Langkah untuk menghasilkan semula masalah paling membantu.</div></div></li>
+      </ol>
+      <p class="closing">Monitor OK tidak pernah mengumpul atau memuat naik sebarang data pemantauan. Lihat <a href="../privacy/">dasar privasi</a>.</p>
+    </section>
+  </article>
+</template>
 <script>
-// 多國語言(與首頁相同的六種語言與偵測順序:網址 ?lang= → 上次選的 → 系統語言 → 英文)
-// 內文的各語言版本放在 <template data-lang data-region>,載入時換上;切換語言會重新載入頁面
+// 內文各語言版本放在 <template data-lang data-region>：ok-i18n 第一次套用語言時換上；之後從選單換語言就重新載入頁面（選擇已存進 ok-lang）
 (function () {
-  var D = {"brand": ["監看都ok", "监看都ok", "Monitor OK", "Monitor OK", "Monitor OK", "Monitor OK"], "nav_manual": ["使用說明", "使用说明", "User guide", "使い方ガイド", "Guía de uso", "Guia de uso"], "nav_privacy": ["隱私權政策", "隐私政策", "Privacy", "プライバシーポリシー", "Privacidad", "Privacidade"], "dl_btn": ["下載", "下载", "Download", "ダウンロード", "Descargar", "Baixar"], "copyright": ["© 2026 監看都ok", "© 2026 监看都ok", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK"], "lang_label": ["語言", "语言", "Language", "言語", "Idioma", "Idioma"], "title_manual": ["監看都ok 使用說明", "监看都ok 使用说明", "Monitor OK User Guide", "Monitor OK 使い方ガイド", "Guía de uso de Monitor OK", "Guia de uso do Monitor OK"], "title_privacy": ["監看都ok 隱私權政策", "监看都ok 隐私政策", "Monitor OK Privacy Policy", "Monitor OK プライバシーポリシー", "Política de privacidad de Monitor OK", "Política de Privacidade do Monitor OK"], "brand_en": ["Monitor OK", "Monitor OK", "", "", "", ""], "home": ["我都ok啊", "我都ok啊", "imokahhhh", "imokahhhh", "imokahhhh", "imokahhhh"], "home_sm": ["我都ok啊", "我都ok啊", "imokahhhh", "imokahhhh", "imokahhhh", "imokahhhh"]}, PAGE = 'manual';
-  var LANGS = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'es', 'pt'];
-  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', es: 'Español', pt: 'Português' };
-  var SHORT = { 'zh-Hant': '繁中', 'zh-Hans': '简中', en: 'EN', ja: '日本語', es: 'ES', pt: 'PT' };
-  function norm(t) {
-    t = String(t || '').toLowerCase();
-    if (t.indexOf('zh') === 0) return /hant|-tw|-hk|-mo/.test(t) ? 'zh-Hant' : 'zh-Hans';
-    return { en: 'en', ja: 'ja', es: 'es', pt: 'pt' }[t.split('-')[0]] || null;
-  }
-  // 依所在地區自動切換：看瀏覽器的時區（在本機判斷，不把 IP 送到任何服務）
-  function byRegion() {
-    var z = '';
-    try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-    if (/^Asia\/(Taipei|Hong_Kong|Macau)$/.test(z)) return 'zh-Hant';
-    if (/^Asia\/(Shanghai|Chongqing|Harbin|Urumqi|Kashgar|Chungking)$|^PRC$/.test(z)) return 'zh-Hans';
-    if (/^Asia\/Tokyo$|^Japan$/.test(z)) return 'ja';
-    if (/^America\/(Sao_Paulo|Fortaleza|Recife|Bahia|Belem|Manaus|Cuiaba|Campo_Grande|Porto_Velho|Boa_Vista|Rio_Branco|Araguaina|Maceio|Noronha|Santarem|Eirunepe)$|^Europe\/Lisbon$|^Atlantic\/(Azores|Madeira)$|^Africa\/(Luanda|Maputo)$/.test(z)) return 'pt';
-    if (/^Europe\/Madrid$|^Atlantic\/Canary$|^Africa\/Ceuta$|^America\/(Mexico_City|Cancun|Merida|Monterrey|Matamoros|Chihuahua|Mazatlan|Hermosillo|Tijuana|Bahia_Banderas|Ojinaga|Bogota|Lima|Santiago|Punta_Arenas|Caracas|Guayaquil|La_Paz|Asuncion|Montevideo|Buenos_Aires|Argentina\/.+|Guatemala|El_Salvador|Tegucigalpa|Managua|Costa_Rica|Panama|Havana|Santo_Domingo|Puerto_Rico)$|^Pacific\/Galapagos$/.test(z)) return 'es';
-    return null;
-  }
-  function detect() {
-    var q = /[?&]lang=([\w-]+)/.exec(location.search);
-    if (q) { var n = LANGS.indexOf(q[1]) >= 0 ? q[1] : norm(q[1]); if (n) return n; }
-    var g = byRegion(); if (g) return g;
-    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
-    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
-    return 'en';
-  }
-  var lang = detect(), idx = LANGS.indexOf(lang);
-  function t(k) { return D[k] ? D[k][idx] : ''; }
-  document.documentElement.lang = lang;
-  if (lang !== 'zh-Hant') {
+  var cur = null;
+  document.addEventListener('ok:lang', function (e) {
+    var lang = e.detail;
+    var bs = document.querySelector('.brand small'); if (bs) bs.hidden = bs.textContent === OK.t('brand');
+    if (cur === lang) return;
+    if (cur !== null) {
+      var u = location.href.replace(/([?&])lang=[\w-]+&?/, '$1').replace(/[?&](#|$)/, '$1');
+      if (u === location.href) location.reload(); else location.href = u;
+      return;
+    }
+    cur = lang;
+    if (lang === 'zh-Hant') return;
     document.querySelectorAll('template[data-lang="' + lang + '"]').forEach(function (tp) {
       var target = document.querySelector(tp.getAttribute('data-region'));
       if (target) target.replaceWith(tp.content.cloneNode(true));
     });
-  }
-  document.querySelectorAll('[data-i]').forEach(function (el) { var v = t(el.getAttribute('data-i')); if (v) el.textContent = v; });
-  document.title = t(PAGE === 'manual' ? 'title_manual' : 'title_privacy');
-  var bs = document.querySelector('.brand small'); if (bs && bs.textContent === t('brand')) bs.hidden = true;
+  });
 })();
 </script>
 <script>
-// 常見問題：展開／收合
+// 常見問題：展開／收合（等 ok-i18n 換好內文語言再綁）
+document.addEventListener('DOMContentLoaded', function () {
 document.querySelectorAll('.qa button').forEach(function (b) {
   b.addEventListener('click', function () {
     var qa = b.parentElement, open = !qa.classList.contains('open');
@@ -949,6 +1318,91 @@ document.querySelectorAll('.qa button').forEach(function (b) {
     b.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
 });
+});
+</script>
+<script>window.OK_I18N = {"_title":["監看都ok 使用說明","监看都ok 使用说明","Monitor OK User Guide","Monitor OK 使い方ガイド","Monitor OK 사용 설명서","Guía de uso de Monitor OK","Guia de uso do Monitor OK","Monitor OK उपयोग गाइड","Panduan Pengguna Monitor OK"],"brand_en":["Monitor OK","Monitor OK","Monitor OK","Monitor OK","Monitor OK","Monitor OK","Monitor OK","Monitor OK","Monitor OK"],"brand":["監看都ok","监看都ok","Monitor OK","Monitor OK","Monitor OK","Monitor OK","Monitor OK","Monitor OK","Monitor OK"],"nav_manual":["使用說明","使用说明","User guide","使い方ガイド","사용 설명서","Guía de uso","Guia de uso","उपयोग गाइड","Panduan pengguna"],"nav_privacy":["隱私權政策","隐私政策","Privacy","プライバシーポリシー","개인정보 보호","Privacidad","Privacidade","गोपनीयता","Privasi"]};</script>
+<script>// ok-i18n: imokahhhh.com 共用多國語言。順序 = 網址 ?lang= → 使用者上次選的（全站共用 ok-lang）→ 瀏覽器語言 → English
+// 用法：頁面先放一段 inline script 設定 window.OK_I18N = { key: [9 個語言] }（順序同 LANGS），再放這支程式。
+// 標記：data-i="key"（換 textContent；key 以 ! 結尾換 innerHTML）、data-ia="aria-label:key;title:key2"（換屬性）。
+// 特殊 key：_title（document.title）、_desc（meta description）。
+(function () {
+  var D = window.OK_I18N || {};
+  var LANGS = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'ko', 'es', 'pt', 'hi', 'ms'];
+  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', ko: '한국어', es: 'Español', pt: 'Português', hi: 'हिन्दी', ms: 'Bahasa Melayu' };
+  var SHORT = { 'zh-Hant': '繁中', 'zh-Hans': '简中', en: 'EN', ja: '日本語', ko: '한국어', es: 'ES', pt: 'PT', hi: 'हिं', ms: 'MS' };
+  var cur = 'zh-Hant';
+  function norm(t) {
+    t = String(t || '').toLowerCase();
+    if (t.indexOf('zh') === 0) return /hant|-tw|-hk|-mo/.test(t) ? 'zh-Hant' : 'zh-Hans';
+    var b = t.split('-')[0];
+    if (b === 'id') return 'ms';
+    return LANGS.indexOf(b) >= 0 ? b : null;
+  }
+  function detect() {
+    var q = /[?&]lang=([\w-]+)/.exec(location.search);
+    if (q) { var n = LANGS.indexOf(q[1]) >= 0 ? q[1] : norm(q[1]); if (n) return n; }
+    try {
+      var saved = localStorage.getItem('ok-lang') || localStorage.getItem('bk-lang');
+      if (LANGS.indexOf(saved) >= 0) return saved;
+    } catch (e) {}
+    var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
+    return 'en';
+  }
+  function t(key, lang) {
+    var v = D[key]; if (!v) return '';
+    var s = v[LANGS.indexOf(lang || cur)];
+    return s == null || s === '' ? (v[2] || v[0]) : s;   // 缺翻譯時退回英文，再退回繁中
+  }
+  function fmt(s, vars) { return String(s).replace(/\{(\w+)\}/g, function (m, k) { return vars && k in vars ? vars[k] : m; }); }
+  function apply(lang) {
+    cur = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i]').forEach(function (el) {
+      var k = el.getAttribute('data-i'), v = t(k);
+      if (!v) return;
+      if (k.slice(-1) === '!') el.innerHTML = v; else el.textContent = v;
+    });
+    document.querySelectorAll('[data-ia]').forEach(function (el) {
+      el.getAttribute('data-ia').split(';').forEach(function (pair) {
+        var p = pair.split(':'); if (p.length === 2 && D[p[1]]) el.setAttribute(p[0].trim(), t(p[1].trim()));
+      });
+    });
+    if (D._title) document.title = t('_title');
+    var md = document.querySelector('meta[name="description"]'); if (md && D._desc) md.setAttribute('content', t('_desc'));
+    var c = document.getElementById('langCur'); if (c) { c.textContent = SHORT[lang]; }
+    var b = document.getElementById('langBtn'); if (b) b.setAttribute('aria-label', 'Language: ' + NAMES[lang]);
+    document.querySelectorAll('#langMenu [role="menuitemradio"]').forEach(function (x) { x.setAttribute('aria-checked', String(x.getAttribute('lang') === lang)); });
+    document.dispatchEvent(new CustomEvent('ok:lang', { detail: lang }));
+  }
+  window.OK = { t: t, fmt: fmt, lang: function () { return cur; }, apply: apply, LANGS: LANGS };
+
+  // 語言選單：地球圖示 + 簡稱，點開是各語言的原文名稱
+  var btn = document.getElementById('langBtn'), menu = document.getElementById('langMenu'), wrap = document.getElementById('lang');
+  if (btn && menu && wrap) {
+    LANGS.forEach(function (l) {
+      var li = document.createElement('li'); li.setAttribute('role', 'none');
+      var x = document.createElement('button');
+      x.type = 'button'; x.setAttribute('role', 'menuitemradio'); x.setAttribute('lang', l); x.textContent = NAMES[l];
+      x.addEventListener('click', function () {
+        try { localStorage.setItem('ok-lang', l); } catch (e) {}
+        close(); apply(l); btn.focus();
+      });
+      li.appendChild(x); menu.appendChild(li);
+    });
+    var open = function () { menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); var c = menu.querySelector('[aria-checked="true"]') || menu.querySelector('button'); c.focus(); };
+    var close = function () { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
+    btn.addEventListener('click', function () { if (menu.hidden) open(); else close(); });
+    document.addEventListener('click', function (e) { if (!menu.hidden && !wrap.contains(e.target)) close(); });
+    menu.addEventListener('keydown', function (e) {
+      var items = Array.prototype.slice.call(menu.querySelectorAll('button')), i = items.indexOf(document.activeElement);
+      if (e.key === 'Escape') { close(); btn.focus(); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+    });
+  }
+  apply(detect());
+})();
 </script>
 </body>
 </html>
