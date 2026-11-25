@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-sceIOt0gpxLDvytZNnuUxyoiETSsYgsc3dvZy9iKEdg=' 'sha256-bmXx7M8xUGB438fmpts7ud8YNOK6KCXXARI+dO4Ivlw=' 'sha256-2lHeL3R28/QKKPZZlW/S4j3Ct9afBBaZQY/LGLNNsxI='; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-sceIOt0gpxLDvytZNnuUxyoiETSsYgsc3dvZy9iKEdg=' 'sha256-DlllX1xnD2nqXs33Q0fbURQHOMYWruhVvUasEAt8V2E=' 'sha256-2lHeL3R28/QKKPZZlW/S4j3Ct9afBBaZQY/LGLNNsxI='; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>if (window.top !== window.self) document.documentElement.style.display = 'none';</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -156,15 +156,10 @@ footer.foot a:hover { color: var(--color-ink); text-decoration: underline; }
 <body>
 <header class="bar">
   <div class="container bar-in">
-    <a class="brand" href="../"><span data-i="brand">監看都ok</span><small data-i="home_sm">我都ok啊</small></a>
+    <a class="brand" href="../"><span data-i="brand">監看都ok</span><small data-i="brand_en">Monitor OK</small></a>
     <nav class="nav" aria-label="監看都ok">
       <a href="../manual/" data-i="nav_manual" aria-current="page">使用說明</a>
       <a class="opt" href="../privacy/" data-i="nav_privacy">隱私權政策</a>
-      <a class="opt" href="/">imokahhhh</a>
-      <div class="lang" id="lang">
-        <button type="button" class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><span id="langCur">繁體中文</span><span class="vh" data-i="lang_label">語言</span></button>
-        <ul class="lang-menu" id="langMenu" role="menu" hidden></ul>
-      </div>
     </nav>
   </div>
 </header>
@@ -291,11 +286,7 @@ footer.foot a:hover { color: var(--color-ink); text-decoration: underline; }
 </main>
 <footer class="foot">
   <div class="container">
-    <a href="../" data-i="dl_btn">下載</a>
-    <a href="../manual/" data-i="nav_manual">使用說明</a>
-    <a href="../privacy/" data-i="nav_privacy">隱私權政策</a>
-    <a href="mailto:imokahhhh@gmail.com">imokahhhh@gmail.com</a>
-    <a href="/" data-i="home">我都ok啊</a>
+    <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#109;&#111;&#107;&#97;&#104;&#104;&#104;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#105;&#109;&#111;&#107;&#97;&#104;&#104;&#104;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
   </div>
 </footer>
 <template data-lang="zh-Hans" data-region="article.doc">
@@ -907,7 +898,7 @@ footer.foot a:hover { color: var(--color-ink); text-decoration: underline; }
 // 多國語言(與首頁相同的六種語言與偵測順序:網址 ?lang= → 上次選的 → 系統語言 → 英文)
 // 內文的各語言版本放在 <template data-lang data-region>,載入時換上;切換語言會重新載入頁面
 (function () {
-  var D = {"brand": ["監看都ok", "监看都ok", "Monitor OK", "Monitor OK", "Monitor OK", "Monitor OK"], "nav_manual": ["使用說明", "使用说明", "User guide", "使い方ガイド", "Guía de uso", "Guia de uso"], "nav_privacy": ["隱私權政策", "隐私政策", "Privacy", "プライバシーポリシー", "Privacidad", "Privacidade"], "dl_btn": ["下載", "下载", "Download", "ダウンロード", "Descargar", "Baixar"], "copyright": ["© 2026 監看都ok", "© 2026 监看都ok", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK"], "lang_label": ["語言", "语言", "Language", "言語", "Idioma", "Idioma"], "title_manual": ["監看都ok 使用說明", "监看都ok 使用说明", "Monitor OK User Guide", "Monitor OK 使い方ガイド", "Guía de uso de Monitor OK", "Guia de uso do Monitor OK"], "title_privacy": ["監看都ok 隱私權政策", "监看都ok 隐私政策", "Monitor OK Privacy Policy", "Monitor OK プライバシーポリシー", "Política de privacidad de Monitor OK", "Política de Privacidade do Monitor OK"], "home": ["我都ok啊", "我都ok啊", "imokahhhh", "imokahhhh", "imokahhhh", "imokahhhh"], "home_sm": ["我都ok啊", "我都ok啊", "imokahhhh", "imokahhhh", "imokahhhh", "imokahhhh"]}, PAGE = 'manual';
+  var D = {"brand": ["監看都ok", "监看都ok", "Monitor OK", "Monitor OK", "Monitor OK", "Monitor OK"], "nav_manual": ["使用說明", "使用说明", "User guide", "使い方ガイド", "Guía de uso", "Guia de uso"], "nav_privacy": ["隱私權政策", "隐私政策", "Privacy", "プライバシーポリシー", "Privacidad", "Privacidade"], "dl_btn": ["下載", "下载", "Download", "ダウンロード", "Descargar", "Baixar"], "copyright": ["© 2026 監看都ok", "© 2026 监看都ok", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK", "© 2026 Monitor OK"], "lang_label": ["語言", "语言", "Language", "言語", "Idioma", "Idioma"], "title_manual": ["監看都ok 使用說明", "监看都ok 使用说明", "Monitor OK User Guide", "Monitor OK 使い方ガイド", "Guía de uso de Monitor OK", "Guia de uso do Monitor OK"], "title_privacy": ["監看都ok 隱私權政策", "监看都ok 隐私政策", "Monitor OK Privacy Policy", "Monitor OK プライバシーポリシー", "Política de privacidad de Monitor OK", "Política de Privacidade do Monitor OK"], "brand_en": ["Monitor OK", "Monitor OK", "", "", "", ""], "home": ["我都ok啊", "我都ok啊", "imokahhhh", "imokahhhh", "imokahhhh", "imokahhhh"], "home_sm": ["我都ok啊", "我都ok啊", "imokahhhh", "imokahhhh", "imokahhhh", "imokahhhh"]}, PAGE = 'manual';
   var LANGS = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'es', 'pt'];
   var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', es: 'Español', pt: 'Português' };
   var SHORT = { 'zh-Hant': '繁中', 'zh-Hans': '简中', en: 'EN', ja: '日本語', es: 'ES', pt: 'PT' };
@@ -916,10 +907,21 @@ footer.foot a:hover { color: var(--color-ink); text-decoration: underline; }
     if (t.indexOf('zh') === 0) return /hant|-tw|-hk|-mo/.test(t) ? 'zh-Hant' : 'zh-Hans';
     return { en: 'en', ja: 'ja', es: 'es', pt: 'pt' }[t.split('-')[0]] || null;
   }
+  // 依所在地區自動切換：看瀏覽器的時區（在本機判斷，不把 IP 送到任何服務）
+  function byRegion() {
+    var z = '';
+    try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    if (/^Asia\/(Taipei|Hong_Kong|Macau)$/.test(z)) return 'zh-Hant';
+    if (/^Asia\/(Shanghai|Chongqing|Harbin|Urumqi|Kashgar|Chungking)$|^PRC$/.test(z)) return 'zh-Hans';
+    if (/^Asia\/Tokyo$|^Japan$/.test(z)) return 'ja';
+    if (/^America\/(Sao_Paulo|Fortaleza|Recife|Bahia|Belem|Manaus|Cuiaba|Campo_Grande|Porto_Velho|Boa_Vista|Rio_Branco|Araguaina|Maceio|Noronha|Santarem|Eirunepe)$|^Europe\/Lisbon$|^Atlantic\/(Azores|Madeira)$|^Africa\/(Luanda|Maputo)$/.test(z)) return 'pt';
+    if (/^Europe\/Madrid$|^Atlantic\/Canary$|^Africa\/Ceuta$|^America\/(Mexico_City|Cancun|Merida|Monterrey|Matamoros|Chihuahua|Mazatlan|Hermosillo|Tijuana|Bahia_Banderas|Ojinaga|Bogota|Lima|Santiago|Punta_Arenas|Caracas|Guayaquil|La_Paz|Asuncion|Montevideo|Buenos_Aires|Argentina\/.+|Guatemala|El_Salvador|Tegucigalpa|Managua|Costa_Rica|Panama|Havana|Santo_Domingo|Puerto_Rico)$|^Pacific\/Galapagos$/.test(z)) return 'es';
+    return null;
+  }
   function detect() {
     var q = /[?&]lang=([\w-]+)/.exec(location.search);
     if (q) { var n = LANGS.indexOf(q[1]) >= 0 ? q[1] : norm(q[1]); if (n) return n; }
-    try { var s = localStorage.getItem('mk-lang'); if (LANGS.indexOf(s) >= 0) return s; } catch (e) {}
+    var g = byRegion(); if (g) return g;
     var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
     for (var i = 0; i < list.length; i++) { var l = norm(list[i]); if (l) return l; }
     return 'en';
@@ -935,32 +937,7 @@ footer.foot a:hover { color: var(--color-ink); text-decoration: underline; }
   }
   document.querySelectorAll('[data-i]').forEach(function (el) { var v = t(el.getAttribute('data-i')); if (v) el.textContent = v; });
   document.title = t(PAGE === 'manual' ? 'title_manual' : 'title_privacy');
-  var cur = document.getElementById('langCur'); cur.textContent = NAMES[lang]; cur.setAttribute('data-short', SHORT[lang]);
-  var btn = document.getElementById('langBtn'), menu = document.getElementById('langMenu');
-  LANGS.forEach(function (l) {
-    var li = document.createElement('li'); li.setAttribute('role', 'none');
-    var b = document.createElement('button');
-    b.type = 'button'; b.setAttribute('role', 'menuitemradio'); b.setAttribute('lang', l); b.textContent = NAMES[l];
-    b.setAttribute('aria-checked', String(l === lang));
-    b.addEventListener('click', function () {
-      try { localStorage.setItem('mk-lang', l); } catch (e) {}
-      if (l === lang) { close(); return; }
-      var u = location.href.replace(/([?&])lang=[\w-]+&?/, '$1').replace(/[?&]$/, '');
-      location.href = u;
-    });
-    li.appendChild(b); menu.appendChild(li);
-  });
-  function close() { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
-  btn.addEventListener('click', function () {
-    if (menu.hidden) { menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); (menu.querySelector('[aria-checked="true"]') || menu.querySelector('button')).focus(); } else close();
-  });
-  document.addEventListener('click', function (e) { if (!menu.hidden && !document.getElementById('lang').contains(e.target)) close(); });
-  menu.addEventListener('keydown', function (e) {
-    var items = Array.prototype.slice.call(menu.querySelectorAll('button')), i = items.indexOf(document.activeElement);
-    if (e.key === 'Escape') { close(); btn.focus(); }
-    else if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
-  });
+  var bs = document.querySelector('.brand small'); if (bs && bs.textContent === t('brand')) bs.hidden = true;
 })();
 </script>
 <script>
