@@ -5,7 +5,7 @@
         <item>
             <title>1.2.3</title>
             <pubDate>Mon, 09 Nov 2026 21:27:29 +0800</pubDate>
-            <link>https://felix5zheng.github.io/monitor-ok</link>
+            <link>https://imokahhhh.com/monitor-ok</link>
             <sparkle:version>6</sparkle:version>
             <sparkle:shortVersionString>1.2.3</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
@@ -14,12 +14,12 @@
   <li>選單列的「SSD／GPU／RAM」標籤改成跟數字一樣大（粗體區分），高度跟數字完全對齊，不會再看起來偏下。</li>
 </ul>
 ]]></description>
-            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.2.3.dmg" length="3152936" type="application/octet-stream" sparkle:edSignature="5u+vxAsQxW+4r3Jra6Qlup3QpSdzP3hDvFucZr0ZPjIqeAsFr0qZZ+PvgzikLnOrXC4p800lPhECCSoYeXfwCQ=="/>
+            <enclosure url="https://imokahhhh.com/monitor-ok/downloads/MonitorOK-1.2.3.dmg" length="3152936" type="application/octet-stream" sparkle:edSignature="5u+vxAsQxW+4r3Jra6Qlup3QpSdzP3hDvFucZr0ZPjIqeAsFr0qZZ+PvgzikLnOrXC4p800lPhECCSoYeXfwCQ=="/>
         </item>
         <item>
             <title>1.2.2</title>
             <pubDate>Sat, 07 Nov 2026 14:00:59 +0800</pubDate>
-            <link>https://felix5zheng.github.io/monitor-ok</link>
+            <link>https://imokahhhh.com/monitor-ok</link>
             <sparkle:version>5</sparkle:version>
             <sparkle:shortVersionString>1.2.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
@@ -30,12 +30,12 @@
   <li>電池區直接顯示充電器實際輸入的瓦數，充電時一起顯示電池正在充的瓦數，例如「輸入 84W · 充 51W」。</li>
 </ul>
 ]]></description>
-            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.2.2.dmg" length="3152958" type="application/octet-stream" sparkle:edSignature="+uMDMc45+Dejg4A5jK3kKheV5Hp8/3yIrsLqUYI06oR1BSaox3BEl+i+MoPP6ZnpDjhy2pBykn6vaUVytBSXCw=="/>
+            <enclosure url="https://imokahhhh.com/monitor-ok/downloads/MonitorOK-1.2.2.dmg" length="3152958" type="application/octet-stream" sparkle:edSignature="+uMDMc45+Dejg4A5jK3kKheV5Hp8/3yIrsLqUYI06oR1BSaox3BEl+i+MoPP6ZnpDjhy2pBykn6vaUVytBSXCw=="/>
         </item>
         <item>
             <title>1.2.1</title>
             <pubDate>Sat, 07 Nov 2026 10:23:56 +0800</pubDate>
-            <link>https://felix5zheng.github.io/monitor-ok</link>
+            <link>https://imokahhhh.com/monitor-ok</link>
             <sparkle:version>4</sparkle:version>
             <sparkle:shortVersionString>1.2.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
@@ -46,7 +46,7 @@
   <li>App 被強制結束後重新打開時，如果風扇還卡在全開，會自動交還系統。</li>
 </ul>
 ]]></description>
-            <enclosure url="https://felix5zheng.github.io/monitor-ok/downloads/MonitorOK-1.2.1.dmg" length="3148104" type="application/octet-stream" sparkle:edSignature="ugPTANn7thIqGgRg/60jTnnAAbvCS6siJ1mbqhjFyQqYA66piXf7bE4VBAfVRJAw3vJRop6Fqfk0WdNGEU34DQ=="/>
+            <enclosure url="https://imokahhhh.com/monitor-ok/downloads/MonitorOK-1.2.1.dmg" length="3148104" type="application/octet-stream" sparkle:edSignature="ugPTANn7thIqGgRg/60jTnnAAbvCS6siJ1mbqhjFyQqYA66piXf7bE4VBAfVRJAw3vJRop6Fqfk0WdNGEU34DQ=="/>
         </item>
     </channel>
 </rss>
